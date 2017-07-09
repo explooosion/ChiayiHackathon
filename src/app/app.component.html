@@ -1,0 +1,14 @@
+<h1>{{ title }}</h1>
+<div class="row">
+  <input type="text" [(ngModel)]="addr" placeholder="placeholderText" />
+  <button type="button" (click)="setCircle()">Search</button>
+</div>
+<div class="row">
+  {{ lat }} | {{ lng }}
+</div>
+<!-- this creates a google map on the page with the given lat/lng from -->
+<!-- the component as the initial center of the map: -->
+<agm-map [latitude]="lat" [longitude]="lng" [zoom]="8">
+  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+  <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="color" [fillOpacity]="0.2"></agm-circle>
+</agm-map>
