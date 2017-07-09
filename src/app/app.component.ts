@@ -17,8 +17,8 @@ export class AppComponent extends GoogleMapsAPIWrapper {
   title: string = 'Angular4 Demo Gmap';
   lat: number = 24.1375758;
   lng: number = 120.68660550000004;
-  radius: number = 22000;
-  color: string = '#f0f';
+  radius: number = 500;
+  color: string = '#FECE00';
   addr: string = "台中火車站";
 
   constructor(
