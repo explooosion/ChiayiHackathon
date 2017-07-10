@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AgmCoreModule, MapsAPILoader, GoogleMapsAPIWrapper, AgmDataLayer } from '@agm/core';
 
 import { GMapsService } from './service/gmaps.service';
+import { LayerService } from './service/layer.service';
 import { Marker } from './class/marker';
 
 declare var google: any;
@@ -12,45 +13,60 @@ declare var google: any;
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [GMapsService, Marker]
+  providers: [GMapsService, LayerService, Marker]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title: string = 'Angular4 Demo Gmap';
   lat: number = 23.4791187;
   lng: number = 120.44113820000007;
   radius: number = 500;
   color: string = '#FECE00';
   addr: string = "̨嘉義火車站";
-
+  geoJsonObject: Object;
   constructor(
     private gmapService: GMapsService,
+    private layerService: LayerService,
     private zone: NgZone,
     private marker: Marker
   ) { }
 
+  ngOnInit() {
+    this.getLayer();
+  }
 
   setCircle() {
     this.gmapService.getLatLan(this.addr)
       .subscribe(
       result => {
-        //needs to run inside zone to update the map
         //必須使用zone 觀察整個 view 否則會導致延遲
         this.zone.run(() => {
+
           this.lat = result.lat();
           this.lng = result.lng();
+          this.saveMarker(result.lat(), result.lng());
+
         });
       },
       error => console.log(error),
       () => console.log('Geocoding completed!')
       );
   }
- 
 
-  /*getUser() {
-    return this.http.get(`https://conduit.productionready.io/api/profiles/eric`)
-      .map((res: Response) => res.json());
-  }*/
+  saveMarker(lat: number, lng: number) {
+    this.marker.lat = lat;
+    this.marker.lng = lng;
+  }
 
-  // 接下來要實作 http get 抓取 資料
+  getLayer() {
+    this.layerService.getTaiwanLayer()
+      .subscribe(
+      result => {
+        this.geoJsonObject = result;
+        console.log(result);
 
+      },
+      error => {
+        console.log(error);
+      });
+  }
 }

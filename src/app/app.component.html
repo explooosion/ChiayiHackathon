@@ -2,6 +2,7 @@
 <div class="row">
   <input type="text" [(ngModel)]="addr" placeholder="placeholderText" />
   <button type="button" (click)="setCircle()">Search</button> {{ lat }} | {{ lng }}
+  <button type="button" (click)="getLayer()">getHeroes</button>
 </div>
 
 <!-- this creates a google map on the page with the given lat/lng from -->
@@ -9,4 +10,5 @@
 <agm-map [latitude]="lat" [longitude]="lng" [zoom]="16">
   <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
   <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="color" [fillOpacity]="0.3"></agm-circle>
+  <agm-data-layer *ngIf="geoJsonObject" [geoJson]="geoJsonObject"></agm-data-layer>
 </agm-map>
