@@ -1,7 +1,7 @@
 import { Component, Input, NgZone, OnInit, NgModule } from '@angular/core';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { AgmCoreModule, MapsAPILoader, GoogleMapsAPIWrapper } from '@agm/core';
+import { AgmCoreModule, MapsAPILoader, GoogleMapsAPIWrapper, AgmDataLayer } from '@agm/core';
 
 import { GMapsService } from './service/gmaps.service';
 
@@ -19,7 +19,7 @@ export class AppComponent extends GoogleMapsAPIWrapper {
   lng: number = 120.68660550000004;
   radius: number = 500;
   color: string = '#FECE00';
-  addr: string = "台中火車站";
+  addr: string = "̨嘉義火車站";
 
   constructor(
     private gmap: GMapsService,
@@ -46,7 +46,7 @@ export class AppComponent extends GoogleMapsAPIWrapper {
     setTimeout(() => {
       this.lat = Number(la);
       this.lng = Number(ln);
-    }, 10);
+    }, 100);
 
   }
 
