@@ -1,7 +1,4 @@
 export class Marker {
-    constructor(public lat: number,
-        public lng: number,
-        public label?: string,
-        public draggable: boolean = false) {
-    }
+    public lat: number = 0;
+    public lng: number = 0;
 }
