@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   title: string = 'Angular4 Demo Gmap';
   lat: number = 23.4791187;
   lng: number = 120.44113820000007;
-  radius: number = 500;
+  radius: number = 50000;
   color: string = '#FECE00';
   addr: string = "̨嘉義火車站";
   geoJsonObject: Object;
@@ -68,5 +68,25 @@ export class AppComponent implements OnInit {
       error => {
         console.log(error);
       });
+  }
+
+  styleFunc(feature) {
+    // get level - 0/1
+    //var level = feature.getProperty('level');
+    var color = 'green';
+    // only show level one features
+    //var visibility = level == 1 ? true : false;
+    return {
+      // icon for point geometry(in this case - doors)
+      // set fill color for polygon features
+      fillColor: color,
+      fillOpacity: 0.2,
+      // stroke color for polygons
+      strokeColor: color,
+      strokeWeight: 1,
+      strokeOpacity: 0.8,
+      // make layer 1 features visible
+      // visible: visibility
+    };
   }
 }
