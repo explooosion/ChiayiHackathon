@@ -3,26 +3,22 @@ import { Component, Input, NgZone, OnInit, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AgmCoreModule, MapsAPILoader, GoogleMapsAPIWrapper, AgmDataLayer } from '@agm/core';
 
-import { GMapsService } from './service/gmaps.service';
-
 declare var google: any;
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  providers: [GMapsService]
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent extends GoogleMapsAPIWrapper {
   title: string = 'Angular4 Demo Gmap';
-  lat: number = 24.1375758;
-  lng: number = 120.68660550000004;
+  lat: number = 23.4791187;
+  lng: number = 120.44113820000007;
   radius: number = 500;
   color: string = '#FECE00';
   addr: string = "̨嘉義火車站";
 
   constructor(
-    private gmap: GMapsService,
     private __loader: MapsAPILoader,
     private __zone: NgZone) {
     super(__loader, __zone);
@@ -46,7 +42,7 @@ export class AppComponent extends GoogleMapsAPIWrapper {
     setTimeout(() => {
       this.lat = Number(la);
       this.lng = Number(ln);
-    }, 100);
+    }, 500);
 
   }
 
