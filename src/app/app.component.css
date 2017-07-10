@@ -1,21 +1,12 @@
-.row {
-    margin: 10px 0;
-    height: 40px;
+h1 {
+  margin-bottom: 50px;
 }
 
-input[type="text"] {
-    margin: 4px;
-    padding: 2px 4px;
-    width: 300px;
-    height: 25px;
-}
-
-button {
-    width: 80px;
-    height: 32px;
-    cursor: pointer;
+.btn-search {
+  width: 120px;
+  cursor: pointer;
 }
 
 agm-map {
-    height: 80vh;
+  height: 80vh;
 }
