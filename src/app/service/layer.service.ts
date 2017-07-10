@@ -11,7 +11,6 @@ export class LayerService {
   private _url: string = 'assets/data/county.json';
   constructor(private http: Http) { }
 
-
   getTaiwanLayer() {
     return this.http.get(this._url)
       .map(this.extractData)

@@ -46,11 +46,9 @@ export class AppComponent implements OnInit {
       result => {
         //必須使用zone 觀察整個 view 否則會導致延遲
         this.zone.run(() => {
-
           this.lat = result.lat();
           this.lng = result.lng();
           this.saveMarker(result.lat(), result.lng());
-
         });
       },
       error => console.log(error),
@@ -80,7 +78,7 @@ export class AppComponent implements OnInit {
       .subscribe(
       result => {
         this.csvData = result;
-        console.log(result[0][1]);
+        console.log(this.csvData);
       });
   }
 
