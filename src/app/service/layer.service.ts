@@ -11,21 +11,15 @@ export class LayerService {
   private _url: string = 'assets/data/county.json';
   constructor(private http: Http) { }
 
-  // getTaiwanLayer() {
-  //   return this.http.get('assets/data/county2.json')
-  //     .map(this.extractData)
-  //     .catch(this.handleError);;
-  // }
 
   getTaiwanLayer() {
     return this.http.get(this._url)
-      .map((response: Response) => response.json());
+      .map(this.extractData)
+      .catch(this.handleError);
   }
 
   private extractData(res: Response) {
-    let body = res.json();
-    //return body.data || {};
-    return res.json();
+    return res.json() || {};
   }
 
   private handleError(error: Response | any) {

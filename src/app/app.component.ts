@@ -5,6 +5,8 @@ import { AgmCoreModule, MapsAPILoader, GoogleMapsAPIWrapper, AgmDataLayer } from
 
 import { GMapsService } from './service/gmaps.service';
 import { LayerService } from './service/layer.service';
+import { PopulationStructureService } from './service/population-structure.service';
+
 import { Marker } from './class/marker';
 
 declare var google: any;
@@ -13,7 +15,7 @@ declare var google: any;
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [GMapsService, LayerService, Marker]
+  providers: [GMapsService, LayerService, Marker, PopulationStructureService]
 })
 export class AppComponent implements OnInit {
   title: string = 'Angular4 Demo Gmap';
@@ -23,7 +25,10 @@ export class AppComponent implements OnInit {
   color: string = '#FECE00';
   addr: string = "̨嘉義火車站";
   geoJsonObject: Object;
+  csvData: any[] = [];
+
   constructor(
+    private populationService: PopulationStructureService,
     private gmapService: GMapsService,
     private layerService: LayerService,
     private zone: NgZone,
@@ -32,6 +37,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.getLayer();
+    this.getPopuCSV();
   }
 
   setCircle() {
@@ -62,11 +68,19 @@ export class AppComponent implements OnInit {
       .subscribe(
       result => {
         this.geoJsonObject = result;
-        console.log(result);
-
+        //console.log(result);
       },
       error => {
         console.log(error);
+      });
+  }
+
+  getPopuCSV() {
+    this.populationService.readCsv()
+      .subscribe(
+      result => {
+        this.csvData = result;
+        console.log(result[0][1]);
       });
   }
 
@@ -77,11 +91,9 @@ export class AppComponent implements OnInit {
     // only show level one features
     //var visibility = level == 1 ? true : false;
     return {
-      // icon for point geometry(in this case - doors)
-      // set fill color for polygon features
+      icon: 'assets/images/door.png',
       fillColor: color,
       fillOpacity: 0.2,
-      // stroke color for polygons
       strokeColor: color,
       strokeWeight: 1,
       strokeOpacity: 0.8,
@@ -89,4 +101,7 @@ export class AppComponent implements OnInit {
       // visible: visibility
     };
   }
+
+
+
 }
