@@ -1,0 +1,36 @@
+/* 修正 bootstrap-slider 在 Bootstrap4 導致 Tooltip 無法顯示的問題 */
+
+
+/* Tooltip show */
+
+.slider.slider-horizontal:hover .tooltip.tooltip-main,
+.slider.slider-vertical:hover .tooltip.tooltip-main {
+  opacity: 0.7 !important;
+}
+
+.slider.slider-horizontal:hover .tooltip-inner,
+.slider.slider-vertical:hover .tooltip-inner {
+  width: auto;
+}
+
+
+/* Tooltip arrow */
+
+.slider.slider-horizontal:hover .tooltip.tooltip-main.top .tooltip-arrow:after,
+.slider.slider-vertical:hover .tooltip.tooltip-main.top .tooltip-arrow:after {
+  content: '';
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 40%;
+  bottom: -10px;
+  border: transparent 5px solid;
+  border-top: #000 5px solid;
+}
+
+
+/* Slider Handle Cursor */
+
+.slider .slider-handle {
+  cursor: pointer;
+}

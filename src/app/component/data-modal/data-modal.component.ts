@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { PopulationStructureService } from '../../service/population-structure.service';
 import { YearStructureService } from '../../service/year-structure.service';
 
+declare var jquery: any;
+declare var $: any;
+declare var DataTable: any;
 @Component({
   selector: 'app-data-modal',
   templateUrl: './data-modal.component.html',
@@ -22,21 +25,27 @@ export class DataModalComponent implements OnInit {
     this.getYearCSV();
   }
 
-  getPopuCSV() {
-    this.popuService.readCsv()
+  async getPopuCSV() {
+    await this.popuService.readCsv()
       .subscribe(
       result => {
         this.popuData = result;
-        console.log('popuData', this.popuData);
+        //console.log('popuData', this.popuData);
       });
   }
 
-  getYearCSV() {
-    this.yearService.readCsv()
+  async getYearCSV() {
+    await this.yearService.readCsv('YearStructure_Chiayi')
       .subscribe(
       result => {
         this.yearData = result;
-        console.log('yearData', this.yearData);
+      });
+
+    await this.yearService.readCsv('YearStructure_Yunlin')
+      .subscribe(
+      result => {
+        this.yearData = this.yearData.concat(result);
+        setTimeout(() => { $('.dataTable').DataTable({ "order": [[4, "asc"]] }); }, 500);
       });
   }
 }

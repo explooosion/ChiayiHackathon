@@ -1,29 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import url(http://fonts.googleapis.com/earlyaccess/notosanstc.css);
+@import url('./styles-boostrap-slider.css');
 * {
-    font-family: 'Noto Sans TC', sans-serif;
+  font-family: 'Noto Sans TC', sans-serif;
 }
 
 body {
-    padding-top: 5rem;
+  padding-top: 5rem;
 }
 
 header {
-    padding: 1.5rem;
-    text-align: center;
-}
-
-
-/* fix bootstrap tooltip in bootstrap4 */
-
-.slider.slider-horizontal:hover .tooltip.tooltip-main,
-.slider.slider-vertical:hover .tooltip.tooltip-main {
-    opacity: 0.7 !important;
-}
-
-.slider.slider-horizontal:hover .tooltip-inner,
-.slider.slider-vertical:hover .tooltip-inner {
-    font-size: 90%;
-    width: auto;
+  padding: 1.5rem;
+  text-align: center;
 }

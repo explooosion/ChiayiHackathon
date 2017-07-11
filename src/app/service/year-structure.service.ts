@@ -8,14 +8,15 @@ import { Yearstructure } from '../class/yearstructure';
 @Injectable()
 export class YearStructureService {
 
-  private csvUrl: string = 'assets/data/YearStructure_Chiayi.csv';
+  private fileUrl: string = 'assets/data/';
+  private fileExtend: string = '.csv';
   private yearstructure: Yearstructure;
   private yearstructureArr: Yearstructure[];
 
   constructor(private http: Http) { }
 
-  readCsv() {
-    return this.http.get(this.csvUrl)
+  readCsv(fn: string) {
+    return this.http.get(this.fileUrl + fn + this.fileExtend)
       .map(this.extractData);
   }
 

@@ -2,10 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { BrowserModule } from '@angular/platform-browser';
 
-import { Marker } from './class/marker';
-
-declare var google: any;
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

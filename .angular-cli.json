@@ -20,12 +20,16 @@
     "styles": [
       "styles.css",
       "../node_modules/bootstrap/dist/css/bootstrap.min.css",
-      "../node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css"
+      "../node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css",
+      "../plugin/datatables/dataTables.bootstrap4.css"
     ],
     "scripts": [
+      "../plugin/tether/tether.min.js",
       "../node_modules/jquery/dist/jquery.min.js",
       "../node_modules/bootstrap/dist/js/bootstrap.min.js",
-      "../node_modules/bootstrap-slider/dist/bootstrap-slider.min.js"
+      "../node_modules/bootstrap-slider/dist/bootstrap-slider.min.js",
+      "../plugin/datatables/jquery.dataTables.js",
+      "../plugin/datatables/dataTables.bootstrap4.js"
     ],
     "environmentSource": "environments/environment.ts",
     "environments": {

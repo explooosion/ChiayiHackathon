@@ -1,7 +1,8 @@
  // Without JQuery
  $(document).ready(function () {
 
-   // With JQuery
-   
+   // Call the dataTables jQuery plugin
+
+
 
  });

@@ -37,7 +37,9 @@ export class MapModalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.getLayer();
+
     // With JQuery
     $("#timeline").slider().on("slide", function (slideEvt) {
       $("#ex6SliderVal").text(slideEvt.value);
@@ -47,8 +49,8 @@ export class MapModalComponent implements OnInit {
 
   }
 
-  setCircle() {
-    this.gmapService.getLatLan(this.addr)
+  async setCircle() {
+    await this.gmapService.getLatLan(this.addr)
       .subscribe(
       result => {
         //必須使用zone 觀察整個 view 否則會導致延遲
@@ -66,15 +68,15 @@ export class MapModalComponent implements OnInit {
   saveMarker(lat: number, lng: number) {
     this.marker.lat = lat;
     this.marker.lng = lng;
-
   }
 
-  getLayer() {
-    this.layerService.getTaiwanLayer()
+  async getLayer() {
+    await this.layerService.getTaiwanLayer()
       .subscribe(
       result => {
-        this.geoJsonObject = result;
-        //console.log(result);
+        this.zone.run(() => {
+          this.geoJsonObject = result;
+        });
       },
       error => {
         console.log(error);
@@ -97,10 +99,6 @@ export class MapModalComponent implements OnInit {
       // make layer 1 features visible
       // visible: visibility
     };
-  }
-
-  test() {
-
   }
 
 }
