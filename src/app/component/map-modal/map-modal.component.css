@@ -1,0 +1,20 @@
+.btn-search {
+    width: 120px;
+    cursor: pointer;
+}
+
+agm-map {
+    height: 80vh;
+}
+
+.gmap {
+    padding: 0 4.5rem;
+}
+
+.map-control {
+    margin-bottom: 40px;
+}
+
+#timeline .slider-selection {
+	background: #BABABA;
+}

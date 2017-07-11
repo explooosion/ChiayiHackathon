@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class LayerService {
 
-  private _url: string = 'assets/data/county.json';
+  private _url: string = 'assets/layer/county.json';
   constructor(private http: Http) { }
 
   getTaiwanLayer() {

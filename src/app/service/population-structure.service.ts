@@ -8,7 +8,7 @@ import { Population } from '../class/population';
 @Injectable()
 export class PopulationStructureService {
 
-  private csvUrl: string = 'assets/data/人口數量變動.csv';
+  private csvUrl: string = 'assets/data/YearStructure_Chiayi.csv';
   private population: Population;
   private populationArr: Population[];
 
