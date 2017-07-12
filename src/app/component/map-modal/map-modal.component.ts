@@ -7,9 +7,10 @@ import { GMapsService } from '../../service/gmaps.service';
 import { LayerService } from '../../service/layer.service';
 
 import { YearStructureService } from '../../service/year-structure.service';
-
+import { PopulationStructureService } from '../../service/population-structure.service';
 
 import { Marker } from '../../class/marker';
+import { City } from '../../class/city';
 
 declare var wNumb: any;
 declare var google: any;
@@ -21,7 +22,8 @@ declare var Slider: any;
   selector: 'app-map-modal',
   templateUrl: './map-modal.component.html',
   styleUrls: ['./map-modal.component.css'],
-  providers: [GMapsService, LayerService, Marker, YearStructureService]
+  providers: [GMapsService, LayerService, Marker,
+    YearStructureService, PopulationStructureService]
 })
 export class MapModalComponent implements OnInit {
 
@@ -32,10 +34,37 @@ export class MapModalComponent implements OnInit {
   addr: string = "̨嘉義火車站";
   geoJsonObject: Object = null;
 
-  // Slider Config
-  sliderActive: string = 'false';
-  valueSlider: number = 56;
-  datetimeSlider: string = `${new Date().getFullYear().toString()}-${new Date().getMonth().toString()}`;
+  // Slider Config - YearStructure
+  yearActiveSlider: string = 'false';
+  yearValueSlider: number = 56;
+  yearDateSlider: string = `${new Date().getFullYear().toString()}-${new Date().getMonth().toString()}`;
+
+  // Slider Config - PopuLation
+  popuActiveSlider: string = 'false';
+  popuValueSlider: number = 56;
+  popuDateSlider: string = `${new Date().getFullYear().toString()}-${new Date().getMonth().toString()}`;
+
+  // DataStore - YearStructure
+  yearData: any[] = [];
+  yearDataFilter: any[] = []; // 儲存卷軸對應的No.資料
+  yearDataPercent: any[] = [50, 50, 50]; // 年齡結構百分比[A群,B群,C群]
+
+  // DataStore - PopulationStructure
+  popuData: any[] = [];
+  popuDataFilter: any[] = [];
+  popuDataPercent: any[] = [50, 50, 50];
+
+  // DropDown - YearStructure
+  cityYearSelect = new City().cityGroup[0];
+  cityYearGroup: any[] = new City().cityGroup;
+
+  // DropDown - PopulationStructure
+  cityPopuSelect = new City().cityGroup[0];
+  cityPopuGroup: any[] = new City().cityGroup;
+
+  // Checkbox - PopulationStructure
+  popuCheckYunlin: boolean = false;
+  popuCheckChiayi: boolean = false;
 
   // Char-Doughnut Config
   doughnutChartLabels: string[] = ['~17', '18~65', '65~',];
@@ -78,28 +107,9 @@ export class MapModalComponent implements OnInit {
     { data: [63, 62, 65, 68, 69], label: '嘉義縣' }
   ];
 
-  // yearStructure Config
-  yearData: any[] = [];
-  yearDataFilter: any[] = []; // 儲存卷軸對應的No.資料
-  yearDataPercent: any[] = [50, 50, 50]; // 年齡結構百分比[A群,B群,C群]
-
-  public cityGroupSelect = {
-    chName: '雲林縣',
-    enName: 'Yunlin'
-  };
-
-  cityGroup: any[] = [
-    {
-      chName: '雲林縣',
-      enName: 'Yunlin'
-    },
-    {
-      chName: '嘉義縣',
-      enName: 'Chiayi'
-    }
-  ];
   constructor(
     private yearService: YearStructureService,
+    private popuService: PopulationStructureService,
     private gmapService: GMapsService,
     private layerService: LayerService,
     private zone: NgZone,
@@ -163,17 +173,46 @@ export class MapModalComponent implements OnInit {
     };
   }
 
-  optionChange(city: any) {
-    this.yearDataPercent = this.yearService.getStructurePercent(city.enName, this.valueSlider);
-    this.sliderActive = ''; // 選擇縣市後才可以滑動 Slider
+  optionYearChange(city: any) {
+    this.yearDataPercent = this.yearService.getStructurePercent(city.enName, this.yearValueSlider);
+    this.yearActiveSlider = ''; // 選擇縣市後才可以滑動 Slider
   }
 
-  onSliderChange(no: number) {
-    this.yearDataPercent = this.yearService.getStructurePercent(this.cityGroupSelect.enName, no);
+  onYearSliderChange(no: number) {
+    this.yearDataPercent = this.yearService.getStructurePercent(this.cityYearSelect.enName, no);
     var _mon = no % 12 == 0 ? 12 : no % 12;
     var _year = no / 12 == 0 ? 2012 : Math.floor(no / 12) + 2012;
-    this.datetimeSlider = `${_year}-${_mon}`;
+    this.yearDateSlider = `${_year}-${_mon}`;
+  }
 
+  optionPopuChange(city: any) {
+    this.popuDataPercent = this.popuService.getPopulationPercent(city.enName, this.yearValueSlider);
+    this.popuActiveSlider = ''; // 選擇縣市後才可以滑動 Slider
+  }
+
+  onPopuSliderChange(no: number) {
+    this.popuDataPercent = this.popuService.getPopulationPercent(this.cityYearSelect.enName, no);
+    var _mon = no % 12 == 0 ? 12 : no % 12;
+    var _year = no / 12 == 0 ? 2012 : Math.floor(no / 12) + 2012;
+    this.popuDateSlider = `${_year}-${_mon}`;
+  }
+
+  checkPopuYunlinChange(e) {
+    this.popuCheckYunlin = !this.popuCheckYunlin;
+
+    if (this.popuCheckYunlin) {
+      this.popuDataPercent = this.popuService.getPopulationPercent('Yunlin', this.yearValueSlider);
+      this.popuActiveSlider = ''; // 選擇縣市後才可以滑動 Slider
+    }
+  }
+
+  checkPopuChiayiChange(e) {
+    this.popuCheckChiayi = !this.popuCheckChiayi;
+
+    if (this.popuCheckChiayi) {
+      this.popuDataPercent = this.popuService.getPopulationPercent('Chiayi', this.yearValueSlider);
+      this.popuActiveSlider = ''; // 選擇縣市後才可以滑動 Slider
+    }
   }
 
   async getYearCSV() {

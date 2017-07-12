@@ -12,13 +12,15 @@ import { NavbarModalComponent } from './component/navbar-modal/navbar-modal.comp
 
 import { ChartsModule } from 'ng2-charts';
 import { NouisliderModule } from 'ng2-nouislider';
+import { FooterModalComponent } from './component/footer-modal/footer-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DataModalComponent,
     MapModalComponent,
-    NavbarModalComponent
+    NavbarModalComponent,
+    FooterModalComponent
   ],
   imports: [
     BrowserModule,

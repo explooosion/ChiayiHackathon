@@ -8,10 +8,19 @@
 }
 
 body {
-    padding-top: 5rem;
+    padding-top: 6.5rem;
 }
 
 header {
     padding: 1.5rem;
     text-align: center;
+}
+
+.title {
+    padding: 10px 0;
+    margin: 40px auto 80px;
+    width: 350px;
+    border-top: 1px solid #888;
+    border-bottom: 1px solid #888;
+    letter-spacing: 1px;
 }

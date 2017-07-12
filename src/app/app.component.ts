@@ -9,7 +9,7 @@ declare var $: any;
 })
 export class AppComponent implements OnInit {
 
-  title: string = '預測未來的高齡化社會的發展趨勢';
+  title: string = '高齡化社會發展趨勢之預測評估';
   constructor() { }
 
   ngOnInit() {

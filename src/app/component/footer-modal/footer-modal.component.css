@@ -1,0 +1,21 @@
+footer {
+    padding: 15px 0;
+    height: 120px;
+    background: #444;
+}
+
+footer .nav-thanks {
+    margin: 6px 0;
+}
+
+footer .nav-thanks li {
+    margin: 0 4px;
+    color: #777;
+    font-weight: normal;
+}
+
+footer .nav-thanks li+li::before {
+    content: '｜';
+    margin: 0 3px 0 -8px;
+    color: #555;
+}

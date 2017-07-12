@@ -1,175 +1,283 @@
-<div class="container">
-
-  <div class="form-group row">
-    <label for="example-text-input" class="col-form-label">地址：</label>
-    <div class="col-8">
-      <input type="text" class="form-control" [(ngModel)]="addr" placeholder="placeholderText" />
-    </div>
-    <div class="col-2">
-      <button type="button" class="btn btn-success" (click)="setCircle()">Search</button>
-    </div>
-  </div>
-
-  <div class="row form-group ">
-    <label class="col-form-label">經度：</label>
-    <div class="col-3">
-      <input type="text" class="form-control" [(ngModel)]="lat" readonly />
-    </div>
-    <label class="col-form-label">緯度：</label>
-    <div class="col-3">
-      <input type="text" class="form-control" [(ngModel)]="lng" readonly />
-    </div>
-  </div>
-
+<!-- Breadcrumbs -->
+<div class="container dashboard">
+  <!-- Icon Cards -->
   <div class="row">
-    <div class="col-lg-6">
-      <div class="card">
-        <div class="card-header">
-          <i class="fa fa-table" aria-hidden="true"></i>&nbsp;年齡結構指標（ 2012-01 ）
-        </div>
+    <div class="col-xl-3 col-sm-6 mb-3">
+      <div class="card card-inverse card-primary o-hidden h-100">
         <div class="card-block">
-          <blockquote class="card-blockquote">
-            <div class="row">
-              <div class="col-sm-2">
-                <label class="col-form-label">縣市：</label>
-              </div>
-              <div class="col-sm-10">
-                <select id="optionCity" class="form-control" [(ngModel)]="cityGroupSelect" (ngModelChange)="optionChange($event)">
-            <option disabled [ngValue]="-1">請選擇縣市</option>
-            <option *ngFor="let option of cityGroup; let itemIndex = index" [ngValue]="option">{{option.chName }}</option>
-        </select>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-2">
-                <label class="col-form-label">指標：</label>
-              </div>
-              <div class="col-sm-10">
-                <nouislider class="nouislider" [min]="1" [max]="250" [step]="1" [(ngModel)]="valueSlider" (ngModelChange)="onSliderChange($event)"
-                  [disabled]="sliderActive"></nouislider>
-              </div>
-            </div>
-            <table class="table table-bordered table-inverse">
-              <thead>
-                <tr>
-                  <th>估計年月</th>
-                  <th>0~17</th>
-                  <th>17~65</th>
-                  <th>65以上</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{{ datetimeSlider }}</td>
-                  <td>{{ yearDataPercent[0] }}%</td>
-                  <td>{{ yearDataPercent[1] }}%</td>
-                  <td>{{ yearDataPercent[2] }}%</td>
-                </tr>
-              </tbody>
-            </table>
-          </blockquote>
+          <i class="fa fa-3x fa-smile-o"></i>
+          <h1 class="text-center">34</h1>
+        </div>
+        <div class="card-footer small">
+          <h5>安全指數</h5>
         </div>
       </div>
     </div>
-
-    <div class="col-lg-6">
-      <div class="card">
-        <div class="card-header">
-          <i class="fa fa-table" aria-hidden="true"></i>&nbsp;年齡結構指標（ 2012-01 ）
-        </div>
+    <div class="col-xl-3 col-sm-6 mb-3">
+      <div class="card card-inverse card-danger o-hidden h-100">
         <div class="card-block">
-          <blockquote class="card-blockquote">
-            <div class="row">
-              <div class="col-sm-2">
-                <label class="col-form-label">縣市：</label>
-              </div>
-              <div class="col-sm-10">
-                <select id="optionCity" class="form-control" [(ngModel)]="cityGroupSelect" (ngModelChange)="optionChange($event)">
-            <option disabled [ngValue]="-1">請選擇縣市</option>
-            <option *ngFor="let option of cityGroup; let itemIndex = index" [ngValue]="option">{{option.chName }}</option>
-        </select>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-2">
-                <label class="col-form-label">指標：</label>
-              </div>
-              <div class="col-sm-10">
-                <nouislider class="nouislider" [min]="1" [max]="250" [step]="1" [(ngModel)]="valueSlider" (ngModelChange)="onSliderChange($event)"
-                  [disabled]="sliderActive"></nouislider>
-              </div>
-            </div>
-            <table class="table table-bordered table-inverse">
-              <thead>
-                <tr>
-                  <th>估計年月</th>
-                  <th>0~17</th>
-                  <th>17~65</th>
-                  <th>65以上</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{{ datetimeSlider }}</td>
-                  <td>{{ yearDataPercent[0] }}%</td>
-                  <td>{{ yearDataPercent[1] }}%</td>
-                  <td>{{ yearDataPercent[2] }}%</td>
-                </tr>
-              </tbody>
-            </table>
-          </blockquote>
+          <i class="fa fa-3x fa-heartbeat"></i>
+          <h1 class="text-center">31</h1>
+        </div>
+        <div class="card-footer small">
+          <h5>醫療指數</h5>
         </div>
       </div>
     </div>
-  </div>
-
-</div>
-
-<div id="charGroup" class="container">
-  <div class="row">
-    <div class="col-xl-4 col-sm-6 mb-4">
-      <div class="card h-100">
-        <div class="card-header">
-          <i class="fa fa-area-chart"></i> 年齡結構分析
-        </div>
+    <div class="col-xl-3 col-sm-6 mb-3">
+      <div class="card card-inverse card-success o-hidden h-100">
         <div class="card-block">
-          <canvas baseChart [data]="yearDataPercent" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"></canvas>
+          <i class="fa fa-3x fa-wheelchair"></i>
+          <h1 class="text-center">21</h1>
+        </div>
+        <div class="card-footer small">
+          <h5>照護指數</h5>
         </div>
       </div>
     </div>
-
-    <div class="col-xl-4 col-sm-6 mb-4">
-      <div class="card h-100">
-        <div class="card-header">
-          <i class="fa fa-area-chart"></i> 人口數量預測
-        </div>
+    <div class="col-xl-3 col-sm-6 mb-3">
+      <div class="card card-inverse card-warning o-hidden h-100">
         <div class="card-block">
-          <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
-            [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+          <i class="fa fa-3x fa-users"></i>
+          <h1 class="text-center">14</h1>
         </div>
-      </div>
-    </div>
-
-    <div class="col-xl-4 col-sm-6 mb-4">
-      <div class="card h-100">
-        <div class="card-header">
-          <i class="fa fa-area-chart"></i> 區域社福評估
-        </div>
-        <div class="card-block">
-          <canvas baseChart [datasets]="radarChartData" [labels]="radarChartLabels" [chartType]="radarChartType" (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)"></canvas>
+        <div class="card-footer small">
+          <h5>宗教指數</h5>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="container">
-  <div class="gmap">
-    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="7">
-      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-      <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="color" [fillOpacity]="0.6"></agm-circle>
-      <agm-data-layer *ngIf="geoJsonObject" [geoJson]="geoJsonObject" (layerClick)="clicked($event)" [style]="styleFunc"></agm-data-layer>
-    </agm-map>
+
+
+<div id="currentGroup" class="jumbotron jumbotron-fluid">
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="title">現況指標評估</h2>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-lg-6">
+        <div class="form-group row">
+          <label for="example-text-input" class="col-form-label">地址：</label>
+          <div class="col-8">
+            <input type="text" class="form-control" [(ngModel)]="addr" placeholder="placeholderText" />
+          </div>
+          <div class="col-2">
+            <button type="button" class="btn btn-success" (click)="setCircle()">Search</button>
+          </div>
+        </div>
+
+        <div class="row form-group ">
+          <label class="col-form-label">經度：</label>
+          <div class="col-3">
+            <input type="text" class="form-control" [(ngModel)]="lat" readonly />
+          </div>
+          <label class="col-form-label">緯度：</label>
+          <div class="col-3">
+            <input type="text" class="form-control" [(ngModel)]="lng" readonly />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="gmap">
+          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="7">
+            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+            <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="color" [fillOpacity]="0.6"></agm-circle>
+            <agm-data-layer *ngIf="geoJsonObject" [geoJson]="geoJsonObject" (layerClick)="clicked($event)" [style]="styleFunc"></agm-data-layer>
+          </agm-map>
+        </div>
+      </div>
+
+    </div>
+
   </div>
+
+</div>
+
+
+
+
+<div id="futureGroup" class="jumbotron jumbotron-fluid">
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="title">未來指標預測</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-header card-custom">
+            <i class="fa fa-table" aria-hidden="true"></i>&nbsp;年齡結構指標（ 2012-01 ）
+          </div>
+          <div class="card-block">
+            <blockquote class="card-blockquote">
+              <div class="row">
+                <div class="col-sm-12">
+                  <h5><span class="badge badge-custom">f(x) = B3+(C3*A3)+D3*(A3*A3)</span></h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-2">
+                  <label class="col-form-label">縣市：</label>
+                </div>
+                <div class="col-sm-10">
+                  <select id="optionCity" class="form-control" [(ngModel)]="cityYearSelect" (ngModelChange)="optionYearChange($event)">
+            <option disabled [ngValue]="-1">請選擇縣市</option>
+            <option *ngFor="let option of cityYearGroup; let itemIndex = index" [ngValue]="option">{{option.chName }}</option>
+        </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-2">
+                  <label class="col-form-label">指標：</label>
+                </div>
+                <div class="col-sm-10">
+                  <nouislider class="nouislider" [min]="1" [max]="250" [step]="1" [(ngModel)]="yearValueSlider" (ngModelChange)="onYearSliderChange($event)"
+                    [disabled]="yearActiveSlider"></nouislider>
+                </div>
+              </div>
+              <table class="table table-bordered table-inverse">
+                <thead>
+                  <tr>
+                    <th>估計年月</th>
+                    <th>0~17</th>
+                    <th>17~65</th>
+                    <th>65歲以上</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{ yearDateSlider }}</td>
+                    <td>{{ yearDataPercent[0] }}%</td>
+                    <td>{{ yearDataPercent[1] }}%</td>
+                    <td>{{ yearDataPercent[2] }}%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-header card-custom">
+            <i class="fa fa-table" aria-hidden="true"></i>&nbsp;人口數量預估（ 2012-01 ）
+          </div>
+          <div class="card-block">
+            <blockquote class="card-blockquote">
+              <div class="row">
+                <div class="col-sm-12">
+                  <h5><span class="badge badge-custom">f(x) = B3+(C3*A3)+(D3*(A3*A3))</span></h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-2">
+                  <label class="col-form-label">縣市：</label>
+                </div>
+                <div class="col-sm-10">
+                  <select id="optionCity" class="form-control" [(ngModel)]="cityPopuSelect" (ngModelChange)="optionPopuChange($event)">
+            <option disabled [ngValue]="-1">請選擇縣市</option>
+            <option *ngFor="let option of cityPopuGroup; let itemIndex = index" [ngValue]="option">{{option.chName }}</option>
+        </select>
+
+                  <label class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" [checked]="popuCheckYunlin" (change)="checkPopuYunlinChange($event)" />
+                   <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description">雲林縣</span>
+                </label>
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" [checked]="popuCheckChiayi" (change)="checkPopuChiayiChange($event)" />
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description">嘉義縣</span>
+                </label>
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-2">
+                  <label class="col-form-label">指標：</label>
+                </div>
+                <div class="col-sm-10">
+                  <nouislider class="nouislider" [min]="1" [max]="250" [step]="1" [(ngModel)]="popuValueSlider" (ngModelChange)="onPopuSliderChange($event)"
+                    [disabled]="popuActiveSlider"></nouislider>
+                </div>
+              </div>
+              <table class="table table-bordered table-inverse">
+                <thead>
+                  <tr>
+                    <th>估計年月</th>
+                    <th>總人口數</th>
+                    <th>自然成長係數</th>
+                    <th>社會成長係數</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{ popuDateSlider }}</td>
+                    <td>{{ popuDataPercent[0] }}人</td>
+                    <td>{{ popuDataPercent[1] }}%</td>
+                    <td>{{ popuDataPercent[2] }}%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="charGroup" class="container">
+    <div class="row">
+      <div class="col-xl-4 col-sm-6 mb-4">
+        <div class="card h-100">
+          <div class="card-header card-inverse">
+            <i class="fa fa-pie-chart"></i> 年齡結構分析
+          </div>
+          <div class="card-block">
+            <canvas baseChart [data]="yearDataPercent" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-sm-6 mb-4">
+        <div class="card h-100">
+          <div class="card-header card-inverse">
+            <i class="fa fa-bar-chart"></i> 人口數量預測
+          </div>
+          <div class="card-block">
+            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+              [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-sm-6 mb-4">
+        <div class="card h-100">
+          <div class="card-header card-inverse">
+            <i class="fa fa-area-chart"></i> 區域社福評估
+          </div>
+          <div class="card-block">
+            <canvas baseChart [datasets]="radarChartData" [labels]="radarChartLabels" [chartType]="radarChartType" (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

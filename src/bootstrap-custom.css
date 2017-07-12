@@ -6,3 +6,18 @@
     box-shadow: none !important;
     outline: none !important;
 }
+
+.table.table-inverse {
+    background-color: #333;
+}
+
+.card-custom {
+    background: #86C7F3 !important;
+    color: #fff !important;
+}
+
+.badge-custom {
+    background: #79B5DD;
+    padding: 6px 10px !important;
+    font-weight: normal !important;
+}

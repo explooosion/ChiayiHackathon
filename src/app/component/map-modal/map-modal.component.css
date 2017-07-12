@@ -1,3 +1,15 @@
+.dashboard {
+    margin: 60px auto 90px;
+}
+
+#currentGroup {
+    background: #E6E6E6;
+}
+
+#futureGroup {
+    background: #fff;
+}
+
 .btn-search {
     width: 120px;
     cursor: pointer;
@@ -7,10 +19,11 @@ agm-map {
     height: 400px;
 }
 
-#timeline .slider-selection {
-    background: #BABABA;
-}
-
 #charGroup {
     margin: 30px auto;
+}
+
+#charGroup .card-inverse {
+    color: #f1f1f1;
+    background: #444;
 }
