@@ -30,9 +30,6 @@
     "jquery": "^3.2.1",
     "ng2-charts": "^1.6.0",
     "ng2-nouislider": "^1.6.1",
-    "ng2-slideable-directive": "^1.0.13",
-    "ng2-slider-component": "^1.0.9",
-    "ng2-styled-directive": "^1.0.5",
     "nouislider": "^10.0.0",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"

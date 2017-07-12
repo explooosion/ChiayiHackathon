@@ -1,4 +1,5 @@
 <div class="container">
+
   <div class="form-group row">
     <label for="example-text-input" class="col-form-label">地址：</label>
     <div class="col-8">
@@ -8,7 +9,8 @@
       <button type="button" class="btn btn-success" (click)="setCircle()">Search</button>
     </div>
   </div>
-  <div class="form-group row">
+
+  <div class="row form-group ">
     <label class="col-form-label">經度：</label>
     <div class="col-3">
       <input type="text" class="form-control" [(ngModel)]="lat" readonly />
@@ -19,11 +21,28 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-lg-6">
-      <nouislider [min]="1" [max]="100" [step]="1" [(ngModel)]="value" [tooltips]="true"></nouislider>
+  <div class="row form-group">
+    <label class="col-form-label">縣市：</label>
+    <div class="col-3">
+      <select id="optionCity" class="form-control" [(ngModel)]="cityGroupSelect" (ngModelChange)="optionChange($event)">
+            <option disabled [ngValue]="-1">請選擇縣市</option>
+            <option *ngFor="let option of cityGroup; let itemIndex = index" [ngValue]="option">{{option.chName }}</option>
+        </select>
     </div>
-    <div class="col-lg-6">
+  </div>
+
+  <div class="row">
+    <div class="col-lg-4">
+      <nouislider [min]="1" [max]="100" [step]="1" [(ngModel)]="valueSlider" [tooltips]="true" (ngModelChange)="onSliderChange($event)"
+        [disabled]="sliderActive"></nouislider>
+      <ul>
+        <li>{{ yearDataPercent[0] }}%</li>
+        <li>{{ yearDataPercent[1] }}%</li>
+        <li>{{ yearDataPercent[2] }}%</li>
+        <li>{{ datetimeSlider }}</li>
+      </ul>
+    </div>
+    <div class="col-lg-8">
       <div class="gmap">
         <agm-map [latitude]="lat" [longitude]="lng" [zoom]="7">
           <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>

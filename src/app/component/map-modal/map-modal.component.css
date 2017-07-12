@@ -1,16 +1,20 @@
 .btn-search {
-  width: 120px;
-  cursor: pointer;
+    width: 120px;
+    cursor: pointer;
 }
 
 agm-map {
-  height: 400px;
+    height: 400px;
 }
 
 #timeline .slider-selection {
-  background: #BABABA;
+    background: #BABABA;
 }
 
 #charGroup {
-  margin: 30px auto;
+    margin: 30px auto;
+}
+
+#optionCity {
+    margin-bottom: 30px;
 }
