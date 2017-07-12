@@ -29,19 +29,20 @@ export class MapModalComponent implements OnInit {
 
   lat: number = 23.4791187;
   lng: number = 120.44113820000007;
-  radius: number = 50000;
+  radius: number = 100;
   color: string = '#FECE00';
   addr: string = "̨嘉義火車站";
   geoJsonObject: Object = null;
+  geoJsonObjectIsAdd: boolean = false;
 
   // Slider Config - YearStructure
   yearActiveSlider: string = 'false';
-  yearValueSlider: number = 56;
+  yearValueSlider: number = 1;
   yearDateSlider: string = `${new Date().getFullYear().toString()}-${new Date().getMonth().toString()}`;
 
   // Slider Config - PopuLation
   popuActiveSlider: string = 'false';
-  popuValueSlider: number = 56;
+  popuValueSlider: number = 41;
   popuDateSlider: string = `${new Date().getFullYear().toString()}-${new Date().getMonth().toString()}`;
 
   // DataStore - YearStructure
@@ -61,10 +62,6 @@ export class MapModalComponent implements OnInit {
   // DropDown - PopulationStructure
   cityPopuSelect = new City().cityGroup[0];
   cityPopuGroup: any[] = new City().cityGroup;
-
-  // Checkbox - PopulationStructure
-  popuCheckYunlin: boolean = false;
-  popuCheckChiayi: boolean = false;
 
   // Char-Doughnut Config
   doughnutChartLabels: string[] = ['~17', '18~65', '65~',];
@@ -88,23 +85,24 @@ export class MapModalComponent implements OnInit {
 
   // Char-BarChart Config
   barChartOptions: any = {
+    scaleOverride: true,
     scaleShowVerticalLines: false,
     maintainAspectRatio: false,
-    responsive: true, scales: {
+    responsive: true,
+    scales: {
       yAxes: [{
         ticks: {
-          min: 60,
-          max: 80
+          min: 0,
+          max: 1000000
         }
       }]
     }
   };
-  barChartLabels: string[] = ['2016', '2017', '2018', '2019'];
+  barChartLabels: string[] = ['2014', '2015', '2016', '2017', '自訂年(季)'];
   barChartType: string = 'bar';
   barChartLegend: boolean = true;
   barChartData: any[] = [
-    { data: [65, 68, 72, 75, 74], label: '雲林縣' },
-    { data: [63, 62, 65, 68, 69], label: '嘉義縣' }
+    { data: [524787, 519659, 514201, 508414, 505412], label: '雲林縣' }
   ];
 
   constructor(
@@ -117,7 +115,7 @@ export class MapModalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getLayer();
+
     this.getYearCSV();
   }
 
@@ -155,6 +153,18 @@ export class MapModalComponent implements OnInit {
       });
   }
 
+  layerControl() {
+
+    // 請顛倒做
+    if (!this.geoJsonObjectIsAdd) {
+      this.getLayer();
+    } else {
+      this.zone.run(() => {
+        this.geoJsonObject = null;
+      });
+    }
+  }
+
   styleFunc(feature) {
     // get level - 0/1
     //var level = feature.getProperty('level');
@@ -186,32 +196,29 @@ export class MapModalComponent implements OnInit {
   }
 
   optionPopuChange(city: any) {
-    this.popuDataPercent = this.popuService.getPopulationPercent(city.enName, this.yearValueSlider);
+    this.popuDataPercent = this.popuService.getPopulationPercent(city.enName, this.yearValueSlider)[0];
     this.popuActiveSlider = ''; // 選擇縣市後才可以滑動 Slider
+
+    this.onPopuSliderChange(41);
   }
 
   onPopuSliderChange(no: number) {
-    this.popuDataPercent = this.popuService.getPopulationPercent(this.cityYearSelect.enName, no);
-    var _mon = no % 12 == 0 ? 12 : no % 12;
-    var _year = no / 12 == 0 ? 2012 : Math.floor(no / 12) + 2012;
+    this.popuDataPercent = this.popuService.getPopulationPercent(this.cityPopuSelect.enName, no);
+    var _mon = no % 4 == 0 ? 4 : no % 4;
+    var _year = no / 4 == 0 ? 2007 : Math.floor(no / 4) + 2007;
     this.popuDateSlider = `${_year}-${_mon}`;
-  }
 
-  checkPopuYunlinChange(e) {
-    this.popuCheckYunlin = !this.popuCheckYunlin;
+    var popuf = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, no)[0]);
+    var popu14 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, 32)[0]);
+    var popu15 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, 36)[0]);
+    var popu16 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, 40)[0]);
+    var popu17 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, 44)[0]);
+    this.barChartData = [{ data: [popu14, popu15, popu16, popu17, popuf], label: this.cityPopuSelect.chName }];
 
-    if (this.popuCheckYunlin) {
-      this.popuDataPercent = this.popuService.getPopulationPercent('Yunlin', this.yearValueSlider);
-      this.popuActiveSlider = ''; // 選擇縣市後才可以滑動 Slider
-    }
-  }
-
-  checkPopuChiayiChange(e) {
-    this.popuCheckChiayi = !this.popuCheckChiayi;
-
-    if (this.popuCheckChiayi) {
-      this.popuDataPercent = this.popuService.getPopulationPercent('Chiayi', this.yearValueSlider);
-      this.popuActiveSlider = ''; // 選擇縣市後才可以滑動 Slider
+    var bartmpLabels = ['2014', '2015', '2016', '2017', `${_year}-${_mon}(季)`];
+    this.barChartLabels.length = 0;
+    for (let i = 0; i < bartmpLabels.length; i++) {
+      this.barChartLabels.push(bartmpLabels[i]);
     }
   }
 

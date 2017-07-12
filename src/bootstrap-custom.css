@@ -1,23 +1,32 @@
 .noUi-handle {
-    opacity: 0.9 !important;
-    background: #292B2C !important;
-    border: none !important;
-    border-radius: 4px !important;
-    box-shadow: none !important;
-    outline: none !important;
+  opacity: 0.9 !important;
+  background: #292B2C !important;
+  border: none !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
-.table.table-inverse {
-    background-color: #333;
+.table th,
+.table tbody {
+  text-align: center;
+}
+
+.table.table-custom {
+  background-color: #79B5DD !important;
 }
 
 .card-custom {
-    background: #86C7F3 !important;
-    color: #fff !important;
+  background: #444444 !important;
+  color: #fff !important;
 }
 
 .badge-custom {
-    background: #79B5DD;
-    padding: 6px 10px !important;
-    font-weight: normal !important;
+  background: #79B5DD;
+  padding: 6px 10px !important;
+  font-weight: normal !important;
+}
+
+.custom-control.custom-checkbox .custom-control-indicator {
+  background: #bbb;
 }

@@ -1,29 +1,30 @@
 .dashboard {
-    margin: 60px auto 90px;
+  margin: 60px auto 90px;
 }
 
 #currentGroup {
-    background: #E6E6E6;
+  background: #E6E6E6;
 }
 
 #futureGroup {
-    background: #fff;
+  background: #fff;
 }
 
 .btn-search {
-    width: 120px;
-    cursor: pointer;
+  width: 120px;
+  cursor: pointer;
 }
 
 agm-map {
-    height: 400px;
+  height: 500px;
+  width: 100%;
 }
 
 #charGroup {
-    margin: 30px auto;
+  margin: 30px auto;
 }
 
 #charGroup .card-inverse {
-    color: #f1f1f1;
-    background: #444;
+  color: #f1f1f1;
+  background: #444;
 }

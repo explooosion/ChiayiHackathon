@@ -22,7 +22,7 @@ export class DataModalComponent implements OnInit {
 
   ngOnInit() {
     this.getPopuCSV();
-    //this.getYearCSV();
+    this.getYearCSV();
   }
 
   // 人口數量變動
@@ -51,7 +51,6 @@ export class DataModalComponent implements OnInit {
       .subscribe(
       result => {
         this.yearData = this.yearData.concat(result);
-        console.log(this.yearData);
         setTimeout(() => { $('#YearTable').DataTable({ "order": [[4, "asc"]] }); }, 500);
       });
   }

@@ -63,7 +63,7 @@
 
     <div class="row">
 
-      <div class="col-lg-6">
+      <div class="col-lg-5">
         <div class="form-group row">
           <label for="example-text-input" class="col-form-label">地址：</label>
           <div class="col-8">
@@ -74,7 +74,7 @@
           </div>
         </div>
 
-        <div class="row form-group ">
+        <div class="row form-group">
           <label class="col-form-label">經度：</label>
           <div class="col-3">
             <input type="text" class="form-control" [(ngModel)]="lat" readonly />
@@ -84,11 +84,23 @@
             <input type="text" class="form-control" [(ngModel)]="lng" readonly />
           </div>
         </div>
+
+        <div class="row form-group">
+          <div class="col-12">
+            <label class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" [(ngModel)]="geoJsonObjectIsAdd" (click)="layerControl()">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">套疊臺灣圖層</span>
+        </label>
+          </div>
+        </div>
       </div>
 
-      <div class="col-lg-6">
+
+
+      <div class="col-lg-7">
         <div class="gmap">
-          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="7">
+          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="17">
             <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
             <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="color" [fillOpacity]="0.6"></agm-circle>
             <agm-data-layer *ngIf="geoJsonObject" [geoJson]="geoJsonObject" (layerClick)="clicked($event)" [style]="styleFunc"></agm-data-layer>
@@ -125,7 +137,7 @@
             <blockquote class="card-blockquote">
               <div class="row">
                 <div class="col-sm-12">
-                  <h5><span class="badge badge-custom">f(x) = B3+(C3*A3)+D3*(A3*A3)</span></h5>
+                  <h5><span class="badge badge-custom"><var>y</var> = <var>a</var> + <var>b</var> * <var>x</var> + <var>b</var> * <var>x²</var></span></h5>
                 </div>
               </div>
               <div class="row">
@@ -148,7 +160,7 @@
                     [disabled]="yearActiveSlider"></nouislider>
                 </div>
               </div>
-              <table class="table table-bordered table-inverse">
+              <table class="table table-bordered table-inverse table-custom">
                 <thead>
                   <tr>
                     <th>估計年月</th>
@@ -180,7 +192,7 @@
             <blockquote class="card-blockquote">
               <div class="row">
                 <div class="col-sm-12">
-                  <h5><span class="badge badge-custom">f(x) = B3+(C3*A3)+(D3*(A3*A3))</span></h5>
+                  <h5><span class="badge badge-custom"><var>y</var> = <var>a</var> + <var>b</var> * <var>x</var> + <var>b</var> * <var>x²</var></span></h5>
                 </div>
               </div>
               <div class="row">
@@ -192,18 +204,6 @@
             <option disabled [ngValue]="-1">請選擇縣市</option>
             <option *ngFor="let option of cityPopuGroup; let itemIndex = index" [ngValue]="option">{{option.chName }}</option>
         </select>
-
-                  <label class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" [checked]="popuCheckYunlin" (change)="checkPopuYunlinChange($event)" />
-                   <span class="custom-control-indicator"></span>
-                  <span class="custom-control-description">雲林縣</span>
-                </label>
-                  <label class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" [checked]="popuCheckChiayi" (change)="checkPopuChiayiChange($event)" />
-                  <span class="custom-control-indicator"></span>
-                  <span class="custom-control-description">嘉義縣</span>
-                </label>
-
                 </div>
               </div>
               <div class="row">
@@ -211,11 +211,11 @@
                   <label class="col-form-label">指標：</label>
                 </div>
                 <div class="col-sm-10">
-                  <nouislider class="nouislider" [min]="1" [max]="250" [step]="1" [(ngModel)]="popuValueSlider" (ngModelChange)="onPopuSliderChange($event)"
+                  <nouislider class="nouislider" [min]="41" [max]="250" [step]="1" [(ngModel)]="popuValueSlider" (ngModelChange)="onPopuSliderChange($event)"
                     [disabled]="popuActiveSlider"></nouislider>
                 </div>
               </div>
-              <table class="table table-bordered table-inverse">
+              <table class="table table-bordered table-inverse table-custom">
                 <thead>
                   <tr>
                     <th>估計年月</th>
