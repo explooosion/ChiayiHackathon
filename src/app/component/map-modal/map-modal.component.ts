@@ -8,6 +8,7 @@ import { LayerService } from '../../service/layer.service';
 
 import { Marker } from '../../class/marker';
 
+
 declare var google: any;
 declare var jquery: any;
 declare var $: any;
@@ -29,6 +30,49 @@ export class MapModalComponent implements OnInit {
   geoJsonObject: Object = null;
   timelineValue: number = 46;
   value: number = 0;
+
+  // Char Doughnut
+  doughnutChartLabels: string[] = ['18~65 成年人', '65~ 老年人', '~18 未成年'];
+  doughnutChartData: number[] = [650, 210, 140];
+  doughnutChartType: string = 'doughnut';
+
+  // Radar
+  public radarChartLabels: string[] = ['食', '衣', '住', '行', '育', '樂'];
+  public radarChartData: any = [
+    { data: [85, 75, 92, 67, 82, 79], label: '嘉義縣', },
+    { data: [79, 72, 85, 75, 91, 87], label: '雲林縣' }
+  ];
+  public radarChartType: string = 'radar';
+  public colors: any = [{
+    borderColor: 'rgba(54,162,235,.8)',
+    backgroundColor: 'rgba(54,162,235,.3)',
+    pointBackgroundColor: '#36A2EB',
+    pointBorderColor: '#fff'
+    // [colors]="colors" 
+  }];
+
+  // barChart
+  public barChartOptions: any = {
+    scaleShowVerticalLines: false,
+    maintainAspectRatio: false,
+    responsive: true, scales: {
+      yAxes: [{
+        ticks: {
+          min: 60,
+          max: 80
+        }
+      }]
+    }
+  };
+  public barChartLabels: string[] = ['2016', '2017', '2018', '2019'];
+  public barChartType: string = 'bar';
+  public barChartLegend: boolean = true;
+
+  public barChartData: any[] = [
+    { data: [65, 68, 72, 75, 74], label: '雲林縣' },
+    { data: [63, 62, 65, 68, 69], label: '嘉義縣' }
+  ];
+
   constructor(
     private gmapService: GMapsService,
     private layerService: LayerService,
@@ -41,11 +85,11 @@ export class MapModalComponent implements OnInit {
     this.getLayer();
 
     // With JQuery
-    $("#timeline").slider().on("slide", function (slideEvt) {
-      $("#ex6SliderVal").text(slideEvt.value);
-    }).on("change", function (slideEvt) {
-      $("#ex6SliderVal").text(slideEvt.value.newValue);
-    });
+    // $("#timeline").slider().on("slide", function (slideEvt) {
+    //   $("#ex6SliderVal").text(slideEvt.value);
+    // }).on("change", function (slideEvt) {
+    //   $("#ex6SliderVal").text(slideEvt.value.newValue);
+    // });
 
   }
 

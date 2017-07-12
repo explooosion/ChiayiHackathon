@@ -1,20 +1,16 @@
 .btn-search {
-    width: 120px;
-    cursor: pointer;
+  width: 120px;
+  cursor: pointer;
 }
 
 agm-map {
-    height: 80vh;
-}
-
-.gmap {
-    padding: 0 4.5rem;
-}
-
-.map-control {
-    margin-bottom: 40px;
+  height: 400px;
 }
 
 #timeline .slider-selection {
-	background: #BABABA;
+  background: #BABABA;
+}
+
+#charGroup {
+  margin: 30px auto;
 }

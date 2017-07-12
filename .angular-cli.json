@@ -19,9 +19,11 @@
     "prefix": "app",
     "styles": [
       "styles.css",
+      "../node_modules/font-awesome/css/font-awesome.min.css",
       "../node_modules/bootstrap/dist/css/bootstrap.min.css",
       "../node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css",
-      "../plugin/datatables/dataTables.bootstrap4.css"
+      "../plugin/datatables/dataTables.bootstrap4.css",
+      "../node_modules/nouislider/distribute/nouislider.min.css"
     ],
     "scripts": [
       "../plugin/tether/tether.min.js",
@@ -29,7 +31,8 @@
       "../node_modules/bootstrap/dist/js/bootstrap.min.js",
       "../node_modules/bootstrap-slider/dist/bootstrap-slider.min.js",
       "../plugin/datatables/jquery.dataTables.js",
-      "../plugin/datatables/dataTables.bootstrap4.js"
+      "../plugin/datatables/dataTables.bootstrap4.js",
+      "../node_modules/chart.js/dist/Chart.bundle.min.js"
     ],
     "environmentSource": "environments/environment.ts",
     "environments": {

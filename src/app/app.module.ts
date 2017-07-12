@@ -1,5 +1,5 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +9,9 @@ import { AgmCoreModule } from '@agm/core';
 import { DataModalComponent } from './component/data-modal/data-modal.component';
 import { MapModalComponent } from './component/map-modal/map-modal.component';
 import { NavbarModalComponent } from './component/navbar-modal/navbar-modal.component';
+
+import { ChartsModule } from 'ng2-charts';
+import { NouisliderModule } from 'ng2-nouislider';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,9 @@ import { NavbarModalComponent } from './component/navbar-modal/navbar-modal.comp
     AgmCoreModule.forRoot({
       apiKey: '',
       language: 'zh-TW'
-    })
+    }),
+    ChartsModule,
+    NouisliderModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
