@@ -8,17 +8,18 @@ export class Yearstructure {
     public month: number;
     public yearmonth: number;
     public city: string;
+
     public zero_twelve: number;
     public twelve_seventeen: number;
     public twenty: number;
     public sixty_five: number;
     public twnty_sixty: number;
+
     public seventeen_twenty: number;
     public zero_twenty: number;
     public zero_seventeen: number;
     public seventeen_sixty: number;
 
-    public fx: number = 999;
     public FxChiayi = [
         {
             a: 18.112324,
@@ -47,7 +48,7 @@ export class Yearstructure {
             a: 15.283826,
             b: 0.012171,
             c: 0.000285
-        }]
+        }];
 }
 
 

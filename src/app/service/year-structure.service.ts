@@ -8,14 +8,13 @@ import { Yearstructure } from '../class/yearstructure';
 @Injectable()
 export class YearStructureService {
 
-  private fileUrl: string = 'assets/data/';
-  private fileExtend: string = '.csv';
   private ys: Yearstructure;
   private ysArr: Yearstructure[];
+  
+  private fileUrl: string = 'assets/data/';
+  private fileExtend: string = '.csv';
 
-  constructor(private http: Http) {
-
-  }
+  constructor(private http: Http) { }
 
   /**
    * 讀取年齡結構CSV（地區）

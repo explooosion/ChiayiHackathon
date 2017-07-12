@@ -12,7 +12,7 @@
         </div>
         <div class="modal-body">
           <div class="table-responsive">
-            <table class="table table-striped table-bordered dataTable" width="100%" cellspacing="0">
+            <table id="YearTable" class="table table-striped table-bordered" width="100%" cellspacing="0">
               <thead>
                 <tr>
                   <th>No.</th>
@@ -60,4 +60,64 @@
     </div>
   </div>
 
+
+  <!-- Modal -->
+  <div class="modal fade" id="popuDataTable" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">人口數量變動</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <div class="table-responsive">
+            <table id="PopuTable" class="table table-striped table-bordered" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>year</th>
+                  <th>season</th>
+                  <th>year_season</th>
+                  <th>city</th>
+                  <th>total_population</th>
+                  <th>total_population_increase</th>
+                  <th>births</th>
+                  <th>deaths</th>
+                  <th>immigrants</th>
+                  <th>emigrants</th>
+                  <th>natural_increase_rate</th>
+                  <th>social_increase_rate</th>
+                  <th>total_increase_rate</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of popuData">
+                  <td>{{data.no}}</td>
+                  <td>{{data.year}}</td>
+                  <td>{{data.season}}</td>
+                  <td>{{data.year_season}}</td>
+                  <td>{{data.city}}</td>
+                  <td>{{data.total_population}}</td>
+                  <td>{{data.total_population_increase}}</td>
+                  <td>{{data.births}}</td>
+                  <td>{{data.deaths}}</td>
+                  <td>{{data.immigrants}}</td>
+                  <td>{{data.emigrants}}</td>
+                  <td>{{data.natural_increase_rate}}</td>
+                  <td>{{data.social_increase_rate}}</td>
+                  <td>{{data.total_increase_rate}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -38,9 +38,9 @@ export class MapModalComponent implements OnInit {
   datetimeSlider: string = `${new Date().getFullYear().toString()}-${new Date().getMonth().toString()}`;
 
   // Char-Doughnut Config
-  doughnutChartLabels: string[] = ['18~65 成年人', '65~ 老年人', '~18 未成年'];
+  doughnutChartLabels: string[] = ['~17', '18~65', '65~',];
   doughnutChartData: number[] = [650, 210, 140];
-  doughnutChartType: string = 'doughnut';
+  doughnutChartType: string = 'doughnut'; // 改讀取 yearDataPercent
 
   // Char-Radar Config
   radarChartLabels: string[] = ['食', '衣', '住', '行', '育', '樂'];
@@ -81,7 +81,7 @@ export class MapModalComponent implements OnInit {
   // yearStructure Config
   yearData: any[] = [];
   yearDataFilter: any[] = []; // 儲存卷軸對應的No.資料
-  yearDataPercent: any[] = [0, 0, 0]; // 年齡結構百分比[A群,B群,C群]
+  yearDataPercent: any[] = [50, 50, 50]; // 年齡結構百分比[A群,B群,C群]
 
   public cityGroupSelect = {
     chName: '雲林縣',
@@ -173,6 +173,7 @@ export class MapModalComponent implements OnInit {
     var _mon = no % 12 == 0 ? 12 : no % 12;
     var _year = no / 12 == 0 ? 2012 : Math.floor(no / 12) + 2012;
     this.datetimeSlider = `${_year}-${_mon}`;
+
   }
 
   async getYearCSV() {

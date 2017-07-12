@@ -8,14 +8,20 @@ import { Population } from '../class/population';
 @Injectable()
 export class PopulationStructureService {
 
-  private csvUrl: string = 'assets/data/YearStructure_Chiayi.csv';
-  private population: Population;
-  private populationArr: Population[];
+  private popu: Population;
+  private popuArr: Population[];
+
+  private fileUrl: string = 'assets/data/';
+  private fileExtend: string = '.csv';
 
   constructor(private http: Http) { }
 
-  readCsv() {
-    return this.http.get(this.csvUrl)
+  /**
+   * 讀取人口數量CSV（地區）
+   * @param fn 
+   */
+  public readCsv(fn: string) {
+    return this.http.get(this.fileUrl + fn + this.fileExtend)
       .map(this.extractData);
   }
 
@@ -32,32 +38,63 @@ export class PopulationStructureService {
       let data = allTextLines[i].split(',');
       if (data.length == headers.length) {
 
-        this.population = new Population();
-        this.population.year = data[0];
-        this.population.season = data[1];
-        this.population.year_season = data[2];
-        this.population.city = data[3];
+        this.popu = new Population();
+        this.popu.no = data[0];
+        this.popu.year = data[1];
+        this.popu.season = data[2];
+        this.popu.year_season = data[3];
+        this.popu.city = data[4];
 
-        this.population.total_population = data[4];
-        this.population.total_population_increase = data[5];
+        this.popu.total_population = data[5];
+        this.popu.total_population_increase = data[6];
 
-        this.population.births = data[6];
-        this.population.deaths = data[7];
-        this.population.immigrants = data[8];
-        this.population.emigrants = data[9];
+        this.popu.births = data[7];
+        this.popu.deaths = data[8];
+        this.popu.immigrants = data[9];
+        this.popu.emigrants = data[10];
 
-        this.population.natural_increase_rate = data[10];
-        this.population.social_increase_rate = data[11];
-        this.population.total_increase_rate = data[12];
+        this.popu.natural_increase_rate = data[11];
+        this.popu.social_increase_rate = data[12];
+        this.popu.total_increase_rate = data[13];
 
-        lines.push(this.population);
+        lines.push(this.popu);
       }
 
-      this.populationArr = lines;
+      this.popuArr = lines;
 
     } // for
 
-    return this.populationArr;
+    return this.popuArr;
   }
+
+  /**
+   * 人口數量百分比（地區，編號）
+   * @param city 
+   * @param no 
+   */
+  public getPopulationPercent(city: string, no: number) {
+
+    // f(x) = B3+(C3*A3)+(D3*(A3*A3))
+    var res = [];
+    var fx = null;
+    switch (city) {
+      case 'Chiayi':
+        fx = new Population().FxChiayi;
+        break;
+      case 'Yunlin':
+        fx = new Population().FxYunlin;
+        break;
+    }
+
+    for (let i = 0; i < 3; i++) {
+
+      var v = fx[i].a + (fx[i].b * no) + (fx[i].c * (no * no));
+      res.push(Number(v).toFixed(6));
+      console.log(`${res} = ${fx[i].a} + ${fx[i].b} * ${no} + ${fx[i].c} * ${no} * ${no}`);
+    }
+    return res;
+
+  }
+
 
 }

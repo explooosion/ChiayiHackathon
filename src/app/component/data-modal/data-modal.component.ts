@@ -22,30 +22,37 @@ export class DataModalComponent implements OnInit {
 
   ngOnInit() {
     this.getPopuCSV();
-    this.getYearCSV();
+    //this.getYearCSV();
   }
 
+  // 人口數量變動
   async getPopuCSV() {
-    await this.popuService.readCsv()
+    await this.popuService.readCsv('Population_Chiayi')
       .subscribe(
       result => {
         this.popuData = result;
-        //console.log('popuData', this.popuData);
+      });
+    await this.popuService.readCsv('Population_Yunlin')
+      .subscribe(
+      result => {
+        this.popuData = this.popuData.concat(result);
+        setTimeout(() => { $('#PopuTable').DataTable({ "order": [[4, "asc"]] }); }, 500);
       });
   }
 
+  // 年齡結構指標
   async getYearCSV() {
     await this.yearService.readCsv('YearStructure_Chiayi')
       .subscribe(
       result => {
         this.yearData = result;
       });
-
     await this.yearService.readCsv('YearStructure_Yunlin')
       .subscribe(
       result => {
         this.yearData = this.yearData.concat(result);
-        setTimeout(() => { $('.dataTable').DataTable({ "order": [[4, "asc"]] }); }, 500);
+        console.log(this.yearData);
+        setTimeout(() => { $('#YearTable').DataTable({ "order": [[4, "asc"]] }); }, 500);
       });
   }
 }

@@ -45,7 +45,7 @@
                 <label class="col-form-label">指標：</label>
               </div>
               <div class="col-sm-10">
-                <nouislider class="nouislider" [min]="1" [max]="120" [step]="1" [(ngModel)]="valueSlider" (ngModelChange)="onSliderChange($event)"
+                <nouislider class="nouislider" [min]="1" [max]="250" [step]="1" [(ngModel)]="valueSlider" (ngModelChange)="onSliderChange($event)"
                   [disabled]="sliderActive"></nouislider>
               </div>
             </div>
@@ -70,16 +70,55 @@
           </blockquote>
         </div>
       </div>
-
     </div>
 
     <div class="col-lg-6">
-      <div class="gmap">
-        <agm-map [latitude]="lat" [longitude]="lng" [zoom]="7">
-          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-          <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="color" [fillOpacity]="0.6"></agm-circle>
-          <agm-data-layer *ngIf="geoJsonObject" [geoJson]="geoJsonObject" (layerClick)="clicked($event)" [style]="styleFunc"></agm-data-layer>
-        </agm-map>
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-table" aria-hidden="true"></i>&nbsp;年齡結構指標（ 2012-01 ）
+        </div>
+        <div class="card-block">
+          <blockquote class="card-blockquote">
+            <div class="row">
+              <div class="col-sm-2">
+                <label class="col-form-label">縣市：</label>
+              </div>
+              <div class="col-sm-10">
+                <select id="optionCity" class="form-control" [(ngModel)]="cityGroupSelect" (ngModelChange)="optionChange($event)">
+            <option disabled [ngValue]="-1">請選擇縣市</option>
+            <option *ngFor="let option of cityGroup; let itemIndex = index" [ngValue]="option">{{option.chName }}</option>
+        </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-2">
+                <label class="col-form-label">指標：</label>
+              </div>
+              <div class="col-sm-10">
+                <nouislider class="nouislider" [min]="1" [max]="250" [step]="1" [(ngModel)]="valueSlider" (ngModelChange)="onSliderChange($event)"
+                  [disabled]="sliderActive"></nouislider>
+              </div>
+            </div>
+            <table class="table table-bordered table-inverse">
+              <thead>
+                <tr>
+                  <th>估計年月</th>
+                  <th>0~17</th>
+                  <th>17~65</th>
+                  <th>65以上</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ datetimeSlider }}</td>
+                  <td>{{ yearDataPercent[0] }}%</td>
+                  <td>{{ yearDataPercent[1] }}%</td>
+                  <td>{{ yearDataPercent[2] }}%</td>
+                </tr>
+              </tbody>
+            </table>
+          </blockquote>
+        </div>
       </div>
     </div>
   </div>
@@ -94,7 +133,7 @@
           <i class="fa fa-area-chart"></i> 年齡結構分析
         </div>
         <div class="card-block">
-          <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"></canvas>
+          <canvas baseChart [data]="yearDataPercent" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"></canvas>
         </div>
       </div>
     </div>
@@ -122,5 +161,15 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="gmap">
+    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="7">
+      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+      <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="color" [fillOpacity]="0.6"></agm-circle>
+      <agm-data-layer *ngIf="geoJsonObject" [geoJson]="geoJsonObject" (layerClick)="clicked($event)" [style]="styleFunc"></agm-data-layer>
+    </agm-map>
   </div>
 </div>
