@@ -9,7 +9,7 @@ import { BrowserModule } from '@angular/platform-browser';
 })
 export class AppComponent implements OnInit {
 
-  title: string = 'Angular4 Demo Gmap';
+  title: string = '預測未來的高齡化社會的發展趨勢';
 
   constructor() { }
 
