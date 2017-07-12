@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { BrowserModule } from '@angular/platform-browser';
-
+declare var jquery: any;
+declare var $: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,10 +10,10 @@ import { BrowserModule } from '@angular/platform-browser';
 export class AppComponent implements OnInit {
 
   title: string = '預測未來的高齡化社會的發展趨勢';
-
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

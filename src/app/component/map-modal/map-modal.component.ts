@@ -34,7 +34,7 @@ export class MapModalComponent implements OnInit {
 
   // Slider Config
   sliderActive: string = 'false';
-  valueSlider: number = 1;
+  valueSlider: number = 56;
   datetimeSlider: string = `${new Date().getFullYear().toString()}-${new Date().getMonth().toString()}`;
 
   // Char-Doughnut Config
