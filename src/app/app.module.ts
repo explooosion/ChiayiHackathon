@@ -9,10 +9,11 @@ import { AgmCoreModule } from '@agm/core';
 import { DataModalComponent } from './component/data-modal/data-modal.component';
 import { MapModalComponent } from './component/map-modal/map-modal.component';
 import { NavbarModalComponent } from './component/navbar-modal/navbar-modal.component';
+import { FooterModalComponent } from './component/footer-modal/footer-modal.component';
 
 import { ChartsModule } from 'ng2-charts';
 import { NouisliderModule } from 'ng2-nouislider';
-import { FooterModalComponent } from './component/footer-modal/footer-modal.component';
+import { TreeModule } from 'angular-tree-component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FooterModalComponent } from './component/footer-modal/footer-modal.comp
     }),
     ChartsModule,
     NouisliderModule,
+    TreeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

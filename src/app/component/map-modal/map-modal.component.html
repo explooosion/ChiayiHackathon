@@ -58,62 +58,101 @@
 
     <div class="row">
       <div class="col-lg-12 text-center">
-        <h2 class="title">現況指標評估</h2>
+        <h2 class="title">社福環域指標</h2>
       </div>
     </div>
 
   </div>
 
-  <div class="gmap">
-    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="17">
-      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-      <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="color" [fillOpacity]="0.6"></agm-circle>
-      <agm-data-layer *ngIf="geoJsonObject" [geoJson]="geoJsonObject" (layerClick)="clicked($event)" [style]="styleFunc"></agm-data-layer>
-    </agm-map>
 
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
 
-    <div id="gmap-control">
+        <div class="container">
 
-      <div class="container">
-        <div class="col-lg-5">
-          <div class="form-group row">
+          <div class="row form-group">
             <label for="example-text-input" class="col-form-label">地址：</label>
-            <div class="col-8">
+            <div class="col-6">
               <input type="text" class="form-control" [(ngModel)]="addr" placeholder="placeholderText" />
             </div>
             <div class="col-2">
-              <button type="button" class="btn btn-success" (click)="setCircle()">Search</button>
+              <button type="button" class="btn btn-success btn-search" (click)="setCircle()">定位</button>
+            </div>
+            <div class="col-2">
+              <button type="button" class="btn btn-success btn-search" (click)="getDistance()">分析</button>
             </div>
           </div>
 
           <div class="row form-group">
             <label class="col-form-label">經度：</label>
-            <div class="col-3">
+            <div class="col-4">
               <input type="text" class="form-control" [(ngModel)]="lat" readonly />
             </div>
             <label class="col-form-label">緯度：</label>
-            <div class="col-3">
+            <div class="col-4">
               <input type="text" class="form-control" [(ngModel)]="lng" readonly />
             </div>
           </div>
 
           <div class="row form-group">
-            <div class="col-12">
-              <label class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" [(ngModel)]="geoJsonObjectIsAdd" (click)="layerControl()">
-          <span class="custom-control-indicator"></span>
-          <span class="custom-control-description">套疊臺灣圖層</span>
-        </label>
+            <label class="col-form-label">半徑：</label>
+            <div class="col-8">
+              <input type="number" class="form-control" [(ngModel)]="radius" />
+            </div>
+            <label class="col-form-label">公尺</label>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+              <div class="card">
+                <div class="card-header">
+                  圖層控制
+                </div>
+                <div class="card-block">
+                  <blockquote class="card-blockquote">
+                    <tree-root #tree [nodes]="nodes" [options]="treeOptions">
+                      <template #treeNodeTemplate let-node="node" let-index="index">
+                        <input (change)="check( node, $event)" type="checkbox" [indeterminate]="node.data.indeterminate" [checked]="node.data.checked">                        {{ node.data.name }}
+                      </template>
+                    </tree-root>
+                  </blockquote>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="card">
+                <div class="card-header">
+                  環域分析結果
+                </div>
+                <div class="card-block">
+                  <blockquote class="card-blockquote">
+                    <p>顯示結果</p>
+                  </blockquote>
+                </div>
+              </div>
             </div>
           </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="col-6">
+        <div class="gmap">
+          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="17">
+            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+            <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="color" [fillOpacity]="0.6"></agm-circle>
+            <agm-data-layer *ngIf="geoTaiwanLayer" [geoJson]="geoTaiwanLayer" (layerClick)="clicked($event)" [style]="styleFunc"></agm-data-layer>
+          </agm-map>
 
         </div>
       </div>
 
     </div>
-    <!-- gmap-control -->
-
   </div>
+
 
 </div>
 

@@ -23,6 +23,7 @@
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
+    "angular-tree-component": "^3.7.3",
     "bootstrap": "^4.0.0-alpha.6",
     "bootstrap-slider": "^9.8.1",
     "chart.js": "^2.6.0",

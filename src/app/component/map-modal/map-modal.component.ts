@@ -28,11 +28,11 @@ declare var Slider: any;
 export class MapModalComponent implements OnInit {
 
   lat: number = 23.4791187;
-  lng: number = 120.44113820000007;
-  radius: number = 100;
+  lng: number = 120.441138;
+  radius: number = 100; // 半徑(公尺)
   color: string = '#FECE00';
   addr: string = "̨嘉義火車站";
-  geoJsonObject: Object = null;
+  geoTaiwanLayer: Object = null;
   geoJsonObjectIsAdd: boolean = false;
 
   // Slider Config - YearStructure
@@ -105,6 +105,35 @@ export class MapModalComponent implements OnInit {
     { data: [524787, 519659, 514201, 508414, 505412], label: '雲林縣' }
   ];
 
+  // Tree Config
+  nodes = [
+    {
+      id: 1,
+      name: '地區圖層',
+      isExpanded: true,
+      children: [
+        { id: 11, name: '直轄市、縣市界線' }
+      ]
+    },
+    {
+      id: 2,
+      name: '指標圖層',
+      isExpanded: true,
+      children: [
+        { id: 21, name: '宗教建設' },
+        { id: 22, name: '照護機構' },
+        { id: 23, name: '國際團體' },
+      ]
+    }
+  ];
+
+  // Map Mark
+  layerTaiwan: boolean = false;
+  layerTemple: boolean = false;
+  layerHospi: boolean = false;
+  layerGroup: boolean = false;
+
+
   constructor(
     private yearService: YearStructureService,
     private popuService: PopulationStructureService,
@@ -115,11 +144,26 @@ export class MapModalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.getYearCSV();
   }
 
-  async setCircle() {
+  public async getDistance() {
+    var p1 = [23.4791187, 120.441138];
+    var p2 = [23.4781758, 120.44138659999999];
+    await this.gmapService.getDistance(p1, p2)
+      .subscribe(
+      result => {
+        //必須使用zone 觀察整個 view 否則會導致延遲
+        this.zone.run(() => {
+          console.log(result);
+        });
+      },
+      error => console.log(error),
+      () => console.log('Calculating completed!')
+      );
+  }
+
+  public async setCircle() {
     await this.gmapService.getLatLan(this.addr)
       .subscribe(
       result => {
@@ -140,29 +184,17 @@ export class MapModalComponent implements OnInit {
     this.marker.lng = lng;
   }
 
-  async getLayer() {
+  public async getLayer() {
     await this.layerService.getTaiwanLayer()
       .subscribe(
       result => {
         this.zone.run(() => {
-          this.geoJsonObject = result;
+          this.geoTaiwanLayer = result;
         });
       },
       error => {
         console.log(error);
       });
-  }
-
-  layerControl() {
-
-    // 請顛倒做
-    if (!this.geoJsonObjectIsAdd) {
-      this.getLayer();
-    } else {
-      this.zone.run(() => {
-        this.geoJsonObject = null;
-      });
-    }
   }
 
   styleFunc(feature) {
@@ -222,7 +254,7 @@ export class MapModalComponent implements OnInit {
     }
   }
 
-  async getYearCSV() {
+  public async getYearCSV() {
     await this.yearService.readCsv('YearStructure_Chiayi')
       .subscribe(
       result => {
@@ -230,4 +262,71 @@ export class MapModalComponent implements OnInit {
       });
   }
 
+
+  public layerControl() {
+    // 請顛倒做
+    if (this.layerTaiwan) {
+      this.getLayer();
+    } else {
+      this.zone.run(() => {
+        this.geoTaiwanLayer = null;
+      });
+    }
+  }
+
+  public check(node, $event) {
+    this.updateChildNodesCheckBox(node, $event.target.checked);
+    this.updateParentNodesCheckBox(node.parent);
+
+    // Draw Map
+    var layerid;
+    if (node.children) {
+      node.children.forEach((child) => {
+        layerid = child.id;
+      });
+    } else {
+      layerid = node.id;
+    }
+
+    switch (layerid) {
+      case 11:
+        this.layerTaiwan = !this.layerTaiwan;
+        break;
+    }
+
+    console.log(this.layerTaiwan);
+    this.layerControl();
+  }
+  public updateChildNodesCheckBox(node, checked) {
+    node.data.checked = checked;
+    if (node.children) {
+      node.children.forEach((child) => this.updateChildNodesCheckBox(child, checked));
+    }
+  }
+  public updateParentNodesCheckBox(node) {
+    if (node && node.level > 0 && node.children) {
+      let allChildChecked = true;
+      let noChildChecked = true;
+
+      for (let child of node.children) {
+        if (!child.data.checked) {
+          allChildChecked = false;
+        } else if (child.data.checked) {
+          noChildChecked = false;
+        }
+      }
+
+      if (allChildChecked) {
+        node.data.checked = true;
+        node.data.indeterminate = false;
+      } else if (noChildChecked) {
+        node.data.checked = false;
+        node.data.indeterminate = false;
+      } else {
+        node.data.checked = true;
+        node.data.indeterminate = true;
+      }
+      this.updateParentNodesCheckBox(node.parent);
+    }
+  }
 }
