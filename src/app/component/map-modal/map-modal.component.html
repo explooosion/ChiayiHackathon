@@ -53,6 +53,7 @@
 
 <div id="currentGroup" class="jumbotron jumbotron-fluid">
 
+
   <div class="container">
 
     <div class="row">
@@ -61,54 +62,56 @@
       </div>
     </div>
 
-    <div class="row">
+  </div>
 
-      <div class="col-lg-5">
-        <div class="form-group row">
-          <label for="example-text-input" class="col-form-label">地址：</label>
-          <div class="col-8">
-            <input type="text" class="form-control" [(ngModel)]="addr" placeholder="placeholderText" />
-          </div>
-          <div class="col-2">
-            <button type="button" class="btn btn-success" (click)="setCircle()">Search</button>
-          </div>
-        </div>
+  <div class="gmap">
+    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="17">
+      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+      <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="color" [fillOpacity]="0.6"></agm-circle>
+      <agm-data-layer *ngIf="geoJsonObject" [geoJson]="geoJsonObject" (layerClick)="clicked($event)" [style]="styleFunc"></agm-data-layer>
+    </agm-map>
 
-        <div class="row form-group">
-          <label class="col-form-label">經度：</label>
-          <div class="col-3">
-            <input type="text" class="form-control" [(ngModel)]="lat" readonly />
-          </div>
-          <label class="col-form-label">緯度：</label>
-          <div class="col-3">
-            <input type="text" class="form-control" [(ngModel)]="lng" readonly />
-          </div>
-        </div>
 
-        <div class="row form-group">
-          <div class="col-12">
-            <label class="custom-control custom-checkbox">
+    <div id="gmap-control">
+
+      <div class="container">
+        <div class="col-lg-5">
+          <div class="form-group row">
+            <label for="example-text-input" class="col-form-label">地址：</label>
+            <div class="col-8">
+              <input type="text" class="form-control" [(ngModel)]="addr" placeholder="placeholderText" />
+            </div>
+            <div class="col-2">
+              <button type="button" class="btn btn-success" (click)="setCircle()">Search</button>
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <label class="col-form-label">經度：</label>
+            <div class="col-3">
+              <input type="text" class="form-control" [(ngModel)]="lat" readonly />
+            </div>
+            <label class="col-form-label">緯度：</label>
+            <div class="col-3">
+              <input type="text" class="form-control" [(ngModel)]="lng" readonly />
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-12">
+              <label class="custom-control custom-checkbox">
           <input type="checkbox" class="custom-control-input" [(ngModel)]="geoJsonObjectIsAdd" (click)="layerControl()">
           <span class="custom-control-indicator"></span>
           <span class="custom-control-description">套疊臺灣圖層</span>
         </label>
+            </div>
           </div>
-        </div>
-      </div>
 
-
-
-      <div class="col-lg-7">
-        <div class="gmap">
-          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="17">
-            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-            <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="color" [fillOpacity]="0.6"></agm-circle>
-            <agm-data-layer *ngIf="geoJsonObject" [geoJson]="geoJsonObject" (layerClick)="clicked($event)" [style]="styleFunc"></agm-data-layer>
-          </agm-map>
         </div>
       </div>
 
     </div>
+    <!-- gmap-control -->
 
   </div>
 
