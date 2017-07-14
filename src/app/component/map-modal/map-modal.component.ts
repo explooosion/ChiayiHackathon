@@ -36,15 +36,16 @@ export class MapModalComponent implements OnInit {
   // 初始資料
   lat: number = 23.4589877;
   lng: number = 120.29294219999997;
+  zoom: number = 14;
   radius: number = 1000; // 半徑(公尺)
   color: string = 'rgba(253,216,55,0.57)';
   addr: string = "̨嘉義縣政府";
 
   // 分析統計
-  countSecure: number = 0;
-  countHospi: number = 0;
-  countCare: number = 0;
-  countTemple: number = 0;
+  countSecure: number = 1644;
+  countHospi: number = 18;
+  countCare: number = 186;
+  countTemple: number = 1492;
 
   // 圖層資料
   geoLayerTaiwan: Object = null;
@@ -188,15 +189,15 @@ export class MapModalComponent implements OnInit {
       result => {
         this.zone.run(async () => {
 
-          //this.layerService.getSecureGeoJson(result);
-          this.geoLayerSecure = this.layerService.getSecureGeoJson(result);
-          // await this.layerService.getCareLayer('care', 'Yunlin')
-          //   .subscribe(
-          //   result => {
-          //     this.zone.run(() => {
-          //       this.geoLayerSecure = this.layerService.getSecureGeoJson(result);
-          //     });
-          //   });
+          this.layerService.getSecureGeoJson(result);
+
+          await this.layerService.getSecureLayer('secure', 'Yunlin')
+            .subscribe(
+            result => {
+              this.zone.run(() => {
+                this.geoLayerSecure = this.layerService.getSecureGeoJson(result);
+              });
+            });
         });
       });
 
@@ -246,9 +247,9 @@ export class MapModalComponent implements OnInit {
 
   public analyticsPointer() {
 
+    this.countSecure = 0;
     this.countCare = 0;
     this.countTemple = 0;
-    this.countSecure = 0;
 
     this.geoLayerTemple['features'].forEach(async (element) => {
       // 在features當中儲存方式為顛倒 (GeoJson官方預設)
@@ -283,9 +284,29 @@ export class MapModalComponent implements OnInit {
         });
     });
 
+    this.geoLayerSecure['features'].forEach(async (element) => {
+
+      // 在features當中儲存方式為顛倒 (GeoJson官方預設)
+      var lat = Number(element.geometry.coordinates[1]);
+      var lng = Number(element.geometry.coordinates[0]);
+      var p2 = [lat, lng];
+      await this.gmapService.getDistance([this.lat, this.lng], p2)
+        .subscribe(
+        result => {
+          this.zone.run(() => {
+            if (result <= this.radius) {
+              this.countSecure++;
+            }
+          });
+        });
+    });
+
   }
 
   public async setCircle() {
+
+    this.zoom = 14;
+
     await this.gmapService.getLatLan(this.addr)
       .subscribe(
       result => {

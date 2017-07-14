@@ -132,8 +132,8 @@
                   <blockquote class="card-blockquote">
                     <p>安全評估：{{countSecure}}</p>
                     <p>醫院診所：{{countHospi}}</p>
-                    <p>宗教建設：{{countTemple}}</p>
                     <p>照護機構：{{countCare}}</p>
+                    <p>宗教建設：{{countTemple}}</p>
                   </blockquote>
                 </div>
               </div>
@@ -147,7 +147,7 @@
 
       <div class="col-6">
         <div class="gmap">
-          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="14" [disableDefaultUI]="false">
+          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false">
             <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
             <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="color" [fillOpacity]="0.6"></agm-circle>
             <agm-data-layer *ngIf="geoLayerShowTaiwan" [geoJson]="geoLayerTaiwan" (layerClick)="infoWindow.open();geoLayerClick($event)"
