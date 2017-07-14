@@ -162,11 +162,9 @@ export class MapModalComponent implements OnInit {
 
   ngOnInit() {
     this.getYearCSV();
-    this.getAllLayer();
   }
 
-  public async getAllLayer() {
-
+  public async getTempleLayer() {
     await this.layerService.getTempleLayer('temple', 'Chiayi')
       .subscribe(
       result => {
@@ -180,23 +178,20 @@ export class MapModalComponent implements OnInit {
               this.zone.run(() => {
                 this.geoLayer = this.layerService.getTempleGeoJson(result);
               });
-            },
-            error => {
-              console.log(error);
             });
         });
-      },
-      error => {
-        console.log(error);
       });
 
+  }
+
+  public async getCareLayer() {
 
     await this.layerService.getCareLayer('care', 'Chiayi')
       .subscribe(
-      res => {
+      result => {
         this.zone.run(async () => {
 
-          this.layerService.getCareGeoJson(res);
+          this.layerService.getCareGeoJson(result);
 
           await this.layerService.getCareLayer('care', 'Yunlin')
             .subscribe(
@@ -204,15 +199,8 @@ export class MapModalComponent implements OnInit {
               this.zone.run(() => {
                 this.geoLayer2 = this.layerService.getCareGeoJson(result);
               });
-            },
-            error => {
-              console.log(error);
             });
-
         });
-      },
-      error => {
-        console.log(error);
       });
   }
 
