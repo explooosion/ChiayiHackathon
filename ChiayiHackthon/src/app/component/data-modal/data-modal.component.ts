@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { PopulationStructureService } from '../../service/population-structure.service';
 import { YearStructureService } from '../../service/year-structure.service';
 
-declare var jquery: any;
-declare var $: any;
-declare var DataTable: any;
+declare let jquery: any;
+declare let $: any;
+declare let DataTable: any;
 @Component({
   selector: 'app-data-modal',
   templateUrl: './data-modal.component.html',

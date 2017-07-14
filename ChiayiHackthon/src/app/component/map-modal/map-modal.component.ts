@@ -1,7 +1,6 @@
 import { Component, Input, NgZone, OnInit, NgModule } from '@angular/core';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { AgmCoreModule, MapsAPILoader, GoogleMapsAPIWrapper, AgmDataLayer } from '@agm/core';
 
 import { GMapsService } from '../../service/gmaps.service';
 import { LayerService } from '../../service/layer.service';
@@ -11,15 +10,10 @@ import { PopulationStructureService } from '../../service/population-structure.s
 
 import { Marker } from '../../class/marker';
 import { City } from '../../class/city';
-import { Temple } from '../../class/temple';
-import { Secure } from '../../class/secure';
-import { Burglary } from '../../class/burglary';
 import { Hospi } from '../../class/Hospi';
-
-declare var google: any;
-declare var jquery: any;
-declare var $: any;
-declare var Slider: any;
+import { Secure } from '../../class/secure';
+import { Temple } from '../../class/temple';
+import { Burglary } from '../../class/burglary';
 
 @Component({
   selector: 'app-map-modal',
@@ -44,27 +38,27 @@ export class MapModalComponent implements OnInit {
   addr: string = "̨嘉義縣政府";
 
   // 分析統計
-  countSecure: number = 17;
   countHospi: number = 7;
+  countSecure: number = 17;
   countCare: number = 3;
   countTemple: number = 2;
   countBurglary: number = 1;
 
   // 圖層資料
   geoLayerTaiwan: Object = null;
-  geoLayerSecure: Object = null;
-  geoLayerBurglary: Object = null;
   geoLayerHospi: Object = null;
+  geoLayerSecure: Object = null;
   geoLayerCare: Object = null;
   geoLayerTemple: Object = null;
+  geoLayerBurglary: Object = null;
 
   // 圖層是否顯示
   geoLayerShowTaiwan: boolean = false;
-  geoLayerShowSecure: boolean = false;
-  geoLayerShowBurglary: boolean = false;
   geoLayerShowHospi: boolean = false;
+  geoLayerShowSecure: boolean = false;
   geoLayerShowCare: boolean = false;
   geoLayerShowTemple: boolean = false;
+  geoLayerShowBurglary: boolean = false;
 
   // 點位訊息小窗
   infowinLat: number = 23.458987;
@@ -100,12 +94,12 @@ export class MapModalComponent implements OnInit {
   cityPopuSelect = new City().cityGroup[0];
   cityPopuGroup: any[] = new City().cityGroup;
 
-  // Char-Doughnut Config
+  // 圖表 - 年齡結構分析
   doughnutChartLabels: string[] = ['~17', '18~65', '65~',];
   doughnutChartData: number[] = [650, 210, 140];
   doughnutChartType: string = 'doughnut'; // 改讀取 yearDataPercent
 
-  // Char-Radar Config
+  // 圖表 - 區域社福評估
   radarChartLabels: string[] = ['監視', '醫院', '照護', '宗教', '竊盜'];
   radarChartData: any = [
     { data: [17, 7, 3, 2, 1], label: '嘉義縣' }
@@ -119,7 +113,7 @@ export class MapModalComponent implements OnInit {
     // [colors]="colors" 
   }];
 
-  // Char-BarChart Config
+  // 圖表 - 人口數量預測
   barChartOptions: any = {
     scaleOverride: true,
     scaleShowVerticalLines: false,
@@ -141,7 +135,7 @@ export class MapModalComponent implements OnInit {
     { data: [524787, 519659, 514201, 508414, 505412], label: '雲林縣' }
   ];
 
-  // Tree Config
+  // 圖層清單
   nodes = [
     {
       id: 1,
@@ -179,6 +173,9 @@ export class MapModalComponent implements OnInit {
     this.LoadAllLayer();
   }
 
+  /**
+   * 載入所有圖層
+   */
   public async LoadAllLayer() {
 
     await this.layerService.getTaiwanLayer()
@@ -189,14 +186,14 @@ export class MapModalComponent implements OnInit {
         });
       });
 
-    await this.layerService.getSecureLayer('secure', 'Chiayi')
+    await this.layerService.getPointerLayer('secure', 'Chiayi')
       .subscribe(
       result => {
         this.zone.run(async () => {
 
           this.layerService.getSecureGeoJson(result);
 
-          await this.layerService.getSecureLayer('secure', 'Yunlin')
+          await this.layerService.getPointerLayer('secure', 'Yunlin')
             .subscribe(
             result => {
               this.zone.run(() => {
@@ -206,14 +203,14 @@ export class MapModalComponent implements OnInit {
         });
       });
 
-    await this.layerService.getBurglaryLayer('burglary', 'Chiayi')
+    await this.layerService.getPointerLayer('burglary', 'Chiayi')
       .subscribe(
       result => {
         this.zone.run(async () => {
 
           this.layerService.getBurglaryGeoJson(result);
 
-          await this.layerService.getBurglaryLayer('burglary', 'Yunlin')
+          await this.layerService.getPointerLayer('burglary', 'Yunlin')
             .subscribe(
             result => {
               this.zone.run(() => {
@@ -223,14 +220,14 @@ export class MapModalComponent implements OnInit {
         });
       });
 
-    await this.layerService.getCareLayer('care', 'Chiayi')
+    await this.layerService.getPointerLayer('care', 'Chiayi')
       .subscribe(
       result => {
         this.zone.run(async () => {
 
           this.layerService.getCareGeoJson(result);
 
-          await this.layerService.getCareLayer('care', 'Yunlin')
+          await this.layerService.getPointerLayer('care', 'Yunlin')
             .subscribe(
             result => {
               this.zone.run(() => {
@@ -240,14 +237,14 @@ export class MapModalComponent implements OnInit {
         });
       });
 
-    await this.layerService.getTempleLayer('temple', 'Chiayi')
+    await this.layerService.getPointerLayer('temple', 'Chiayi')
       .subscribe(
       result => {
         this.zone.run(async () => {
 
           this.layerService.getTempleGeoJson(result);
 
-          await this.layerService.getTempleLayer('temple', 'Yunlin')
+          await this.layerService.getPointerLayer('temple', 'Yunlin')
             .subscribe(
             result => {
               this.zone.run(() => {
@@ -257,21 +254,21 @@ export class MapModalComponent implements OnInit {
         });
       });
 
-    await this.layerService.getHospiLayer('hospi', 'Chiayi')
+    await this.layerService.getPointerLayer('hospi', 'Chiayi')
       .subscribe(
       result => {
         this.zone.run(async () => {
 
           this.layerService.getHospiGeoJson(result);
 
-          await this.layerService.getHospiLayer('hospi', 'Yunlin')
+          await this.layerService.getPointerLayer('hospi', 'Yunlin')
             .subscribe(
             result => {
               this.zone.run(async () => {
 
                 this.layerService.getHospiGeoJson(result);
 
-                await this.layerService.getHospiLayer('hospi', '長照ABC')
+                await this.layerService.getPointerLayer('hospi', '長照ABC')
                   .subscribe(
                   result => {
                     this.zone.run(() => {
@@ -284,31 +281,33 @@ export class MapModalComponent implements OnInit {
       });
   }
 
+  /**
+   * 座標點選 EVENT
+   * @param e 
+   */
   public geoLayerClick(e) {
+
     let feature = e.feature.f;
     this.infowinLat = feature.lat + 0.00008;
     this.infowinLng = feature.lng;
-
-    let name;
-    if (feature.TempleName) {
-      name = feature.TempleName;
-    } else if (feature.CareName) {
-      name = feature.CareName;
-    } else if (feature.Name) {
-      name = feature.Name;
-    } else if (feature.name) {
-      name = feature.name;
-    }
-    this.infowinMsg[0] = name;
+    this.infowinMsg[0] = feature.name;
     this.infowinMsg[1] = feature.address;
+
     if (feature.level) {
       this.infowinMsg[2] = `長照等級：${feature.level}`;
+    } else if (feature.date) {
+      this.infowinMsg[2] = `事件時間：${feature.date}`;
+    } else if (feature.lordgod) {
+      this.infowinMsg[2] = `寺廟主神：${feature.lordgod}`;
     } else {
       this.infowinMsg[2] = null;
     }
     this.infowinIsOpen = true;
   }
 
+  /**
+   * 環域分析 EVENT
+   */
   public analyticsPointer() {
 
     this.countSecure = 0;
@@ -317,9 +316,9 @@ export class MapModalComponent implements OnInit {
     this.countHospi = 0;
 
     this.geoLayerHospi['features'].forEach(async (element) => {
-      var lat = Number(element.geometry.coordinates[1]);
-      var lng = Number(element.geometry.coordinates[0]);
-      var p2 = [lat, lng];
+      let lat = Number(element.geometry.coordinates[1]);
+      let lng = Number(element.geometry.coordinates[0]);
+      let p2 = [lat, lng];
       await this.gmapService.getDistance([this.lat, this.lng], p2)
         .subscribe(
         result => {
@@ -332,9 +331,9 @@ export class MapModalComponent implements OnInit {
     });
 
     this.geoLayerTemple['features'].forEach(async (element) => {
-      var lat = Number(element.geometry.coordinates[1]);
-      var lng = Number(element.geometry.coordinates[0]);
-      var p2 = [lat, lng];
+      let lat = Number(element.geometry.coordinates[1]);
+      let lng = Number(element.geometry.coordinates[0]);
+      let p2 = [lat, lng];
       await this.gmapService.getDistance([this.lat, this.lng], p2)
         .subscribe(
         result => {
@@ -347,9 +346,9 @@ export class MapModalComponent implements OnInit {
     });
 
     this.geoLayerCare['features'].forEach(async (element) => {
-      var lat = Number(element.geometry.coordinates[1]);
-      var lng = Number(element.geometry.coordinates[0]);
-      var p2 = [lat, lng];
+      let lat = Number(element.geometry.coordinates[1]);
+      let lng = Number(element.geometry.coordinates[0]);
+      let p2 = [lat, lng];
       await this.gmapService.getDistance([this.lat, this.lng], p2)
         .subscribe(
         result => {
@@ -362,9 +361,9 @@ export class MapModalComponent implements OnInit {
     });
 
     this.geoLayerSecure['features'].forEach(async (element) => {
-      var lat = Number(element.geometry.coordinates[1]);
-      var lng = Number(element.geometry.coordinates[0]);
-      var p2 = [lat, lng];
+      let lat = Number(element.geometry.coordinates[1]);
+      let lng = Number(element.geometry.coordinates[0]);
+      let p2 = [lat, lng];
       await this.gmapService.getDistance([this.lat, this.lng], p2)
         .subscribe(
         result => {
@@ -377,9 +376,9 @@ export class MapModalComponent implements OnInit {
     });
 
     this.geoLayerBurglary['features'].forEach(async (element) => {
-      var lat = Number(element.geometry.coordinates[1]);
-      var lng = Number(element.geometry.coordinates[0]);
-      var p2 = [lat, lng];
+      let lat = Number(element.geometry.coordinates[1]);
+      let lng = Number(element.geometry.coordinates[0]);
+      let p2 = [lat, lng];
       await this.gmapService.getDistance([this.lat, this.lng], p2)
         .subscribe(
         result => {
@@ -390,7 +389,6 @@ export class MapModalComponent implements OnInit {
           });
         });
     });
-
 
     // 分析完後要更新圖表 - 區域社福評估
     this.radarChartData = [
@@ -407,6 +405,9 @@ export class MapModalComponent implements OnInit {
 
   }
 
+  /**
+   * 繪製圓形區域 EVENT
+   */
   public async setCircle() {
 
     this.zoom = 14;
@@ -426,42 +427,55 @@ export class MapModalComponent implements OnInit {
       );
   }
 
+  /**
+   * 當前座標
+   * @param lat 
+   * @param lng 
+   */
   public saveMarker(lat: number, lng: number) {
     this.marker.lat = lat;
     this.marker.lng = lng;
   }
 
+  /**
+   * 圖層樣式
+   * @param feature 
+   */
   public styleLayer(feature) {
-    var icon;
+    let icon;
     switch (feature.getProperty('group')) {
       case 'hospi':
 
-        console.log(feature.getProperty('level'));
         switch (feature.getProperty('level')) {
           case 'A':
             icon = 'assets/images/a.png';
             break;
+
           case 'B':
             icon = 'assets/images/b.png';
             break;
+
           case 'C':
             icon = 'assets/images/c.png';
             break;
+
           default:
-          case 1:
             icon = 'assets/images/hospi.png';
         }
-
         break;
+
       case 'secure':
         icon = 'assets/images/secure.png';
         break;
+
       case 'burglary':
         icon = 'assets/images/burglary.png';
         break;
+
       case 'care':
         icon = 'assets/images/care.png';
         break;
+
       case 'temple':
         icon = 'assets/images/temple.png';
         break;
@@ -492,8 +506,8 @@ export class MapModalComponent implements OnInit {
    */
   public onYearSliderChange(no: number) {
     this.yearDataPercent = this.yearService.getStructurePercent(this.cityYearSelect.enName, no);
-    var _mon = no % 12 == 0 ? 12 : no % 12;
-    var _year = no / 12 == 0 ? 2012 : Math.floor(no / 12) + 2012;
+    let _mon = no % 12 == 0 ? 12 : no % 12;
+    let _year = no / 12 == 0 ? 2012 : Math.floor(no / 12) + 2012;
     this.yearDateSlider = `${_year}-${_mon}`;
   }
 
@@ -513,18 +527,18 @@ export class MapModalComponent implements OnInit {
    */
   public onPopuSliderChange(no: number) {
     this.popuDataPercent = this.popuService.getPopulationPercent(this.cityPopuSelect.enName, no);
-    var _mon = no % 4 == 0 ? 4 : no % 4;
-    var _year = no / 4 == 0 ? 2007 : Math.floor(no / 4) + 2007;
+    let _mon = no % 4 == 0 ? 4 : no % 4;
+    let _year = no / 4 == 0 ? 2007 : Math.floor(no / 4) + 2007;
     this.popuDateSlider = `${_year}-${_mon}`;
 
-    var popuf = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, no)[0]);
-    var popu14 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, 32)[0]);
-    var popu15 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, 36)[0]);
-    var popu16 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, 40)[0]);
-    var popu17 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, 44)[0]);
+    let popuf = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, no)[0]);
+    let popu14 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, 32)[0]);
+    let popu15 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, 36)[0]);
+    let popu16 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, 40)[0]);
+    let popu17 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, 44)[0]);
     this.barChartData = [{ data: [popu14, popu15, popu16, popu17, popuf], label: this.cityPopuSelect.chName }];
 
-    var bartmpLabels = ['2014', '2015', '2016', '2017', `${_year}-${_mon}(季)`];
+    let bartmpLabels = ['2014', '2015', '2016', '2017', `${_year}-${_mon}(季)`];
     this.barChartLabels.length = 0;
     for (let i = 0; i < bartmpLabels.length; i++) {
       this.barChartLabels.push(bartmpLabels[i]);

@@ -6,32 +6,33 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import { GeoJson, Features, Geometry } from '../class/geo-json';
+
+import { Hospi } from '../class/hospi';
+import { Secure } from '../class/secure';
 import { Care } from '../class/care';
 import { Temple } from '../class/temple';
-import { Secure } from '../class/secure';
 import { Burglary } from '../class/burglary';
-import { Hospi } from '../class/hospi';
 
 @Injectable()
 export class LayerService {
 
-  private templeGeoJson: GeoJson = new GeoJson();
-  private careGeoJson: GeoJson = new GeoJson();
-  private secureGeoJson: GeoJson = new GeoJson();
-  private burglaryGeoJson: GeoJson = new GeoJson();
   private hospiGeoJson: GeoJson = new GeoJson();
+  private secureGeoJson: GeoJson = new GeoJson();
+  private careGeoJson: GeoJson = new GeoJson();
+  private templeGeoJson: GeoJson = new GeoJson();
+  private burglaryGeoJson: GeoJson = new GeoJson();
 
-  private temple: Temple;
-  private care: Care;
-  private secure: Secure;
-  private burglary: Burglary;
   private hospi: Hospi;
+  private secure: Secure;
+  private care: Care;
+  private temple: Temple;
+  private burglary: Burglary;
 
-  private templeArr: Temple[];
-  private careArr: Care[];
-  private secureArr: Secure[];
-  private burglaryArr: Burglary[];
   private hospiArr: Hospi[];
+  private secureArr: Secure[];
+  private careArr: Care[];
+  private templeArr: Temple[];
+  private burglaryArr: Burglary[];
 
   private fileUrl: string = 'assets/layer/';
   private fileCategory: string = '';
@@ -40,40 +41,49 @@ export class LayerService {
   private fileUrlMap: string = 'assets/layer/map/county.json';
   constructor(private http: Http) { }
 
+  /**
+   * 讀取地區 JSON（GeoJson）
+   */
   public getTaiwanLayer() {
     return this.http.get(this.fileUrlMap)
-      .map(this.saveTaiwan);
+      .map((res) => {
+        return res.json() || {}
+      });
   }
 
-  private saveTaiwan(res: Response) {
-    return res.json() || {};
-  }
-
-  public getTempleLayer(category: string, city: string) {
+  /**
+   * 讀取指標 CSV（監視器、醫院診所、照護機構、宗教建設、竊盜紀錄）
+   * @param category 
+   * @param city 
+   */
+  public getPointerLayer(category: string, city: string) {
     return this.http.get(this.fileUrl + category + '/' + city + this.fileExtend)
-      .map(this.saveTemple);
+      .map(
+      (res) => {
+        switch (category) {
+          case 'hospi':
+            return this.saveHospi(res);
+
+          case 'secure':
+            return this.saveSecure(res);
+
+          case 'care':
+            return this.saveCare(res);
+
+          case 'temple':
+            return this.saveTemple(res);
+
+          case 'burglary':
+            return this.saveBurglary(res);
+        }
+      }
+      );
   }
 
-  public getCareLayer(category: string, city: string) {
-    return this.http.get(this.fileUrl + category + '/' + city + this.fileExtend)
-      .map(this.saveCare);
-  }
-
-  public getSecureLayer(category: string, city: string) {
-    return this.http.get(this.fileUrl + category + '/' + city + this.fileExtend)
-      .map(this.saveSecure);
-  }
-
-  public getBurglaryLayer(category: string, city: string) {
-    return this.http.get(this.fileUrl + category + '/' + city + this.fileExtend)
-      .map(this.saveSecure);
-  }
-
-  public getHospiLayer(category: string, city: string) {
-    return this.http.get(this.fileUrl + category + '/' + city + this.fileExtend)
-      .map(this.saveHospi);
-  }
-
+  /**
+   * Layer - 宗教建設
+   * @param res 
+   */
   public saveTemple(res: Response): Temple[] {
     let csvData = res['_body'] || '';
     let allTextLines = csvData.split(/\r\n|\n/);
@@ -86,10 +96,10 @@ export class LayerService {
       if (data.length == headers.length) {
 
         this.temple = new Temple(
-          data[0],  // TempleName
-          data[1],  // LordGod
-          data[2],  // Area
-          data[3],  // Address
+          data[0],  // name
+          data[1],  // lordgod
+          data[2],  // area
+          data[3],  // address
           data[4],  // lat
           data[5]   // lng
         );
@@ -98,11 +108,14 @@ export class LayerService {
       }
       this.templeArr = lines;
 
-    } // fro
-
+    }
     return this.templeArr;
   }
 
+  /**
+   * Layer - 照護機構
+   * @param res 
+   */
   public saveCare(res: Response): Care[] {
     let csvData = res['_body'] || '';
     let allTextLines = csvData.split(/\r\n|\n/);
@@ -115,10 +128,10 @@ export class LayerService {
       if (data.length == headers.length) {
 
         this.care = new Care(
-          data[0],    // CareName
-          data[6],    // Service
-          data[1],    // Area
-          data[4],    // Address
+          data[0],    // name
+          data[6],    // service
+          data[1],    // area
+          data[4],    // address
           data[11],   // lat
           data[12]    // lng
         );
@@ -127,11 +140,14 @@ export class LayerService {
       }
       this.careArr = lines;
 
-    } // fro
-
+    }
     return this.careArr;
   }
 
+  /**
+   * Layer - 監視器
+   * @param res 
+   */
   public saveSecure(res: Response): Secure[] {
     let csvData = res['_body'] || '';
     let allTextLines = csvData.split(/\r\n|\n/);
@@ -153,11 +169,14 @@ export class LayerService {
       }
       this.secureArr = lines;
 
-    } // fro
-
+    }
     return this.secureArr;
   }
 
+  /**
+   * Layer - 竊盜紀錄
+   * @param res 
+   */
   public saveBurglary(res: Response): Burglary[] {
     let csvData = res['_body'] || '';
     let allTextLines = csvData.split(/\r\n|\n/);
@@ -173,18 +192,21 @@ export class LayerService {
           data[0],  // address
           data[1],  // lat
           data[2],  // lng
-          data[3]  // Address
+          data[3]   // date
         );
 
         lines.push(this.burglary);
       }
       this.burglaryArr = lines;
 
-    } // fro
-
+    }
     return this.burglaryArr;
   }
 
+  /**
+   * Layer - 醫院診所
+   * @param res 
+   */
   public saveHospi(res: Response): Hospi[] {
     let csvData = res['_body'] || '';
     let allTextLines = csvData.split(/\r\n|\n/);
@@ -208,11 +230,14 @@ export class LayerService {
       }
       this.hospiArr = lines;
 
-    } // fro
-
+    }
     return this.hospiArr;
   }
 
+  /**
+   * GeoJson - 宗教建設
+   * @param temple 
+   */
   public getTempleGeoJson(temple: any[]): GeoJson {
 
     temple.forEach(element => {
@@ -220,11 +245,11 @@ export class LayerService {
         new Features(
           {
             group: 'temple',
-            address: element.Address,
-            LordGod: element.element,
-            TempleName: element.TempleName,
+            name: element.name,
+            address: element.address,
             lat: Number(element.lat),
             lng: Number(element.lng),
+            lordgod: element.lordgod,
           },
           new Geometry('Point', [Number(element.lng), Number(element.lat)])
         )
@@ -234,6 +259,10 @@ export class LayerService {
     return JSON.parse(JSON.stringify(this.templeGeoJson));
   }
 
+  /**
+   * GeoJson - 照護機構
+   * @param care 
+   */
   public getCareGeoJson(care: any[]): GeoJson {
 
     care.forEach(element => {
@@ -241,11 +270,11 @@ export class LayerService {
         new Features(
           {
             group: 'care',
-            address: element.Address,
-            Service: element.Service,
-            CareName: element.CareName,
+            name: element.name,
+            address: element.address,
             lat: Number(element.lat),
             lng: Number(element.lng),
+            service: element.service,
           },
           new Geometry('Point', [Number(element.lng), Number(element.lat)])
         )
@@ -255,6 +284,10 @@ export class LayerService {
     return JSON.parse(JSON.stringify(this.careGeoJson));
   }
 
+  /**
+   * GeoJson - 監視器
+   * @param secure 
+   */
   public getSecureGeoJson(secure: any[]): GeoJson {
 
     secure.forEach(element => {
@@ -273,6 +306,10 @@ export class LayerService {
     return JSON.parse(JSON.stringify(this.secureGeoJson));
   }
 
+  /**
+   * GeoJson - 竊盜紀錄
+   * @param burglary 
+   */
   public getBurglaryGeoJson(burglary: any[]): GeoJson {
 
     burglary.forEach(element => {
@@ -281,9 +318,9 @@ export class LayerService {
           {
             group: 'burglary',
             address: element.address,
-            date: element.date,
             lat: Number(element.lat),
             lng: Number(element.lng),
+            date: element.date,
           },
           new Geometry('Point', [Number(element.lng), Number(element.lat)])
         )
@@ -292,6 +329,10 @@ export class LayerService {
     return JSON.parse(JSON.stringify(this.burglaryGeoJson));
   }
 
+  /**
+   * GeoJson - 醫院診所
+   * @param hospi 
+   */
   public getHospiGeoJson(hospi: any[]): GeoJson {
 
     hospi.forEach(element => {

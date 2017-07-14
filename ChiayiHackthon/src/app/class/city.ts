@@ -1,4 +1,8 @@
+/**
+ * 市區
+ */
 export class City {
+    
     public cityGroup: any[] = [
         {
             chName: '雲林縣',
