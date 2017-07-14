@@ -6,7 +6,7 @@
       <div class="card card-inverse card-primary o-hidden h-100">
         <div class="card-block">
           <i class="fa fa-3x fa-smile-o"></i>
-          <h1 class="text-center">34</h1>
+          <h1 class="text-center">{{countSecure}}</h1>
         </div>
         <div class="card-footer small">
           <h5>安全指數</h5>
@@ -17,7 +17,7 @@
       <div class="card card-inverse card-danger o-hidden h-100">
         <div class="card-block">
           <i class="fa fa-3x fa-heartbeat"></i>
-          <h1 class="text-center">31</h1>
+          <h1 class="text-center">{{countHospi}}</h1>
         </div>
         <div class="card-footer small">
           <h5>醫療指數</h5>
@@ -130,9 +130,10 @@
                 </div>
                 <div class="card-block">
                   <blockquote class="card-blockquote">
+                    <p>安全評估：{{countSecure}}</p>
+                    <p>醫院診所：{{countHospi}}</p>
                     <p>宗教建設：{{countTemple}}</p>
                     <p>照護機構：{{countCare}}</p>
-                    <p>國際團體：{{countGroup}}</p>
                   </blockquote>
                 </div>
               </div>
@@ -151,9 +152,11 @@
             <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="color" [fillOpacity]="0.6"></agm-circle>
             <agm-data-layer *ngIf="geolayerShowTaiwan" [geoJson]="geoLayerTaiwan" (layerClick)="infoWindow.open();geoLayerClick($event)"
               [style]="styleLayer"></agm-data-layer>
-            <agm-data-layer *ngIf="geolayerShowTemple" [geoJson]="geoLayerTemple" (layerClick)="infoWindow.open();geoLayerClick($event)"
+            <agm-data-layer *ngIf="geolayerShowSecure" [geoJson]="geoLayerSecure" (layerClick)="infoWindow.open();geoLayerClick($event)"
               [style]="styleLayer"></agm-data-layer>
             <agm-data-layer *ngIf="geolayerShowCare" [geoJson]="geoLayerCare" (layerClick)="infoWindow.open();geoLayerClick($event)"
+              [style]="styleLayer"></agm-data-layer>
+            <agm-data-layer *ngIf="geolayerShowTemple" [geoJson]="geoLayerTemple" (layerClick)="infoWindow.open();geoLayerClick($event)"
               [style]="styleLayer"></agm-data-layer>
             <agm-info-window #infoWindow [isOpen]="infowinIsOpen" [latitude]="infowinLat" [longitude]="infowinLng">
               <strong>{{infowinMsg[0]}}</strong>

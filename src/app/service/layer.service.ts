@@ -5,23 +5,24 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
+import { GeoJson, Features, Geometry } from '../class/geo-json';
 import { Care } from '../class/care';
 import { Temple } from '../class/temple';
-import { GeoJson, Features, Geometry } from '../class/geo-json';
+import { Secure } from '../class/secure';
 
 @Injectable()
 export class LayerService {
 
   private templeGeoJson: GeoJson = new GeoJson();
   private careGeoJson: GeoJson = new GeoJson();
-
-  private featureArr: Features[];
-  private features: Features;
+  private secureGeoJson: GeoJson = new GeoJson();
 
   private temple: Temple;
   private care: Care;
+  private secure: Secure;
   private templeArr: Temple[];
   private careArr: Care[];
+  private secureArr: Secure[];
 
   private fileUrl: string = 'assets/layer/';
   private fileCategory: string = '';
@@ -47,6 +48,11 @@ export class LayerService {
   public getCareLayer(category: string, city: string) {
     return this.http.get(this.fileUrl + category + '/' + city + this.fileExtend)
       .map(this.saveCare);
+  }
+
+  public getSecureLayer(category: string, city: string) {
+    return this.http.get(this.fileUrl + category + '/' + city + this.fileExtend)
+      .map(this.saveSecure);
   }
 
   public saveTemple(res: Response): Temple[] {
@@ -90,12 +96,12 @@ export class LayerService {
       if (data.length == headers.length) {
 
         this.care = new Care(
-          data[0],  // CareName
-          data[6],  // Service
-          data[1],  // Area
-          data[4],  // Address
-          data[11],  // lat
-          data[12]   // lng
+          data[0],    // CareName
+          data[6],    // Service
+          data[1],    // Area
+          data[4],    // Address
+          data[11],   // lat
+          data[12]    // lng
         );
 
         lines.push(this.care);
@@ -105,6 +111,32 @@ export class LayerService {
     } // fro
 
     return this.careArr;
+  }
+
+  public saveSecure(res: Response): Secure[] {
+    let csvData = res['_body'] || '';
+    let allTextLines = csvData.split(/\r\n|\n/);
+    let headers = allTextLines[0].split(',');
+
+    let lines = [];
+    for (let i = 1; i < allTextLines.length; i++) {
+
+      let data = allTextLines[i].split(',');
+      if (data.length == headers.length) {
+
+        this.secure = new Secure(
+          data[0],  // address
+          data[1],  // lat
+          data[2],  // lng 
+        );
+
+        lines.push(this.secure);
+      }
+      this.secureArr = lines;
+
+    } // fro
+
+    return this.secureArr;
   }
 
   public getTempleGeoJson(temple: any[]): GeoJson {
@@ -138,6 +170,25 @@ export class LayerService {
             address: element.Address,
             Service: element.Service,
             CareName: element.CareName,
+            lat: Number(element.lat),
+            lng: Number(element.lng),
+          },
+          new Geometry('Point', [Number(element.lng), Number(element.lat)])
+        )
+      );
+    });
+
+    return JSON.parse(JSON.stringify(this.careGeoJson));
+  }
+
+  public getSecureGeoJson(care: any[]): GeoJson {
+
+    care.forEach(element => {
+      this.secureGeoJson.features.push(
+        new Features(
+          {
+            group: 'secure',
+            address: element.address,
             lat: Number(element.lat),
             lng: Number(element.lng),
           },

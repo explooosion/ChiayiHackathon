@@ -12,6 +12,7 @@ import { PopulationStructureService } from '../../service/population-structure.s
 import { Marker } from '../../class/marker';
 import { City } from '../../class/city';
 import { Temple } from '../../class/temple';
+import { Secure } from '../../class/secure';
 
 declare var google: any;
 declare var jquery: any;
@@ -40,20 +41,24 @@ export class MapModalComponent implements OnInit {
   addr: string = "̨嘉義縣政府";
 
   // 分析統計
-  countTemple: number = 0;
+  countSecure: number = 0;
+  countHospi: number = 0;
   countCare: number = 0;
-  countGroup: number = 0;
+  countTemple: number = 0;
 
   // 圖層資料
   geoLayerTaiwan: Object = null;
-  geoLayerTemple: Object = null;
+  geoLayerSecure: Object = null;
+  geoLayerHospi: Object = null;
   geoLayerCare: Object = null;
+  geoLayerTemple: Object = null;
 
   // 圖層是否顯示
   geolayerShowTaiwan: boolean = false;
-  geolayerShowTemple: boolean = false;
+  geolayerShowSecure: boolean = false;
+  geolayerShowHospi: boolean = false;
   geolayerShowCare: boolean = false;
-  geolayerShowGroup: boolean = false;
+  geolayerShowTemple: boolean = false;
 
   // 點位訊息小窗
   infowinLat: number = 23.458987;
@@ -146,9 +151,10 @@ export class MapModalComponent implements OnInit {
       name: '指標圖層',
       isExpanded: true,
       children: [
-        { id: 21, name: '宗教建設' },
-        { id: 22, name: '照護機構' },
-        { id: 23, name: '國際團體' },
+        { id: 21, name: '監視器' },
+        { id: 22, name: '醫院診所' },
+        { id: 23, name: '照護機構' },
+        { id: 24, name: '宗教建設' },
       ]
     }
   ];
@@ -225,7 +231,7 @@ export class MapModalComponent implements OnInit {
 
     this.countCare = 0;
     this.countTemple = 0;
-    this.countGroup = 0;
+    this.countSecure = 0;
 
     this.geoLayerTemple['features'].forEach(async (element) => {
       // 在features當中儲存方式為顛倒 (GeoJson官方預設)
@@ -385,18 +391,22 @@ export class MapModalComponent implements OnInit {
         this.geolayerShowTaiwan = !this.geolayerShowTaiwan;
         break;
       case 21:
-        this.geolayerShowTemple = !this.geolayerShowTemple;
+        this.geolayerShowSecure = !this.geolayerShowSecure;
         break;
       case 22:
-        this.geolayerShowCare = !this.geolayerShowCare;
+        this.geoLayerHospi = !this.geoLayerHospi;
         break;
       case 23:
-        this.geolayerShowGroup = !this.geolayerShowGroup;
+        this.geolayerShowCare = !this.geolayerShowCare;
+        break;
+      case 24:
+        this.geolayerShowTemple = !this.geolayerShowTemple;
         break;
       case 2:
-        this.geolayerShowTemple = !this.geolayerShowTemple;
+        this.geolayerShowSecure = !this.geolayerShowSecure;
+        this.geoLayerHospi = !this.geoLayerHospi;
         this.geolayerShowCare = !this.geolayerShowCare;
-        this.geolayerShowGroup = !this.geolayerShowGroup;
+        this.geolayerShowTemple = !this.geolayerShowTemple;
         break;
     }
   }
