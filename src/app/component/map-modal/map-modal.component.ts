@@ -54,11 +54,11 @@ export class MapModalComponent implements OnInit {
   geoLayerTemple: Object = null;
 
   // 圖層是否顯示
-  geolayerShowTaiwan: boolean = false;
-  geolayerShowSecure: boolean = false;
-  geolayerShowHospi: boolean = false;
-  geolayerShowCare: boolean = false;
-  geolayerShowTemple: boolean = false;
+  geoLayerShowTaiwan: boolean = false;
+  geoLayerShowSecure: boolean = false;
+  geoLayerShowHospi: boolean = false;
+  geoLayerShowCare: boolean = false;
+  geoLayerShowTemple: boolean = false;
 
   // 點位訊息小窗
   infowinLat: number = 23.458987;
@@ -183,20 +183,20 @@ export class MapModalComponent implements OnInit {
         });
       });
 
-    await this.layerService.getTempleLayer('temple', 'Chiayi')
+    await this.layerService.getSecureLayer('secure', 'Chiayi')
       .subscribe(
       result => {
         this.zone.run(async () => {
 
-          this.layerService.getTempleGeoJson(result);
-
-          await this.layerService.getTempleLayer('temple', 'Yunlin')
-            .subscribe(
-            result => {
-              this.zone.run(() => {
-                this.geoLayerTemple = this.layerService.getTempleGeoJson(result);
-              });
-            });
+          //this.layerService.getSecureGeoJson(result);
+          this.geoLayerSecure = this.layerService.getSecureGeoJson(result);
+          // await this.layerService.getCareLayer('care', 'Yunlin')
+          //   .subscribe(
+          //   result => {
+          //     this.zone.run(() => {
+          //       this.geoLayerSecure = this.layerService.getSecureGeoJson(result);
+          //     });
+          //   });
         });
       });
 
@@ -212,6 +212,23 @@ export class MapModalComponent implements OnInit {
             result => {
               this.zone.run(() => {
                 this.geoLayerCare = this.layerService.getCareGeoJson(result);
+              });
+            });
+        });
+      });
+
+    await this.layerService.getTempleLayer('temple', 'Chiayi')
+      .subscribe(
+      result => {
+        this.zone.run(async () => {
+
+          this.layerService.getTempleGeoJson(result);
+
+          await this.layerService.getTempleLayer('temple', 'Yunlin')
+            .subscribe(
+            result => {
+              this.zone.run(() => {
+                this.geoLayerTemple = this.layerService.getTempleGeoJson(result);
               });
             });
         });
@@ -292,11 +309,14 @@ export class MapModalComponent implements OnInit {
   public styleLayer(feature) {
     var icon;
     switch (feature.getProperty('group')) {
-      case 'temple':
-        icon = 'assets/images/temple.png';
+      case 'secure':
+        icon = 'assets/images/secure.png';
         break;
       case 'care':
         icon = 'assets/images/care.png';
+        break;
+      case 'temple':
+        icon = 'assets/images/temple.png';
         break;
     }
     return {
@@ -388,25 +408,32 @@ export class MapModalComponent implements OnInit {
     switch (node.id) {
       case 1:
       case 11:
-        this.geolayerShowTaiwan = !this.geolayerShowTaiwan;
+        this.geoLayerShowTaiwan = !this.geoLayerShowTaiwan;
         break;
       case 21:
-        this.geolayerShowSecure = !this.geolayerShowSecure;
+        this.geoLayerShowSecure = !this.geoLayerShowSecure;
         break;
       case 22:
-        this.geoLayerHospi = !this.geoLayerHospi;
+        this.geoLayerShowHospi = !this.geoLayerShowHospi;
         break;
       case 23:
-        this.geolayerShowCare = !this.geolayerShowCare;
+        this.geoLayerShowCare = !this.geoLayerShowCare;
         break;
       case 24:
-        this.geolayerShowTemple = !this.geolayerShowTemple;
+        this.geoLayerShowTemple = !this.geoLayerShowTemple;
         break;
       case 2:
-        this.geolayerShowSecure = !this.geolayerShowSecure;
-        this.geoLayerHospi = !this.geoLayerHospi;
-        this.geolayerShowCare = !this.geolayerShowCare;
-        this.geolayerShowTemple = !this.geolayerShowTemple;
+        if (node.data.checked) {
+          this.geoLayerShowSecure = true;
+          this.geoLayerShowHospi = true;
+          this.geoLayerShowCare = true;
+          this.geoLayerShowTemple = true;
+        } else {
+          this.geoLayerShowSecure = false;
+          this.geoLayerShowHospi = false;
+          this.geoLayerShowCare = false;
+          this.geoLayerShowTemple = false;
+        }
         break;
     }
   }

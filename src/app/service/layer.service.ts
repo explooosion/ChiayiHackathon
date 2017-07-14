@@ -135,7 +135,7 @@ export class LayerService {
       this.secureArr = lines;
 
     } // fro
-
+ 
     return this.secureArr;
   }
 
@@ -181,9 +181,9 @@ export class LayerService {
     return JSON.parse(JSON.stringify(this.careGeoJson));
   }
 
-  public getSecureGeoJson(care: any[]): GeoJson {
+  public getSecureGeoJson(secure: any[]): GeoJson {
 
-    care.forEach(element => {
+    secure.forEach(element => {
       this.secureGeoJson.features.push(
         new Features(
           {
@@ -196,7 +196,6 @@ export class LayerService {
         )
       );
     });
-
-    return JSON.parse(JSON.stringify(this.careGeoJson));
+    return JSON.parse(JSON.stringify(this.secureGeoJson));
   }
 }
