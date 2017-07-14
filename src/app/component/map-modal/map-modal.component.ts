@@ -13,7 +13,6 @@ import { Marker } from '../../class/marker';
 import { City } from '../../class/city';
 import { Temple } from '../../class/temple';
 
-declare var wNumb: any;
 declare var google: any;
 declare var jquery: any;
 declare var $: any;
@@ -26,18 +25,24 @@ declare var Slider: any;
   providers: [
     GMapsService,
     LayerService,
-    Marker,
     YearStructureService,
+    Marker,
     PopulationStructureService,
   ]
 })
 export class MapModalComponent implements OnInit {
 
+  // 初始資料
   lat: number = 23.4589877;
   lng: number = 120.29294219999997;
-  radius: number = 100; // 半徑(公尺)
-  color: string = '#FECE00';
+  radius: number = 1000; // 半徑(公尺)
+  color: string = 'rgba(253,216,55,0.57)';
   addr: string = "̨嘉義縣政府";
+
+  // 分析統計
+  countTemple: number = 0;
+  countCare: number = 0;
+  countGroup: number = 0;
 
   // 圖層資料
   geoLayerTaiwan: Object = null;
@@ -216,20 +221,45 @@ export class MapModalComponent implements OnInit {
     this.infowinIsOpen = true;
   }
 
-  public async getDistance() {
-    var p1 = [23.4791187, 120.441138];
-    var p2 = [23.4781758, 120.44138659999999];
-    await this.gmapService.getDistance(p1, p2)
-      .subscribe(
-      result => {
-        //必須使用zone 觀察整個 view 否則會導致延遲
-        this.zone.run(() => {
-          console.log(result);
+  public analyticsPointer() {
+
+    this.countCare = 0;
+    this.countTemple = 0;
+    this.countGroup = 0;
+
+    this.geoLayerTemple['features'].forEach(async (element) => {
+      // 在features當中儲存方式為顛倒 (GeoJson官方預設)
+      var lat = Number(element.geometry.coordinates[1]);
+      var lng = Number(element.geometry.coordinates[0]);
+      var p2 = [lat, lng];
+      await this.gmapService.getDistance([this.lat, this.lng], p2)
+        .subscribe(
+        result => {
+          this.zone.run(() => {
+            if (result <= this.radius) {
+              this.countTemple++;
+            }
+          });
         });
-      },
-      error => console.log(error),
-      () => console.log('Calculating completed!')
-      );
+    });
+
+    this.geoLayerCare['features'].forEach(async (element) => {
+
+      // 在features當中儲存方式為顛倒 (GeoJson官方預設)
+      var lat = Number(element.geometry.coordinates[1]);
+      var lng = Number(element.geometry.coordinates[0]);
+      var p2 = [lat, lng];
+      await this.gmapService.getDistance([this.lat, this.lng], p2)
+        .subscribe(
+        result => {
+          this.zone.run(() => {
+            if (result <= this.radius) {
+              this.countCare++;
+            }
+          });
+        });
+    });
+
   }
 
   public async setCircle() {
@@ -254,9 +284,7 @@ export class MapModalComponent implements OnInit {
   }
 
   public styleLayer(feature) {
-
-    //var visibility = filter == group ? isShow : !isShow; 
-    var icon, visibility = true;
+    var icon;
     switch (feature.getProperty('group')) {
       case 'temple':
         icon = 'assets/images/temple.png';
@@ -267,7 +295,7 @@ export class MapModalComponent implements OnInit {
     }
     return {
       icon: icon,
-      visible: visibility,
+      visible: true,
       fillColor: 'green',
       fillOpacity: 0.2,
       strokeColor: 'green',
