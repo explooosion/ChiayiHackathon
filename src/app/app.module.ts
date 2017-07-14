@@ -29,7 +29,7 @@ import { TreeModule } from 'angular-tree-component';
     HttpModule,
     JsonpModule,
     AgmCoreModule.forRoot({
-      apiKey: '',
+      apiKey: 'AIzaSyDT7xIZ1hGuhosRMMHp7euLSjKmJUgRip8',
       language: 'zh-TW'
     }),
     ChartsModule,

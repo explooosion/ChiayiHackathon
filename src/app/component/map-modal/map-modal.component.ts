@@ -11,6 +11,7 @@ import { PopulationStructureService } from '../../service/population-structure.s
 
 import { Marker } from '../../class/marker';
 import { City } from '../../class/city';
+import { Temple } from '../../class/temple';
 
 declare var wNumb: any;
 declare var google: any;
@@ -22,8 +23,13 @@ declare var Slider: any;
   selector: 'app-map-modal',
   templateUrl: './map-modal.component.html',
   styleUrls: ['./map-modal.component.css'],
-  providers: [GMapsService, LayerService, Marker,
-    YearStructureService, PopulationStructureService]
+  providers: [
+    GMapsService,
+    LayerService,
+    Marker,
+    YearStructureService,
+    PopulationStructureService,
+  ]
 })
 export class MapModalComponent implements OnInit {
 
@@ -32,8 +38,26 @@ export class MapModalComponent implements OnInit {
   radius: number = 100; // 半徑(公尺)
   color: string = '#FECE00';
   addr: string = "̨嘉義火車站";
+
+  geoFeature: any[];
   geoTaiwanLayer: Object = null;
   geoJsonObjectIsAdd: boolean = false;
+
+  //All Layer
+  geoLayer: Object = null;
+  geoLayer2: Object = null;
+
+  // All Layer IsShow
+  geolayerShowTaiwan: boolean = false;
+  geolayerShowTemple: boolean = false;
+  geolayerShowCare: boolean = false;
+  geolayerShowGroup: boolean = false;
+
+  // Info Window
+  infowinLat: number = 23.4791187;
+  infowinLng: number = 120.441138;
+  infowinMsg: string[] = ['', ''];
+  infowinIsOpen: boolean = false;
 
   // Slider Config - YearStructure
   yearActiveSlider: string = 'false';
@@ -127,16 +151,9 @@ export class MapModalComponent implements OnInit {
     }
   ];
 
-  // Map Mark
-  layerTaiwan: boolean = false;
-  layerTemple: boolean = false;
-  layerHospi: boolean = false;
-  layerGroup: boolean = false;
-
-
   constructor(
-    private yearService: YearStructureService,
     private popuService: PopulationStructureService,
+    private yearService: YearStructureService,
     private gmapService: GMapsService,
     private layerService: LayerService,
     private zone: NgZone,
@@ -145,6 +162,67 @@ export class MapModalComponent implements OnInit {
 
   ngOnInit() {
     this.getYearCSV();
+    this.getAllLayer();
+  }
+
+  public async getAllLayer() {
+
+    await this.layerService.getTempleLayer('temple', 'Chiayi')
+      .subscribe(
+      result => {
+        this.zone.run(async () => {
+
+          this.layerService.getTempleGeoJson(result);
+
+          await this.layerService.getTempleLayer('temple', 'Yunlin')
+            .subscribe(
+            result => {
+              this.zone.run(() => {
+                this.geoLayer = this.layerService.getTempleGeoJson(result);
+              });
+            },
+            error => {
+              console.log(error);
+            });
+        });
+      },
+      error => {
+        console.log(error);
+      });
+
+
+    await this.layerService.getCareLayer('care', 'Chiayi')
+      .subscribe(
+      res => {
+        this.zone.run(async () => {
+
+          this.layerService.getCareGeoJson(res);
+
+          await this.layerService.getCareLayer('care', 'Yunlin')
+            .subscribe(
+            result => {
+              this.zone.run(() => {
+                this.geoLayer2 = this.layerService.getCareGeoJson(result);
+              });
+            },
+            error => {
+              console.log(error);
+            });
+
+        });
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
+  public geoLayerClick(e) {
+    let feature = e.feature.f;
+    this.infowinLat = feature.lat + 0.00008;
+    this.infowinLng = feature.lng;
+    this.infowinMsg[0] = feature.TempleName == null ? feature.CareName : feature.TempleName;
+    this.infowinMsg[1] = feature.address;
+    this.infowinIsOpen = true;
   }
 
   public async getDistance() {
@@ -179,12 +257,12 @@ export class MapModalComponent implements OnInit {
       );
   }
 
-  saveMarker(lat: number, lng: number) {
+  public saveMarker(lat: number, lng: number) {
     this.marker.lat = lat;
     this.marker.lng = lng;
   }
 
-  public async getLayer() {
+  public async getTaiwanLayer() {
     await this.layerService.getTaiwanLayer()
       .subscribe(
       result => {
@@ -197,14 +275,42 @@ export class MapModalComponent implements OnInit {
       });
   }
 
-  styleFunc(feature) {
+  public stylePointer(feature) {
+
+    //var visibility = filter == group ? isShow : !isShow; 
+    var icon, visibility = true;
+    switch (feature.getProperty('group')) {
+      case 'temple':
+        icon = 'assets/images/temple.png';
+        break;
+      case 'care':
+        icon = 'assets/images/care.png';
+        break;
+    }
+    return {
+      icon: icon,
+      visible: visibility,
+    };
+  }
+
+  public styleTest(feature) {
+    return {
+      //icon: 'assets/images/care.png',
+      visible: true,
+    };
+  }
+
+  public styleFunc(feature) {
     // get level - 0/1
-    //var level = feature.getProperty('level');
+    // var group = feature.getProperty('group');
+    // console.log(group);
     var color = 'green';
     // only show level one features
-    //var visibility = level == 1 ? true : false;
+    // var visibility = group == 'temple' ? true : false;
+    var filter = feature.getProperty('group');
+    //var visibility = filter == group ? isShow : !isShow; 
+    //var icon = group == 'temple' ? '' : 'assets/images/temple.png';
     return {
-      icon: 'assets/images/door.png',
       fillColor: color,
       fillOpacity: 0.2,
       strokeColor: color,
@@ -215,26 +321,26 @@ export class MapModalComponent implements OnInit {
     };
   }
 
-  optionYearChange(city: any) {
+  public optionYearChange(city: any) {
     this.yearDataPercent = this.yearService.getStructurePercent(city.enName, this.yearValueSlider);
     this.yearActiveSlider = ''; // 選擇縣市後才可以滑動 Slider
   }
 
-  onYearSliderChange(no: number) {
+  public onYearSliderChange(no: number) {
     this.yearDataPercent = this.yearService.getStructurePercent(this.cityYearSelect.enName, no);
     var _mon = no % 12 == 0 ? 12 : no % 12;
     var _year = no / 12 == 0 ? 2012 : Math.floor(no / 12) + 2012;
     this.yearDateSlider = `${_year}-${_mon}`;
   }
 
-  optionPopuChange(city: any) {
+  public optionPopuChange(city: any) {
     this.popuDataPercent = this.popuService.getPopulationPercent(city.enName, this.yearValueSlider)[0];
     this.popuActiveSlider = ''; // 選擇縣市後才可以滑動 Slider
 
     this.onPopuSliderChange(41);
   }
 
-  onPopuSliderChange(no: number) {
+  public onPopuSliderChange(no: number) {
     this.popuDataPercent = this.popuService.getPopulationPercent(this.cityPopuSelect.enName, no);
     var _mon = no % 4 == 0 ? 4 : no % 4;
     var _year = no / 4 == 0 ? 2007 : Math.floor(no / 4) + 2007;
@@ -262,23 +368,11 @@ export class MapModalComponent implements OnInit {
       });
   }
 
-
-  public layerControl() {
-    // 請顛倒做
-    if (this.layerTaiwan) {
-      this.getLayer();
-    } else {
-      this.zone.run(() => {
-        this.geoTaiwanLayer = null;
-      });
-    }
-  }
-
   public check(node, $event) {
+
     this.updateChildNodesCheckBox(node, $event.target.checked);
     this.updateParentNodesCheckBox(node.parent);
 
-    // Draw Map
     var layerid;
     if (node.children) {
       node.children.forEach((child) => {
@@ -287,16 +381,27 @@ export class MapModalComponent implements OnInit {
     } else {
       layerid = node.id;
     }
-
     switch (layerid) {
       case 11:
-        this.layerTaiwan = !this.layerTaiwan;
+        this.geolayerShowTaiwan = !this.geolayerShowTaiwan;
+        break;
+      case 21:
+        this.geolayerShowTemple = !this.geolayerShowTemple;
+        if (!this.geolayerShowTemple) {
+          this.geoLayer = null;
+        } else {
+          this.getAllLayer();
+        }
+        break;
+      case 22:
+        this.geolayerShowCare = !this.geolayerShowCare;
+        break;
+      case 23:
+        this.geolayerShowGroup = !this.geolayerShowGroup;
         break;
     }
-
-    console.log(this.layerTaiwan);
-    this.layerControl();
   }
+
   public updateChildNodesCheckBox(node, checked) {
     node.data.checked = checked;
     if (node.children) {

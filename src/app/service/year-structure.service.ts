@@ -10,7 +10,7 @@ export class YearStructureService {
 
   private ys: Yearstructure;
   private ysArr: Yearstructure[];
-  
+
   private fileUrl: string = 'assets/data/';
   private fileExtend: string = '.csv';
 

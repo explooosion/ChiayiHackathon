@@ -141,10 +141,15 @@
 
       <div class="col-6">
         <div class="gmap">
-          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="17">
+          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="17" [disableDefaultUI]="false">
             <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
             <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="color" [fillOpacity]="0.6"></agm-circle>
-            <agm-data-layer *ngIf="geoTaiwanLayer" [geoJson]="geoTaiwanLayer" (layerClick)="clicked($event)" [style]="styleFunc"></agm-data-layer>
+            <agm-data-layer *ngIf="geoLayer" [geoJson]="geoLayer" (layerClick)="infoWindow.open();geoLayerClick($event)" [style]="stylePointer"></agm-data-layer>
+            <agm-data-layer *ngIf="geoLayer2" [geoJson]="geoLayer2" (layerClick)="infoWindow.open();geoLayerClick($event)" [style]="stylePointer"></agm-data-layer>
+            <agm-info-window #infoWindow [isOpen]="infowinIsOpen" [latitude]="infowinLat" [longitude]="infowinLng">
+              <strong>{{infowinMsg[0]}}</strong>
+              <p>{{infowinMsg[1]}}</p>
+            </agm-info-window>
           </agm-map>
 
         </div>
@@ -152,7 +157,7 @@
 
     </div>
   </div>
-
+ 
 
 </div>
 
