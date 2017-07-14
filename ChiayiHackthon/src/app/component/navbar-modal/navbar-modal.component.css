@@ -1,0 +1,41 @@
+  .navbar {
+    min-height: 80px;
+  }
+
+  .navbar.bg-custom {
+    background-size: 100%;
+    background-image: -moz-linear-gradient(0deg, #33d5c5, #4bccef);
+    background-image: -webkit-linear-gradient(0deg, #33d5c5, #4bccef);
+    background-image: linear-gradient(90deg, #33d5c5, #4bccef);
+  }
+
+  .navbar-brand {
+    padding: 0 15px;
+    height: 80px;
+    line-height: 80px;
+    font-size: 2em;
+  }
+
+  .navbar-toggle {
+    /* (80px - button height 34px) / 2 = 23px */
+    margin-top: 23px;
+    padding: 9px 10px !important;
+  }
+
+  @media (min-width: 768px) {
+    .navbar-nav>li>a {
+      /* (80px - line-height of 27px) / 2 = 26.5px */
+      padding-top: 26.5px;
+      padding-bottom: 26.5px;
+      line-height: 27px;
+      font-size: 1.2em;
+    }
+  }
+
+  #navbar-toggler {
+    margin-top: 20px;
+  }
+
+  .navbar-collapse .navbar-text {
+    line-height: 60px;
+  }
