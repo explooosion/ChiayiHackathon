@@ -33,57 +33,54 @@ declare var Slider: any;
 })
 export class MapModalComponent implements OnInit {
 
-  lat: number = 23.4791187;
-  lng: number = 120.441138;
+  lat: number = 23.4589877;
+  lng: number = 120.29294219999997;
   radius: number = 100; // 半徑(公尺)
   color: string = '#FECE00';
-  addr: string = "̨嘉義火車站";
+  addr: string = "̨嘉義縣政府";
 
-  geoFeature: any[];
-  geoTaiwanLayer: Object = null;
-  geoJsonObjectIsAdd: boolean = false;
+  // 圖層資料
+  geoLayerTaiwan: Object = null;
+  geoLayerTemple: Object = null;
+  geoLayerCare: Object = null;
 
-  //All Layer
-  geoLayer: Object = null;
-  geoLayer2: Object = null;
-
-  // All Layer IsShow
+  // 圖層是否顯示
   geolayerShowTaiwan: boolean = false;
   geolayerShowTemple: boolean = false;
   geolayerShowCare: boolean = false;
   geolayerShowGroup: boolean = false;
 
-  // Info Window
-  infowinLat: number = 23.4791187;
-  infowinLng: number = 120.441138;
+  // 點位訊息小窗
+  infowinLat: number = 23.458987;
+  infowinLng: number = 120.29294219999997;
   infowinMsg: string[] = ['', ''];
   infowinIsOpen: boolean = false;
 
-  // Slider Config - YearStructure
+  // 年齡結構 - 卷軸
   yearActiveSlider: string = 'false';
   yearValueSlider: number = 1;
   yearDateSlider: string = `${new Date().getFullYear().toString()}-${new Date().getMonth().toString()}`;
 
-  // Slider Config - PopuLation
+  // 人口結構 - 卷軸
   popuActiveSlider: string = 'false';
   popuValueSlider: number = 41;
   popuDateSlider: string = `${new Date().getFullYear().toString()}-${new Date().getMonth().toString()}`;
 
-  // DataStore - YearStructure
+  // 年齡結構 - 圖表
   yearData: any[] = [];
-  yearDataFilter: any[] = []; // 儲存卷軸對應的No.資料
+  // yearDataFilter: any[] = []; // 儲存卷軸對應的No.資料
   yearDataPercent: any[] = [50, 50, 50]; // 年齡結構百分比[A群,B群,C群]
 
-  // DataStore - PopulationStructure
+  // 人口結構 - 圖表
   popuData: any[] = [];
   popuDataFilter: any[] = [];
   popuDataPercent: any[] = [50, 50, 50];
 
-  // DropDown - YearStructure
+  // 年齡結構 - 下拉式選單
   cityYearSelect = new City().cityGroup[0];
   cityYearGroup: any[] = new City().cityGroup;
 
-  // DropDown - PopulationStructure
+  // 人口結構 - 下拉式選單
   cityPopuSelect = new City().cityGroup[0];
   cityPopuGroup: any[] = new City().cityGroup;
 
@@ -162,9 +159,19 @@ export class MapModalComponent implements OnInit {
 
   ngOnInit() {
     this.getYearCSV();
+    this.LoadAllLayer();
   }
 
-  public async getTempleLayer() {
+  public async LoadAllLayer() {
+
+    await this.layerService.getTaiwanLayer()
+      .subscribe(
+      result => {
+        this.zone.run(() => {
+          this.geoLayerTaiwan = result;
+        });
+      });
+
     await this.layerService.getTempleLayer('temple', 'Chiayi')
       .subscribe(
       result => {
@@ -176,15 +183,11 @@ export class MapModalComponent implements OnInit {
             .subscribe(
             result => {
               this.zone.run(() => {
-                this.geoLayer = this.layerService.getTempleGeoJson(result);
+                this.geoLayerTemple = this.layerService.getTempleGeoJson(result);
               });
             });
         });
       });
-
-  }
-
-  public async getCareLayer() {
 
     await this.layerService.getCareLayer('care', 'Chiayi')
       .subscribe(
@@ -197,7 +200,7 @@ export class MapModalComponent implements OnInit {
             .subscribe(
             result => {
               this.zone.run(() => {
-                this.geoLayer2 = this.layerService.getCareGeoJson(result);
+                this.geoLayerCare = this.layerService.getCareGeoJson(result);
               });
             });
         });
@@ -250,20 +253,7 @@ export class MapModalComponent implements OnInit {
     this.marker.lng = lng;
   }
 
-  public async getTaiwanLayer() {
-    await this.layerService.getTaiwanLayer()
-      .subscribe(
-      result => {
-        this.zone.run(() => {
-          this.geoTaiwanLayer = result;
-        });
-      },
-      error => {
-        console.log(error);
-      });
-  }
-
-  public stylePointer(feature) {
+  public styleLayer(feature) {
 
     //var visibility = filter == group ? isShow : !isShow; 
     var icon, visibility = true;
@@ -278,42 +268,27 @@ export class MapModalComponent implements OnInit {
     return {
       icon: icon,
       visible: visibility,
-    };
-  }
-
-  public styleTest(feature) {
-    return {
-      //icon: 'assets/images/care.png',
-      visible: true,
-    };
-  }
-
-  public styleFunc(feature) {
-    // get level - 0/1
-    // var group = feature.getProperty('group');
-    // console.log(group);
-    var color = 'green';
-    // only show level one features
-    // var visibility = group == 'temple' ? true : false;
-    var filter = feature.getProperty('group');
-    //var visibility = filter == group ? isShow : !isShow; 
-    //var icon = group == 'temple' ? '' : 'assets/images/temple.png';
-    return {
-      fillColor: color,
+      fillColor: 'green',
       fillOpacity: 0.2,
-      strokeColor: color,
+      strokeColor: 'green',
       strokeWeight: 1,
       strokeOpacity: 0.8,
-      // make layer 1 features visible
-      // visible: visibility
     };
   }
 
+  /**
+   * 下拉式選單 - 年齡結構
+   * @param city 
+   */
   public optionYearChange(city: any) {
     this.yearDataPercent = this.yearService.getStructurePercent(city.enName, this.yearValueSlider);
     this.yearActiveSlider = ''; // 選擇縣市後才可以滑動 Slider
   }
 
+  /**
+   * 卷軸 - 年齡結構
+   * @param no 
+   */
   public onYearSliderChange(no: number) {
     this.yearDataPercent = this.yearService.getStructurePercent(this.cityYearSelect.enName, no);
     var _mon = no % 12 == 0 ? 12 : no % 12;
@@ -321,13 +296,20 @@ export class MapModalComponent implements OnInit {
     this.yearDateSlider = `${_year}-${_mon}`;
   }
 
+  /**
+   * 下拉式選單 - 人口結構
+   * @param city 
+   */
   public optionPopuChange(city: any) {
     this.popuDataPercent = this.popuService.getPopulationPercent(city.enName, this.yearValueSlider)[0];
     this.popuActiveSlider = ''; // 選擇縣市後才可以滑動 Slider
-
     this.onPopuSliderChange(41);
   }
 
+  /**
+   * 卷軸 - 年齡結構
+   * @param no 
+   */
   public onPopuSliderChange(no: number) {
     this.popuDataPercent = this.popuService.getPopulationPercent(this.cityPopuSelect.enName, no);
     var _mon = no % 4 == 0 ? 4 : no % 4;
@@ -348,6 +330,9 @@ export class MapModalComponent implements OnInit {
     }
   }
 
+  /**
+   * 取得資料原始資料 - 年齡結構
+   */
   public async getYearCSV() {
     await this.yearService.readCsv('YearStructure_Chiayi')
       .subscribe(
@@ -356,30 +341,23 @@ export class MapModalComponent implements OnInit {
       });
   }
 
+  /**
+   * 圖層控制
+   * @param node 
+   * @param event 
+   */
   public check(node, $event) {
 
     this.updateChildNodesCheckBox(node, $event.target.checked);
     this.updateParentNodesCheckBox(node.parent);
 
-    var layerid;
-    if (node.children) {
-      node.children.forEach((child) => {
-        layerid = child.id;
-      });
-    } else {
-      layerid = node.id;
-    }
-    switch (layerid) {
+    switch (node.id) {
+      case 1:
       case 11:
         this.geolayerShowTaiwan = !this.geolayerShowTaiwan;
         break;
       case 21:
         this.geolayerShowTemple = !this.geolayerShowTemple;
-        if (!this.geolayerShowTemple) {
-          this.geoLayer = null;
-        } else {
-          this.getAllLayer();
-        }
         break;
       case 22:
         this.geolayerShowCare = !this.geolayerShowCare;
@@ -387,15 +365,30 @@ export class MapModalComponent implements OnInit {
       case 23:
         this.geolayerShowGroup = !this.geolayerShowGroup;
         break;
+      case 2:
+        this.geolayerShowTemple = !this.geolayerShowTemple;
+        this.geolayerShowCare = !this.geolayerShowCare;
+        this.geolayerShowGroup = !this.geolayerShowGroup;
+        break;
     }
   }
 
+  /**
+   * check 連動
+   * @param node 
+   * @param checked 
+   */
   public updateChildNodesCheckBox(node, checked) {
     node.data.checked = checked;
     if (node.children) {
       node.children.forEach((child) => this.updateChildNodesCheckBox(child, checked));
     }
   }
+
+  /**
+   * check 連動
+   * @param node 
+   */
   public updateParentNodesCheckBox(node) {
     if (node && node.level > 0 && node.children) {
       let allChildChecked = true;
