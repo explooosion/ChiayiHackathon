@@ -13,6 +13,7 @@ import { Marker } from '../../class/marker';
 import { City } from '../../class/city';
 import { Temple } from '../../class/temple';
 import { Secure } from '../../class/secure';
+import { Burglary } from '../../class/burglary';
 
 declare var google: any;
 declare var jquery: any;
@@ -43,6 +44,7 @@ export class MapModalComponent implements OnInit {
 
   // 分析統計
   countSecure: number = 1644;
+  countBurglary: number = 0;
   countHospi: number = 18;
   countCare: number = 186;
   countTemple: number = 1492;
@@ -50,6 +52,7 @@ export class MapModalComponent implements OnInit {
   // 圖層資料
   geoLayerTaiwan: Object = null;
   geoLayerSecure: Object = null;
+  geoLayerBurglary: Object = null;
   geoLayerHospi: Object = null;
   geoLayerCare: Object = null;
   geoLayerTemple: Object = null;
@@ -57,6 +60,7 @@ export class MapModalComponent implements OnInit {
   // 圖層是否顯示
   geoLayerShowTaiwan: boolean = false;
   geoLayerShowSecure: boolean = false;
+  geoLayerShowBurglary: boolean = false;
   geoLayerShowHospi: boolean = false;
   geoLayerShowCare: boolean = false;
   geoLayerShowTemple: boolean = false;
@@ -156,6 +160,7 @@ export class MapModalComponent implements OnInit {
         { id: 22, name: '醫院診所' },
         { id: 23, name: '照護機構' },
         { id: 24, name: '宗教建設' },
+        { id: 25, name: '竊盜紀錄' },
       ]
     }
   ];
@@ -201,6 +206,23 @@ export class MapModalComponent implements OnInit {
         });
       });
 
+    await this.layerService.getBurglaryLayer('burglary', 'Chiayi')
+      .subscribe(
+      result => {
+        this.zone.run(async () => {
+
+          this.layerService.getBurglaryGeoJson(result);
+
+          await this.layerService.getBurglaryLayer('burglary', 'Yunlin')
+            .subscribe(
+            result => {
+              this.zone.run(() => {
+                this.geoLayerBurglary = this.layerService.getBurglaryGeoJson(result);
+              });
+            });
+        });
+      });
+
     await this.layerService.getCareLayer('care', 'Chiayi')
       .subscribe(
       result => {
@@ -240,7 +262,16 @@ export class MapModalComponent implements OnInit {
     let feature = e.feature.f;
     this.infowinLat = feature.lat + 0.00008;
     this.infowinLng = feature.lng;
-    this.infowinMsg[0] = feature.TempleName == null ? feature.CareName : feature.TempleName;
+
+    let name;
+    if (feature.TempleName) {
+      name = feature.TempleName;
+    } else if (feature.CareName) {
+      name = feature.CareName;
+    } else if (feature.Name) {
+      name = feature.Name;
+    }
+    this.infowinMsg[0] = name;
     this.infowinMsg[1] = feature.address;
     this.infowinIsOpen = true;
   }
@@ -301,6 +332,22 @@ export class MapModalComponent implements OnInit {
         });
     });
 
+    this.geoLayerBurglary['features'].forEach(async (element) => {
+      // 在features當中儲存方式為顛倒 (GeoJson官方預設)
+      var lat = Number(element.geometry.coordinates[1]);
+      var lng = Number(element.geometry.coordinates[0]);
+      var p2 = [lat, lng];
+      await this.gmapService.getDistance([this.lat, this.lng], p2)
+        .subscribe(
+        result => {
+          this.zone.run(() => {
+            if (result <= this.radius) {
+              this.countBurglary++;
+            }
+          });
+        });
+    });
+
   }
 
   public async setCircle() {
@@ -330,8 +377,14 @@ export class MapModalComponent implements OnInit {
   public styleLayer(feature) {
     var icon;
     switch (feature.getProperty('group')) {
+      case 'hospi':
+        icon = 'assets/images/hospi.png';
+        break;
       case 'secure':
         icon = 'assets/images/secure.png';
+        break;
+      case 'burglary':
+        icon = 'assets/images/burglary.png';
         break;
       case 'care':
         icon = 'assets/images/care.png';
@@ -443,17 +496,23 @@ export class MapModalComponent implements OnInit {
       case 24:
         this.geoLayerShowTemple = !this.geoLayerShowTemple;
         break;
+      case 25:
+        this.geoLayerShowBurglary = !this.geoLayerShowBurglary;
+        break;
       case 2:
         if (node.data.checked) {
           this.geoLayerShowSecure = true;
           this.geoLayerShowHospi = true;
           this.geoLayerShowCare = true;
           this.geoLayerShowTemple = true;
+          this.geoLayerShowBurglary = true;
+
         } else {
           this.geoLayerShowSecure = false;
           this.geoLayerShowHospi = false;
           this.geoLayerShowCare = false;
           this.geoLayerShowTemple = false;
+          this.geoLayerShowBurglary = false;
         }
         break;
     }

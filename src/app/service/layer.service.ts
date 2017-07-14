@@ -9,6 +9,7 @@ import { GeoJson, Features, Geometry } from '../class/geo-json';
 import { Care } from '../class/care';
 import { Temple } from '../class/temple';
 import { Secure } from '../class/secure';
+import { Burglary } from '../class/burglary';
 
 @Injectable()
 export class LayerService {
@@ -16,13 +17,18 @@ export class LayerService {
   private templeGeoJson: GeoJson = new GeoJson();
   private careGeoJson: GeoJson = new GeoJson();
   private secureGeoJson: GeoJson = new GeoJson();
+  private burglaryGeoJson: GeoJson = new GeoJson();
+
 
   private temple: Temple;
   private care: Care;
   private secure: Secure;
+  private burglary: Burglary;
+
   private templeArr: Temple[];
   private careArr: Care[];
   private secureArr: Secure[];
+  private burglaryArr: Burglary[];
 
   private fileUrl: string = 'assets/layer/';
   private fileCategory: string = '';
@@ -51,6 +57,11 @@ export class LayerService {
   }
 
   public getSecureLayer(category: string, city: string) {
+    return this.http.get(this.fileUrl + category + '/' + city + this.fileExtend)
+      .map(this.saveSecure);
+  }
+
+  public getBurglaryLayer(category: string, city: string) {
     return this.http.get(this.fileUrl + category + '/' + city + this.fileExtend)
       .map(this.saveSecure);
   }
@@ -135,8 +146,35 @@ export class LayerService {
       this.secureArr = lines;
 
     } // fro
- 
+
     return this.secureArr;
+  }
+
+  public saveBurglary(res: Response): Burglary[] {
+    let csvData = res['_body'] || '';
+    let allTextLines = csvData.split(/\r\n|\n/);
+    let headers = allTextLines[0].split(',');
+
+    let lines = [];
+    for (let i = 1; i < allTextLines.length; i++) {
+
+      let data = allTextLines[i].split(',');
+      if (data.length == headers.length) {
+
+        this.burglary = new Burglary(
+          data[0],  // address
+          data[1],  // lat
+          data[2],  // lng
+          data[3]  // Address
+        );
+
+        lines.push(this.burglary);
+      }
+      this.burglaryArr = lines;
+
+    } // fro
+
+    return this.burglaryArr;
   }
 
   public getTempleGeoJson(temple: any[]): GeoJson {
@@ -197,5 +235,25 @@ export class LayerService {
       );
     });
     return JSON.parse(JSON.stringify(this.secureGeoJson));
+  }
+
+  public getBurglaryGeoJson(burglary: any[]): GeoJson {
+
+    burglary.forEach(element => {
+      this.burglaryGeoJson.features.push(
+        new Features(
+          {
+            group: 'burglary',
+            address: element.address,
+            date: element.date,
+            lat: Number(element.lat),
+            lng: Number(element.lng),
+          },
+          new Geometry('Point', [Number(element.lng), Number(element.lat)])
+        )
+      );
+    });
+
+    return JSON.parse(JSON.stringify(this.burglaryGeoJson));
   }
 }

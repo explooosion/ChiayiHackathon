@@ -6,7 +6,7 @@
       <div class="card card-inverse card-primary o-hidden h-100">
         <div class="card-block">
           <i class="fa fa-3x fa-smile-o"></i>
-          <h1 class="text-center">{{countSecure}}</h1>
+          <h1 class="text-center">{{countSecure - countBurglary}}</h1>
         </div>
         <div class="card-footer small">
           <h5>安全指數</h5>
@@ -130,10 +130,11 @@
                 </div>
                 <div class="card-block">
                   <blockquote class="card-blockquote">
-                    <p>安全評估：{{countSecure}}</p>
+                    <p>監視器材：{{countSecure}}</p>
                     <p>醫院診所：{{countHospi}}</p>
                     <p>照護機構：{{countCare}}</p>
                     <p>宗教建設：{{countTemple}}</p>
+                    <p>竊盜紀錄F：{{countBurglary}}</p>
                   </blockquote>
                 </div>
               </div>
@@ -153,6 +154,8 @@
             <agm-data-layer *ngIf="geoLayerShowTaiwan" [geoJson]="geoLayerTaiwan" (layerClick)="infoWindow.open();geoLayerClick($event)"
               [style]="styleLayer"></agm-data-layer>
             <agm-data-layer *ngIf="geoLayerShowSecure" [geoJson]="geoLayerSecure" (layerClick)="infoWindow.open();geoLayerClick($event)"
+              [style]="styleLayer"></agm-data-layer>
+            <agm-data-layer *ngIf="geoLayerShowBurglary" [geoJson]="geoLayerBurglary" (layerClick)="infoWindow.open();geoLayerClick($event)"
               [style]="styleLayer"></agm-data-layer>
             <agm-data-layer *ngIf="geoLayerShowCare" [geoJson]="geoLayerCare" (layerClick)="infoWindow.open();geoLayerClick($event)"
               [style]="styleLayer"></agm-data-layer>
