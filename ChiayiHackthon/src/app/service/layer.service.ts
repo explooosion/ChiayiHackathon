@@ -10,6 +10,7 @@ import { Care } from '../class/care';
 import { Temple } from '../class/temple';
 import { Secure } from '../class/secure';
 import { Burglary } from '../class/burglary';
+import { Hospi } from '../class/hospi';
 
 @Injectable()
 export class LayerService {
@@ -18,17 +19,19 @@ export class LayerService {
   private careGeoJson: GeoJson = new GeoJson();
   private secureGeoJson: GeoJson = new GeoJson();
   private burglaryGeoJson: GeoJson = new GeoJson();
-
+  private hospiGeoJson: GeoJson = new GeoJson();
 
   private temple: Temple;
   private care: Care;
   private secure: Secure;
   private burglary: Burglary;
+  private hospi: Hospi;
 
   private templeArr: Temple[];
   private careArr: Care[];
   private secureArr: Secure[];
   private burglaryArr: Burglary[];
+  private hospiArr: Hospi[];
 
   private fileUrl: string = 'assets/layer/';
   private fileCategory: string = '';
@@ -64,6 +67,11 @@ export class LayerService {
   public getBurglaryLayer(category: string, city: string) {
     return this.http.get(this.fileUrl + category + '/' + city + this.fileExtend)
       .map(this.saveSecure);
+  }
+
+  public getHospiLayer(category: string, city: string) {
+    return this.http.get(this.fileUrl + category + '/' + city + this.fileExtend)
+      .map(this.saveHospi);
   }
 
   public saveTemple(res: Response): Temple[] {
@@ -177,6 +185,34 @@ export class LayerService {
     return this.burglaryArr;
   }
 
+  public saveHospi(res: Response): Hospi[] {
+    let csvData = res['_body'] || '';
+    let allTextLines = csvData.split(/\r\n|\n/);
+    let headers = allTextLines[0].split(',');
+
+    let lines = [];
+    for (let i = 1; i < allTextLines.length; i++) {
+
+      let data = allTextLines[i].split(',');
+      if (data.length == headers.length) {
+
+        this.hospi = new Hospi(
+          data[0],  // address
+          data[1],  // lat
+          data[2],  // lng
+          data[3],  // Address
+          data[4] == null ? '' : data[4], // level
+        );
+
+        lines.push(this.hospi);
+      }
+      this.hospiArr = lines;
+
+    } // fro
+
+    return this.hospiArr;
+  }
+
   public getTempleGeoJson(temple: any[]): GeoJson {
 
     temple.forEach(element => {
@@ -253,7 +289,26 @@ export class LayerService {
         )
       );
     });
-
     return JSON.parse(JSON.stringify(this.burglaryGeoJson));
+  }
+
+  public getHospiGeoJson(hospi: any[]): GeoJson {
+
+    hospi.forEach(element => {
+      this.hospiGeoJson.features.push(
+        new Features(
+          {
+            group: 'hospi',
+            name: element.name,
+            address: element.address,
+            lat: Number(element.lat),
+            lng: Number(element.lng),
+            level: element.level
+          },
+          new Geometry('Point', [Number(element.lng), Number(element.lat)])
+        )
+      );
+    });
+    return JSON.parse(JSON.stringify(this.hospiGeoJson));
   }
 }

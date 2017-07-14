@@ -14,6 +14,7 @@ import { City } from '../../class/city';
 import { Temple } from '../../class/temple';
 import { Secure } from '../../class/secure';
 import { Burglary } from '../../class/burglary';
+import { Hospi } from '../../class/Hospi';
 
 declare var google: any;
 declare var jquery: any;
@@ -43,11 +44,11 @@ export class MapModalComponent implements OnInit {
   addr: string = "̨嘉義縣政府";
 
   // 分析統計
-  countSecure: number = 1644;
-  countBurglary: number = 0;
-  countHospi: number = 18;
-  countCare: number = 186;
-  countTemple: number = 1492;
+  countSecure: number = 17;
+  countHospi: number = 7;
+  countCare: number = 3;
+  countTemple: number = 2;
+  countBurglary: number = 1;
 
   // 圖層資料
   geoLayerTaiwan: Object = null;
@@ -68,7 +69,7 @@ export class MapModalComponent implements OnInit {
   // 點位訊息小窗
   infowinLat: number = 23.458987;
   infowinLng: number = 120.29294219999997;
-  infowinMsg: string[] = ['', ''];
+  infowinMsg: string[] = ['', '', ''];
   infowinIsOpen: boolean = false;
 
   // 年齡結構 - 卷軸
@@ -105,13 +106,12 @@ export class MapModalComponent implements OnInit {
   doughnutChartType: string = 'doughnut'; // 改讀取 yearDataPercent
 
   // Char-Radar Config
-  radarChartLabels: string[] = ['食', '衣', '住', '行', '育', '樂'];
+  radarChartLabels: string[] = ['監視', '醫院', '照護', '宗教', '竊盜'];
   radarChartData: any = [
-    { data: [85, 75, 92, 67, 82, 79], label: '嘉義縣', },
-    { data: [79, 72, 85, 75, 91, 87], label: '雲林縣' }
+    { data: [17, 7, 3, 2, 1], label: '嘉義縣' }
   ];
   radarChartType: string = 'radar';
-  colors: any = [{
+  radarChartOptions: any = [{
     borderColor: 'rgba(54,162,235,.8)',
     backgroundColor: 'rgba(54,162,235,.3)',
     pointBackgroundColor: '#36A2EB',
@@ -256,6 +256,32 @@ export class MapModalComponent implements OnInit {
             });
         });
       });
+
+    await this.layerService.getHospiLayer('hospi', 'Chiayi')
+      .subscribe(
+      result => {
+        this.zone.run(async () => {
+
+          this.layerService.getHospiGeoJson(result);
+
+          await this.layerService.getHospiLayer('hospi', 'Yunlin')
+            .subscribe(
+            result => {
+              this.zone.run(async () => {
+
+                this.layerService.getHospiGeoJson(result);
+
+                await this.layerService.getHospiLayer('hospi', '長照ABC')
+                  .subscribe(
+                  result => {
+                    this.zone.run(() => {
+                      this.geoLayerHospi = this.layerService.getHospiGeoJson(result);
+                    });
+                  });
+              });
+            });
+        });
+      });
   }
 
   public geoLayerClick(e) {
@@ -270,9 +296,16 @@ export class MapModalComponent implements OnInit {
       name = feature.CareName;
     } else if (feature.Name) {
       name = feature.Name;
+    } else if (feature.name) {
+      name = feature.name;
     }
     this.infowinMsg[0] = name;
     this.infowinMsg[1] = feature.address;
+    if (feature.level) {
+      this.infowinMsg[2] = `長照等級：${feature.level}`;
+    } else {
+      this.infowinMsg[2] = null;
+    }
     this.infowinIsOpen = true;
   }
 
@@ -281,9 +314,24 @@ export class MapModalComponent implements OnInit {
     this.countSecure = 0;
     this.countCare = 0;
     this.countTemple = 0;
+    this.countHospi = 0;
+
+    this.geoLayerHospi['features'].forEach(async (element) => {
+      var lat = Number(element.geometry.coordinates[1]);
+      var lng = Number(element.geometry.coordinates[0]);
+      var p2 = [lat, lng];
+      await this.gmapService.getDistance([this.lat, this.lng], p2)
+        .subscribe(
+        result => {
+          this.zone.run(() => {
+            if (result <= this.radius) {
+              this.countHospi++;
+            }
+          });
+        });
+    });
 
     this.geoLayerTemple['features'].forEach(async (element) => {
-      // 在features當中儲存方式為顛倒 (GeoJson官方預設)
       var lat = Number(element.geometry.coordinates[1]);
       var lng = Number(element.geometry.coordinates[0]);
       var p2 = [lat, lng];
@@ -299,8 +347,6 @@ export class MapModalComponent implements OnInit {
     });
 
     this.geoLayerCare['features'].forEach(async (element) => {
-
-      // 在features當中儲存方式為顛倒 (GeoJson官方預設)
       var lat = Number(element.geometry.coordinates[1]);
       var lng = Number(element.geometry.coordinates[0]);
       var p2 = [lat, lng];
@@ -316,8 +362,6 @@ export class MapModalComponent implements OnInit {
     });
 
     this.geoLayerSecure['features'].forEach(async (element) => {
-
-      // 在features當中儲存方式為顛倒 (GeoJson官方預設)
       var lat = Number(element.geometry.coordinates[1]);
       var lng = Number(element.geometry.coordinates[0]);
       var p2 = [lat, lng];
@@ -333,7 +377,6 @@ export class MapModalComponent implements OnInit {
     });
 
     this.geoLayerBurglary['features'].forEach(async (element) => {
-      // 在features當中儲存方式為顛倒 (GeoJson官方預設)
       var lat = Number(element.geometry.coordinates[1]);
       var lng = Number(element.geometry.coordinates[0]);
       var p2 = [lat, lng];
@@ -347,6 +390,20 @@ export class MapModalComponent implements OnInit {
           });
         });
     });
+
+
+    // 分析完後要更新圖表 - 區域社福評估
+    this.radarChartData = [
+      {
+        data: [
+          this.countSecure,
+          this.countHospi,
+          this.countCare,
+          this.countTemple,
+          this.countBurglary],
+        label: this.addr
+      }
+    ];
 
   }
 
@@ -378,7 +435,23 @@ export class MapModalComponent implements OnInit {
     var icon;
     switch (feature.getProperty('group')) {
       case 'hospi':
-        icon = 'assets/images/hospi.png';
+
+        console.log(feature.getProperty('level'));
+        switch (feature.getProperty('level')) {
+          case 'A':
+            icon = 'assets/images/a.png';
+            break;
+          case 'B':
+            icon = 'assets/images/b.png';
+            break;
+          case 'C':
+            icon = 'assets/images/c.png';
+            break;
+          default:
+          case 1:
+            icon = 'assets/images/hospi.png';
+        }
+
         break;
       case 'secure':
         icon = 'assets/images/secure.png';

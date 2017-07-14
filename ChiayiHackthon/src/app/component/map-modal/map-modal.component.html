@@ -134,7 +134,7 @@
                     <p>醫院診所：{{countHospi}}</p>
                     <p>照護機構：{{countCare}}</p>
                     <p>宗教建設：{{countTemple}}</p>
-                    <p>竊盜紀錄F：{{countBurglary}}</p>
+                    <p>竊盜紀錄：{{countBurglary}}</p>
                   </blockquote>
                 </div>
               </div>
@@ -153,6 +153,8 @@
             <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="color" [fillOpacity]="0.6"></agm-circle>
             <agm-data-layer *ngIf="geoLayerShowTaiwan" [geoJson]="geoLayerTaiwan" (layerClick)="infoWindow.open();geoLayerClick($event)"
               [style]="styleLayer"></agm-data-layer>
+            <agm-data-layer *ngIf="geoLayerShowHospi" [geoJson]="geoLayerHospi" (layerClick)="infoWindow.open();geoLayerClick($event)"
+              [style]="styleLayer"></agm-data-layer>
             <agm-data-layer *ngIf="geoLayerShowSecure" [geoJson]="geoLayerSecure" (layerClick)="infoWindow.open();geoLayerClick($event)"
               [style]="styleLayer"></agm-data-layer>
             <agm-data-layer *ngIf="geoLayerShowBurglary" [geoJson]="geoLayerBurglary" (layerClick)="infoWindow.open();geoLayerClick($event)"
@@ -164,6 +166,7 @@
             <agm-info-window #infoWindow [isOpen]="infowinIsOpen" [latitude]="infowinLat" [longitude]="infowinLng">
               <strong>{{infowinMsg[0]}}</strong>
               <p>{{infowinMsg[1]}}</p>
+              <p>{{infowinMsg[2]}}</p>
             </agm-info-window>
           </agm-map>
 
@@ -323,7 +326,7 @@
           </div>
           <div class="card-block">
             <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
-              [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+              [chartType]="barChartType"></canvas>
           </div>
         </div>
       </div>
@@ -334,8 +337,7 @@
             <i class="fa fa-area-chart"></i> 區域社福評估
           </div>
           <div class="card-block">
-            <canvas baseChart [datasets]="radarChartData" [labels]="radarChartLabels" [chartType]="radarChartType" (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)"></canvas>
+            <canvas baseChart [datasets]="radarChartData" [labels]="radarChartLabels" [chartType]="radarChartType" [colors]="radarChartOptions"></canvas>
           </div>
         </div>
       </div>
