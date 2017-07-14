@@ -4,23 +4,30 @@
 @import url('./bootstrap-custom.css');
 @import "~nouislider/distribute/nouislider.min.css";
 * {
-    font-family: 'Noto Sans TC', sans-serif;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+*:not(input) {
+  outline: none;
 }
 
 body {
-    padding-top: 6.5rem;
+  padding-top: 6.5rem;
+  background: #434C5D !important;
 }
 
 header {
-    padding: 1.5rem;
-    text-align: center;
+  padding: 1.5rem;
+  text-align: center;
+  color: #fff;
 }
 
 .title {
-    padding: 10px 0;
-    margin: 40px auto 80px;
-    width: 350px;
-    border-top: 1px solid #888;
-    border-bottom: 1px solid #888;
-    letter-spacing: 1px;
+  padding: 12px 0;
+  margin: 40px auto 80px;
+  width: 350px;
+  color: #eee;
+  border-top: 2px solid #888;
+  border-bottom: 2px solid #888;
+  letter-spacing: 1px;
 }

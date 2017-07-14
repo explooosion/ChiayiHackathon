@@ -58,7 +58,7 @@
 
     <div class="row">
       <div class="col-lg-12 text-center">
-        <h2 class="title">社福環域指標</h2>
+        <h2 class="title">社福環域分析</h2>
       </div>
     </div>
 
@@ -72,35 +72,35 @@
         <div class="container">
 
           <div class="row form-group">
-            <label for="example-text-input" class="col-form-label">地址：</label>
+            <label for="example-text-input" class="col-form-label co-custom">地址：</label>
             <div class="col-6">
               <input type="text" class="form-control" [(ngModel)]="addr" placeholder="placeholderText" />
             </div>
             <div class="col-2">
-              <button type="button" class="btn btn-success btn-search" (click)="setCircle()">定位</button>
+              <button type="button" class="btn btn-success btn-search co-custom" (click)="setCircle()">定位</button>
             </div>
             <div class="col-2">
-              <button type="button" class="btn btn-success btn-search" (click)="analyticsPointer()">分析</button>
+              <button type="button" class="btn btn-success btn-search co-custom" (click)="analyticsPointer()">分析</button>
             </div>
           </div>
 
           <div class="row form-group">
-            <label class="col-form-label">經度：</label>
+            <label class="col-form-label co-custom">經度：</label>
             <div class="col-4">
               <input type="text" class="form-control" [(ngModel)]="lat" readonly />
             </div>
-            <label class="col-form-label">緯度：</label>
+            <label class="col-form-label co-custom">緯度：</label>
             <div class="col-4">
               <input type="text" class="form-control" [(ngModel)]="lng" readonly />
             </div>
           </div>
 
           <div class="row form-group">
-            <label class="col-form-label">半徑：</label>
+            <label class="col-form-label co-custom">半徑：</label>
             <div class="col-4">
               <input type="number" class="form-control" [(ngModel)]="radius" />
             </div>
-            <label class="col-form-label">顏色：</label>
+            <label class="col-form-label co-custom">顏色：</label>
             <div class="col-4">
               <input class="form-control" [(colorPicker)]="color" [style.background]="color" [value]="color" />
             </div>
@@ -109,7 +109,7 @@
           <div class="row">
             <div class="col-6">
               <div class="card">
-                <div class="card-header card-inverse card-success">
+                <div class="card-header card-inverse card-success co-custom">
                   圖層控制
                 </div>
                 <div class="card-block">
@@ -125,7 +125,7 @@
             </div>
             <div class="col-6">
               <div class="card">
-                <div class="card-header card-inverse card-success">
+                <div class="card-header card-inverse card-success co-custom">
                   環域分析結果
                 </div>
                 <div class="card-block">

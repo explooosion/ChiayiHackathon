@@ -1,7 +1,7 @@
 footer {
     padding: 15px 0;
     height: 120px;
-    background: #444;
+    background: #2B3442;
 }
 
 footer .nav-thanks {
@@ -10,12 +10,12 @@ footer .nav-thanks {
 
 footer .nav-thanks li {
     margin: 0 4px;
-    color: #777;
+    color: #707070;
     font-weight: normal;
 }
 
 footer .nav-thanks li+li::before {
     content: '｜';
     margin: 0 3px 0 -8px;
-    color: #555;
+    color: #666;
 }
