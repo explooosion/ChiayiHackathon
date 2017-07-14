@@ -1,8 +1,3 @@
- // Without JQuery
- $(document).ready(function () {
-
-   // Call the dataTables jQuery plugin
-
-
-
- });
+// 外部呼叫用 
+// $(document).ready(function () {
+//  });

@@ -21,7 +21,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "\r\n", ""]);
+exports.push([module.i, "\n", ""]);
 
 // exports
 
@@ -34,7 +34,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-navbar-modal></app-navbar-modal>\r\n<header>\r\n  <h1>{{title}}</h1>\r\n</header>\r\n<app-map-modal></app-map-modal>\r\n<app-data-modal></app-data-modal>\r\n<app-footer-modal></app-footer-modal>\r\n"
+module.exports = "<app-navbar-modal></app-navbar-modal>\n<header>\n  <h1>{{title}}</h1>\n</header>\n<app-map-modal></app-map-modal>\n<app-data-modal></app-data-modal>\n<app-footer-modal></app-footer-modal>\n"
 
 /***/ }),
 
@@ -58,8 +58,6 @@ var AppComponent = (function () {
     function AppComponent() {
         this.title = '高齡化社會發展趨勢之預測評估';
     }
-    AppComponent.prototype.ngOnInit = function () {
-    };
     return AppComponent;
 }());
 AppComponent = __decorate([
@@ -165,6 +163,9 @@ AppModule = __decorate([
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Burglary; });
+/**
+ * 圖層 - 竊盜紀錄
+ */
 var Burglary = (function () {
     function Burglary(address, lat, lng, date) {
         this.address = address;
@@ -184,12 +185,15 @@ var Burglary = (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Care; });
+/**
+ * 圖層 - 照護紀錄
+ */
 var Care = (function () {
-    function Care(CareName, Service, Area, Address, lat, lng) {
-        this.CareName = CareName;
-        this.Service = Service;
-        this.Area = Area;
-        this.Address = Address;
+    function Care(name, service, area, address, lat, lng) {
+        this.name = name;
+        this.service = service;
+        this.area = area;
+        this.address = address;
         this.lat = lat;
         this.lng = lng;
     }
@@ -205,6 +209,9 @@ var Care = (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return City; });
+/**
+ * 市區
+ */
 var City = (function () {
     function City() {
         this.cityGroup = [
@@ -275,6 +282,9 @@ var Geometry = (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Hospi; });
+/**
+ * 圖層 - 醫院診所
+ */
 var Hospi = (function () {
     function Hospi(name, address, lat, lng, level) {
         this.name = name;
@@ -295,6 +305,9 @@ var Hospi = (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Marker; });
+/**
+ * 座標屬性
+ */
 var Marker = (function () {
     function Marker() {
         this.lat = 0;
@@ -360,6 +373,9 @@ var Population = (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Secure; });
+/**
+ * 圖層 - 照護機構
+ */
 var Secure = (function () {
     function Secure(address, lat, lng) {
         this.address = address;
@@ -382,11 +398,11 @@ var Secure = (function () {
  * 廟宇資料接口
  */
 var Temple = (function () {
-    function Temple(TempleName, LordGod, Area, Address, lat, lng) {
-        this.TempleName = TempleName;
-        this.LordGod = LordGod;
-        this.Area = Area;
-        this.Address = Address;
+    function Temple(name, lordgod, area, address, lat, lng) {
+        this.name = name;
+        this.lordgod = lordgod;
+        this.area = area;
+        this.address = address;
         this.lat = lat;
         this.lng = lng;
     }
@@ -453,7 +469,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".modal-lg {\r\n  max-width: 90%;\r\n}\r\n", ""]);
+exports.push([module.i, ".modal-lg {\n  max-width: 90%;\n}\n", ""]);
 
 // exports
 
@@ -466,7 +482,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/component/data-modal/data-modal.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n\r\n  <!-- Modal -->\r\n  <div class=\"modal fade\" id=\"ysDataTable\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">\r\n    <div class=\"modal-dialog modal-lg\" role=\"document\">\r\n      <div class=\"modal-content\">\r\n        <div class=\"modal-header\">\r\n          <h5 class=\"modal-title\">年齡結構指標</h5>\r\n          <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n          <span aria-hidden=\"true\">&times;</span>\r\n        </button>\r\n        </div>\r\n        <div class=\"modal-body\">\r\n          <div class=\"table-responsive\">\r\n            <table id=\"YearTable\" class=\"table table-striped table-bordered\" width=\"100%\" cellspacing=\"0\">\r\n              <thead>\r\n                <tr>\r\n                  <th>No.</th>\r\n                  <th>year</th>\r\n                  <th>month</th>\r\n                  <th>yearmonth</th>\r\n                  <th>city</th>\r\n                  <th>zero_twelve</th>\r\n                  <th>twelve_seventeen</th>\r\n                  <th>twenty</th>\r\n                  <th>sixty_five</th>\r\n                  <th>twnty_sixty</th>\r\n                  <th>seventeen_twenty</th>\r\n                  <th>zero_twenty</th>\r\n                  <th>zero_seventeen</th>\r\n                  <th>seventeen_sixty</th>\r\n                </tr>\r\n              </thead>\r\n              <tbody>\r\n                <tr *ngFor=\"let data of yearData\">\r\n                  <td>{{data.no}}</td>\r\n                  <td>{{data.year}}</td>\r\n                  <td>{{data.month}}</td>\r\n                  <td>{{data.yearmonth}}</td>\r\n                  <td>{{data.city}}</td>\r\n                  <td>{{data.zero_twelve}}</td>\r\n                  <td>{{data.twelve_seventeen}}</td>\r\n                  <td>{{data.twenty}}</td>\r\n                  <td>{{data.sixty_five}}</td>\r\n                  <td>{{data.twnty_sixty}}</td>\r\n                  <td>{{data.seventeen_twenty}}</td>\r\n                  <td>{{data.zero_twenty}}</td>\r\n                  <td>{{data.zero_seventeen}}</td>\r\n                  <td>{{data.seventeen_sixty}}</td>\r\n                </tr>\r\n              </tbody>\r\n            </table>\r\n          </div>\r\n        </div>\r\n        <div class=\"modal-footer\">\r\n          <button type=\"button\" class=\"btn btn-info\" data-dismiss=\"modal\">Close</button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n\r\n  <!-- Modal -->\r\n  <div class=\"modal fade\" id=\"popuDataTable\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">\r\n    <div class=\"modal-dialog modal-lg\" role=\"document\">\r\n      <div class=\"modal-content\">\r\n        <div class=\"modal-header\">\r\n          <h5 class=\"modal-title\">人口數量變動</h5>\r\n          <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n          <span aria-hidden=\"true\">&times;</span>\r\n        </button>\r\n        </div>\r\n        <div class=\"modal-body\">\r\n          <div class=\"table-responsive\">\r\n            <table id=\"PopuTable\" class=\"table table-striped table-bordered\" width=\"100%\" cellspacing=\"0\">\r\n              <thead>\r\n                <tr>\r\n                  <th>No.</th>\r\n                  <th>year</th>\r\n                  <th>season</th>\r\n                  <th>year_season</th>\r\n                  <th>city</th>\r\n                  <th>total_population</th>\r\n                  <th>total_population_increase</th>\r\n                  <th>births</th>\r\n                  <th>deaths</th>\r\n                  <th>immigrants</th>\r\n                  <th>emigrants</th>\r\n                  <th>natural_increase_rate</th>\r\n                  <th>social_increase_rate</th>\r\n                  <th>total_increase_rate</th>\r\n                </tr>\r\n              </thead>\r\n              <tbody>\r\n                <tr *ngFor=\"let data of popuData\">\r\n                  <td>{{data.no}}</td>\r\n                  <td>{{data.year}}</td>\r\n                  <td>{{data.season}}</td>\r\n                  <td>{{data.year_season}}</td>\r\n                  <td>{{data.city}}</td>\r\n                  <td>{{data.total_population}}</td>\r\n                  <td>{{data.total_population_increase}}</td>\r\n                  <td>{{data.births}}</td>\r\n                  <td>{{data.deaths}}</td>\r\n                  <td>{{data.immigrants}}</td>\r\n                  <td>{{data.emigrants}}</td>\r\n                  <td>{{data.natural_increase_rate}}</td>\r\n                  <td>{{data.social_increase_rate}}</td>\r\n                  <td>{{data.total_increase_rate}}</td>\r\n                </tr>\r\n              </tbody>\r\n            </table>\r\n          </div>\r\n        </div>\r\n        <div class=\"modal-footer\">\r\n          <button type=\"button\" class=\"btn btn-info\" data-dismiss=\"modal\">Close</button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"container\">\n\n  <!-- Modal -->\n  <div class=\"modal fade\" id=\"ysDataTable\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">\n    <div class=\"modal-dialog modal-lg\" role=\"document\">\n      <div class=\"modal-content\">\n        <div class=\"modal-header\">\n          <h5 class=\"modal-title\">年齡結構指標</h5>\n          <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n        </div>\n        <div class=\"modal-body\">\n          <div class=\"table-responsive\">\n            <table id=\"YearTable\" class=\"table table-striped table-bordered\" width=\"100%\" cellspacing=\"0\">\n              <thead>\n                <tr>\n                  <th>No.</th>\n                  <th>year</th>\n                  <th>month</th>\n                  <th>yearmonth</th>\n                  <th>city</th>\n                  <th>zero_twelve</th>\n                  <th>twelve_seventeen</th>\n                  <th>twenty</th>\n                  <th>sixty_five</th>\n                  <th>twnty_sixty</th>\n                  <th>seventeen_twenty</th>\n                  <th>zero_twenty</th>\n                  <th>zero_seventeen</th>\n                  <th>seventeen_sixty</th>\n                </tr>\n              </thead>\n              <tbody>\n                <tr *ngFor=\"let data of yearData\">\n                  <td>{{data.no}}</td>\n                  <td>{{data.year}}</td>\n                  <td>{{data.month}}</td>\n                  <td>{{data.yearmonth}}</td>\n                  <td>{{data.city}}</td>\n                  <td>{{data.zero_twelve}}</td>\n                  <td>{{data.twelve_seventeen}}</td>\n                  <td>{{data.twenty}}</td>\n                  <td>{{data.sixty_five}}</td>\n                  <td>{{data.twnty_sixty}}</td>\n                  <td>{{data.seventeen_twenty}}</td>\n                  <td>{{data.zero_twenty}}</td>\n                  <td>{{data.zero_seventeen}}</td>\n                  <td>{{data.seventeen_sixty}}</td>\n                </tr>\n              </tbody>\n            </table>\n          </div>\n        </div>\n        <div class=\"modal-footer\">\n          <button type=\"button\" class=\"btn btn-info\" data-dismiss=\"modal\">Close</button>\n        </div>\n      </div>\n    </div>\n  </div>\n\n\n  <!-- Modal -->\n  <div class=\"modal fade\" id=\"popuDataTable\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">\n    <div class=\"modal-dialog modal-lg\" role=\"document\">\n      <div class=\"modal-content\">\n        <div class=\"modal-header\">\n          <h5 class=\"modal-title\">人口數量變動</h5>\n          <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n        </div>\n        <div class=\"modal-body\">\n          <div class=\"table-responsive\">\n            <table id=\"PopuTable\" class=\"table table-striped table-bordered\" width=\"100%\" cellspacing=\"0\">\n              <thead>\n                <tr>\n                  <th>No.</th>\n                  <th>year</th>\n                  <th>season</th>\n                  <th>year_season</th>\n                  <th>city</th>\n                  <th>total_population</th>\n                  <th>total_population_increase</th>\n                  <th>births</th>\n                  <th>deaths</th>\n                  <th>immigrants</th>\n                  <th>emigrants</th>\n                  <th>natural_increase_rate</th>\n                  <th>social_increase_rate</th>\n                  <th>total_increase_rate</th>\n                </tr>\n              </thead>\n              <tbody>\n                <tr *ngFor=\"let data of popuData\">\n                  <td>{{data.no}}</td>\n                  <td>{{data.year}}</td>\n                  <td>{{data.season}}</td>\n                  <td>{{data.year_season}}</td>\n                  <td>{{data.city}}</td>\n                  <td>{{data.total_population}}</td>\n                  <td>{{data.total_population_increase}}</td>\n                  <td>{{data.births}}</td>\n                  <td>{{data.deaths}}</td>\n                  <td>{{data.immigrants}}</td>\n                  <td>{{data.emigrants}}</td>\n                  <td>{{data.natural_increase_rate}}</td>\n                  <td>{{data.social_increase_rate}}</td>\n                  <td>{{data.total_increase_rate}}</td>\n                </tr>\n              </tbody>\n            </table>\n          </div>\n        </div>\n        <div class=\"modal-footer\">\n          <button type=\"button\" class=\"btn btn-info\" data-dismiss=\"modal\">Close</button>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -609,7 +625,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "footer {\r\n    padding: 15px 0;\r\n    height: 120px;\r\n    background: #2B3442;\r\n}\r\n\r\nfooter .nav-thanks {\r\n    margin: 6px 0;\r\n}\r\n\r\nfooter .nav-thanks li {\r\n    margin: 0 4px;\r\n    color: #707070;\r\n    font-weight: normal;\r\n}\r\n\r\nfooter .nav-thanks li+li::before {\r\n    content: '\\FF5C';\r\n    margin: 0 3px 0 -8px;\r\n    color: #666;\r\n}", ""]);
+exports.push([module.i, "footer {\n    padding: 15px 0;\n    height: 120px;\n    background: #2B3442;\n}\n\nfooter .nav-thanks {\n    margin: 6px 0;\n}\n\nfooter .nav-thanks li {\n    margin: 0 4px;\n    color: #707070;\n    font-weight: normal;\n}\n\nfooter .nav-thanks li+li::before {\n    content: '\\FF5C';\n    margin: 0 3px 0 -8px;\n    color: #666;\n}", ""]);
 
 // exports
 
@@ -645,8 +661,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var FooterModalComponent = (function () {
     function FooterModalComponent() {
     }
-    FooterModalComponent.prototype.ngOnInit = function () {
-    };
     return FooterModalComponent;
 }());
 FooterModalComponent = __decorate([
@@ -670,7 +684,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".dashboard {\r\n  margin: 60px auto 90px;\r\n}\r\n\r\n#currentGroup {\r\n  /* background: #A3CCFF; */\r\n  background: #3A4354;\r\n  padding: 2rem 0 !important;\r\n}\r\n\r\n#futureGroup {\r\n  background: #343C4B;\r\n  padding: 2rem 0 !important;\r\n}\r\n\r\nagm-map {\r\n  height: 600px;\r\n  width: 100%;\r\n}\r\n\r\n#charGroup {\r\n  margin: 30px auto;\r\n}\r\n\r\n#charGroup .card-inverse {\r\n  color: #f1f1f1;\r\n  background: #444;\r\n}\r\n\r\n\r\n/**/\r\n", ""]);
+exports.push([module.i, ".dashboard {\n  margin: 60px auto 90px;\n}\n\n#currentGroup {\n  /* background: #A3CCFF; */\n  background: #3A4354;\n  padding: 2rem 0 !important;\n}\n\n#futureGroup {\n  background: #343C4B;\n  padding: 2rem 0 !important;\n}\n\nagm-map {\n  height: 600px;\n  width: 100%;\n}\n\n#charGroup {\n  margin: 30px auto;\n}\n\n#charGroup .card-inverse {\n  color: #f1f1f1;\n  background: #444;\n}\n\n\n/**/\n", ""]);
 
 // exports
 
@@ -683,7 +697,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/component/map-modal/map-modal.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Breadcrumbs -->\r\n<div class=\"container dashboard\">\r\n  <!-- Icon Cards -->\r\n  <div class=\"row\">\r\n    <div class=\"col-xl-3 col-sm-6 mb-3\">\r\n      <div class=\"card card-inverse card-primary o-hidden h-100\">\r\n        <div class=\"card-block\">\r\n          <i class=\"fa fa-3x fa-smile-o\"></i>\r\n          <h1 class=\"text-center\">{{countSecure - countBurglary}}</h1>\r\n        </div>\r\n        <div class=\"card-footer small\">\r\n          <h5>安全指數</h5>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-xl-3 col-sm-6 mb-3\">\r\n      <div class=\"card card-inverse card-danger o-hidden h-100\">\r\n        <div class=\"card-block\">\r\n          <i class=\"fa fa-3x fa-heartbeat\"></i>\r\n          <h1 class=\"text-center\">{{countHospi}}</h1>\r\n        </div>\r\n        <div class=\"card-footer small\">\r\n          <h5>醫療指數</h5>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-xl-3 col-sm-6 mb-3\">\r\n      <div class=\"card card-inverse card-success o-hidden h-100\">\r\n        <div class=\"card-block\">\r\n          <i class=\"fa fa-3x fa-wheelchair\"></i>\r\n          <h1 class=\"text-center\">{{countCare}}</h1>\r\n        </div>\r\n        <div class=\"card-footer small\">\r\n          <h5>照護指數</h5>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-xl-3 col-sm-6 mb-3\">\r\n      <div class=\"card card-inverse card-warning o-hidden h-100\">\r\n        <div class=\"card-block\">\r\n          <i class=\"fa fa-3x fa-users\"></i>\r\n          <h1 class=\"text-center\">{{countTemple}}</h1>\r\n        </div>\r\n        <div class=\"card-footer small\">\r\n          <h5>宗教指數</h5>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n\r\n\r\n<div id=\"currentGroup\" class=\"jumbotron jumbotron-fluid\">\r\n\r\n\r\n  <div class=\"container\">\r\n\r\n    <div class=\"row\">\r\n      <div class=\"col-lg-12 text-center\">\r\n        <h2 class=\"title\">社福環域分析</h2>\r\n      </div>\r\n    </div>\r\n\r\n  </div>\r\n\r\n\r\n  <div class=\"container\">\r\n    <div class=\"row\">\r\n      <div class=\"col-6\">\r\n\r\n        <div class=\"container\">\r\n\r\n          <div class=\"row form-group\">\r\n            <label for=\"example-text-input\" class=\"col-form-label co-custom\">地址：</label>\r\n            <div class=\"col-6\">\r\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"addr\" placeholder=\"placeholderText\" />\r\n            </div>\r\n            <div class=\"col-2\">\r\n              <button type=\"button\" class=\"btn btn-success btn-search co-custom\" (click)=\"setCircle()\">定位</button>\r\n            </div>\r\n            <div class=\"col-2\">\r\n              <button type=\"button\" class=\"btn btn-success btn-search co-custom\" (click)=\"analyticsPointer()\">分析</button>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"row form-group\">\r\n            <label class=\"col-form-label co-custom\">經度：</label>\r\n            <div class=\"col-4\">\r\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"lat\" readonly />\r\n            </div>\r\n            <label class=\"col-form-label co-custom\">緯度：</label>\r\n            <div class=\"col-4\">\r\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"lng\" readonly />\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"row form-group\">\r\n            <label class=\"col-form-label co-custom\">半徑：</label>\r\n            <div class=\"col-4\">\r\n              <input type=\"number\" class=\"form-control\" [(ngModel)]=\"radius\" />\r\n            </div>\r\n            <label class=\"col-form-label co-custom\">顏色：</label>\r\n            <div class=\"col-4\">\r\n              <input class=\"form-control\" [(colorPicker)]=\"color\" [style.background]=\"color\" [value]=\"color\" />\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"row\">\r\n            <div class=\"col-6\">\r\n              <div class=\"card\">\r\n                <div class=\"card-header card-inverse card-success co-custom\">\r\n                  圖層控制\r\n                </div>\r\n                <div class=\"card-block\">\r\n                  <blockquote class=\"card-blockquote\">\r\n                    <tree-root #tree [nodes]=\"nodes\" [options]=\"treeOptions\">\r\n                      <template #treeNodeTemplate let-node=\"node\" let-index=\"index\">\r\n                        <input (change)=\"check( node, $event)\" type=\"checkbox\" [indeterminate]=\"node.data.indeterminate\" [checked]=\"node.data.checked\">                        {{ node.data.name }}\r\n                      </template>\r\n                    </tree-root>\r\n                  </blockquote>\r\n                </div>\r\n              </div>\r\n            </div>\r\n            <div class=\"col-6\">\r\n              <div class=\"card\">\r\n                <div class=\"card-header card-inverse card-success co-custom\">\r\n                  環域分析結果\r\n                </div>\r\n                <div class=\"card-block\">\r\n                  <blockquote class=\"card-blockquote\">\r\n                    <p>監視器材：{{countSecure}}</p>\r\n                    <p>醫院診所：{{countHospi}}</p>\r\n                    <p>照護機構：{{countCare}}</p>\r\n                    <p>宗教建設：{{countTemple}}</p>\r\n                    <p>竊盜紀錄：{{countBurglary}}</p>\r\n                  </blockquote>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n        </div>\r\n\r\n      </div>\r\n\r\n\r\n      <div class=\"col-6\">\r\n        <div class=\"gmap\">\r\n          <agm-map [latitude]=\"lat\" [longitude]=\"lng\" [zoom]=\"zoom\" [disableDefaultUI]=\"false\">\r\n            <agm-marker [latitude]=\"lat\" [longitude]=\"lng\"></agm-marker>\r\n            <agm-circle [latitude]=\"lat\" [longitude]=\"lng\" [radius]=\"radius\" [fillColor]=\"color\" [fillOpacity]=\"0.6\"></agm-circle>\r\n            <agm-data-layer *ngIf=\"geoLayerShowTaiwan\" [geoJson]=\"geoLayerTaiwan\" (layerClick)=\"infoWindow.open();geoLayerClick($event)\"\r\n              [style]=\"styleLayer\"></agm-data-layer>\r\n            <agm-data-layer *ngIf=\"geoLayerShowHospi\" [geoJson]=\"geoLayerHospi\" (layerClick)=\"infoWindow.open();geoLayerClick($event)\"\r\n              [style]=\"styleLayer\"></agm-data-layer>\r\n            <agm-data-layer *ngIf=\"geoLayerShowSecure\" [geoJson]=\"geoLayerSecure\" (layerClick)=\"infoWindow.open();geoLayerClick($event)\"\r\n              [style]=\"styleLayer\"></agm-data-layer>\r\n            <agm-data-layer *ngIf=\"geoLayerShowBurglary\" [geoJson]=\"geoLayerBurglary\" (layerClick)=\"infoWindow.open();geoLayerClick($event)\"\r\n              [style]=\"styleLayer\"></agm-data-layer>\r\n            <agm-data-layer *ngIf=\"geoLayerShowCare\" [geoJson]=\"geoLayerCare\" (layerClick)=\"infoWindow.open();geoLayerClick($event)\"\r\n              [style]=\"styleLayer\"></agm-data-layer>\r\n            <agm-data-layer *ngIf=\"geoLayerShowTemple\" [geoJson]=\"geoLayerTemple\" (layerClick)=\"infoWindow.open();geoLayerClick($event)\"\r\n              [style]=\"styleLayer\"></agm-data-layer>\r\n            <agm-info-window #infoWindow [isOpen]=\"infowinIsOpen\" [latitude]=\"infowinLat\" [longitude]=\"infowinLng\">\r\n              <strong>{{infowinMsg[0]}}</strong>\r\n              <p>{{infowinMsg[1]}}</p>\r\n              <p>{{infowinMsg[2]}}</p>\r\n            </agm-info-window>\r\n          </agm-map>\r\n\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n<div id=\"futureGroup\" class=\"jumbotron jumbotron-fluid\">\r\n\r\n  <div class=\"container\">\r\n\r\n    <div class=\"row\">\r\n      <div class=\"col-lg-12 text-center\">\r\n        <h2 class=\"title\">未來指標預測</h2>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"row\">\r\n      <div class=\"col-lg-6\">\r\n        <div class=\"card\">\r\n          <div class=\"card-header card-custom\">\r\n            <i class=\"fa fa-table\" aria-hidden=\"true\"></i>&nbsp;年齡結構指標（ 2012-01 ）\r\n          </div>\r\n          <div class=\"card-block\">\r\n            <blockquote class=\"card-blockquote\">\r\n              <div class=\"row\">\r\n                <div class=\"col-sm-12\">\r\n                  <h5><span class=\"badge badge-custom\"><var>y</var> = <var>a</var> + <var>b</var> * <var>x</var> + <var>b</var> * <var>x²</var></span></h5>\r\n                </div>\r\n              </div>\r\n              <div class=\"row\">\r\n                <div class=\"col-sm-2\">\r\n                  <label class=\"col-form-label\">縣市：</label>\r\n                </div>\r\n                <div class=\"col-sm-10\">\r\n                  <select id=\"optionCity\" class=\"form-control\" [(ngModel)]=\"cityYearSelect\" (ngModelChange)=\"optionYearChange($event)\">\r\n            <option disabled [ngValue]=\"-1\">請選擇縣市</option>\r\n            <option *ngFor=\"let option of cityYearGroup; let itemIndex = index\" [ngValue]=\"option\">{{option.chName }}</option>\r\n        </select>\r\n                </div>\r\n              </div>\r\n              <div class=\"row\">\r\n                <div class=\"col-sm-2\">\r\n                  <label class=\"col-form-label\">指標：</label>\r\n                </div>\r\n                <div class=\"col-sm-10\">\r\n                  <nouislider class=\"nouislider\" [min]=\"1\" [max]=\"250\" [step]=\"1\" [(ngModel)]=\"yearValueSlider\" (ngModelChange)=\"onYearSliderChange($event)\"\r\n                    [disabled]=\"yearActiveSlider\"></nouislider>\r\n                </div>\r\n              </div>\r\n              <table class=\"table table-bordered table-inverse table-custom\">\r\n                <thead>\r\n                  <tr>\r\n                    <th>估計年月</th>\r\n                    <th>0~17</th>\r\n                    <th>17~65</th>\r\n                    <th>65歲以上</th>\r\n                  </tr>\r\n                </thead>\r\n                <tbody>\r\n                  <tr>\r\n                    <td>{{ yearDateSlider }}</td>\r\n                    <td>{{ yearDataPercent[0] }}%</td>\r\n                    <td>{{ yearDataPercent[1] }}%</td>\r\n                    <td>{{ yearDataPercent[2] }}%</td>\r\n                  </tr>\r\n                </tbody>\r\n              </table>\r\n            </blockquote>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-lg-6\">\r\n        <div class=\"card\">\r\n          <div class=\"card-header card-custom\">\r\n            <i class=\"fa fa-table\" aria-hidden=\"true\"></i>&nbsp;人口數量預估（ 2012-01 ）\r\n          </div>\r\n          <div class=\"card-block\">\r\n            <blockquote class=\"card-blockquote\">\r\n              <div class=\"row\">\r\n                <div class=\"col-sm-12\">\r\n                  <h5><span class=\"badge badge-custom\"><var>y</var> = <var>a</var> + <var>b</var> * <var>x</var> + <var>b</var> * <var>x²</var></span></h5>\r\n                </div>\r\n              </div>\r\n              <div class=\"row\">\r\n                <div class=\"col-sm-2\">\r\n                  <label class=\"col-form-label\">縣市：</label>\r\n                </div>\r\n                <div class=\"col-sm-10\">\r\n                  <select id=\"optionCity\" class=\"form-control\" [(ngModel)]=\"cityPopuSelect\" (ngModelChange)=\"optionPopuChange($event)\">\r\n            <option disabled [ngValue]=\"-1\">請選擇縣市</option>\r\n            <option *ngFor=\"let option of cityPopuGroup; let itemIndex = index\" [ngValue]=\"option\">{{option.chName }}</option>\r\n        </select>\r\n                </div>\r\n              </div>\r\n              <div class=\"row\">\r\n                <div class=\"col-sm-2\">\r\n                  <label class=\"col-form-label\">指標：</label>\r\n                </div>\r\n                <div class=\"col-sm-10\">\r\n                  <nouislider class=\"nouislider\" [min]=\"41\" [max]=\"250\" [step]=\"1\" [(ngModel)]=\"popuValueSlider\" (ngModelChange)=\"onPopuSliderChange($event)\"\r\n                    [disabled]=\"popuActiveSlider\"></nouislider>\r\n                </div>\r\n              </div>\r\n              <table class=\"table table-bordered table-inverse table-custom\">\r\n                <thead>\r\n                  <tr>\r\n                    <th>估計年月</th>\r\n                    <th>總人口數</th>\r\n                    <th>自然成長係數</th>\r\n                    <th>社會成長係數</th>\r\n                  </tr>\r\n                </thead>\r\n                <tbody>\r\n                  <tr>\r\n                    <td>{{ popuDateSlider }}</td>\r\n                    <td>{{ popuDataPercent[0] }}人</td>\r\n                    <td>{{ popuDataPercent[1] }}%</td>\r\n                    <td>{{ popuDataPercent[2] }}%</td>\r\n                  </tr>\r\n                </tbody>\r\n              </table>\r\n            </blockquote>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n  </div>\r\n\r\n  <div id=\"charGroup\" class=\"container\">\r\n    <div class=\"row\">\r\n      <div class=\"col-xl-4 col-sm-6 mb-4\">\r\n        <div class=\"card h-100\">\r\n          <div class=\"card-header card-inverse\">\r\n            <i class=\"fa fa-pie-chart\"></i> 年齡結構分析\r\n          </div>\r\n          <div class=\"card-block\">\r\n            <canvas baseChart [data]=\"yearDataPercent\" [labels]=\"doughnutChartLabels\" [chartType]=\"doughnutChartType\"></canvas>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-xl-4 col-sm-6 mb-4\">\r\n        <div class=\"card h-100\">\r\n          <div class=\"card-header card-inverse\">\r\n            <i class=\"fa fa-bar-chart\"></i> 人口數量預測\r\n          </div>\r\n          <div class=\"card-block\">\r\n            <canvas baseChart [datasets]=\"barChartData\" [labels]=\"barChartLabels\" [options]=\"barChartOptions\" [legend]=\"barChartLegend\"\r\n              [chartType]=\"barChartType\"></canvas>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-xl-4 col-sm-6 mb-4\">\r\n        <div class=\"card h-100\">\r\n          <div class=\"card-header card-inverse\">\r\n            <i class=\"fa fa-area-chart\"></i> 區域社福評估\r\n          </div>\r\n          <div class=\"card-block\">\r\n            <canvas baseChart [datasets]=\"radarChartData\" [labels]=\"radarChartLabels\" [chartType]=\"radarChartType\" [colors]=\"radarChartOptions\"></canvas>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n</div>\r\n"
+module.exports = "<!-- Breadcrumbs -->\n<div class=\"container dashboard\">\n  <!-- Icon Cards -->\n  <div class=\"row\">\n    <div class=\"col-xl-3 col-sm-6 mb-3\">\n      <div class=\"card card-inverse card-primary o-hidden h-100\">\n        <div class=\"card-block\">\n          <i class=\"fa fa-3x fa-smile-o\"></i>\n          <h1 class=\"text-center\">{{countSecure - countBurglary}}</h1>\n        </div>\n        <div class=\"card-footer small\">\n          <h5>安全指數</h5>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-xl-3 col-sm-6 mb-3\">\n      <div class=\"card card-inverse card-danger o-hidden h-100\">\n        <div class=\"card-block\">\n          <i class=\"fa fa-3x fa-heartbeat\"></i>\n          <h1 class=\"text-center\">{{countHospi}}</h1>\n        </div>\n        <div class=\"card-footer small\">\n          <h5>醫療指數</h5>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-xl-3 col-sm-6 mb-3\">\n      <div class=\"card card-inverse card-success o-hidden h-100\">\n        <div class=\"card-block\">\n          <i class=\"fa fa-3x fa-wheelchair\"></i>\n          <h1 class=\"text-center\">{{countCare}}</h1>\n        </div>\n        <div class=\"card-footer small\">\n          <h5>照護指數</h5>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-xl-3 col-sm-6 mb-3\">\n      <div class=\"card card-inverse card-warning o-hidden h-100\">\n        <div class=\"card-block\">\n          <i class=\"fa fa-3x fa-users\"></i>\n          <h1 class=\"text-center\">{{countTemple}}</h1>\n        </div>\n        <div class=\"card-footer small\">\n          <h5>宗教指數</h5>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n\n\n<div id=\"currentGroup\" class=\"jumbotron jumbotron-fluid\">\n\n\n  <div class=\"container\">\n\n    <div class=\"row\">\n      <div class=\"col-lg-12 text-center\">\n        <h2 class=\"title\">社福環域分析</h2>\n      </div>\n    </div>\n\n  </div>\n\n\n  <div class=\"container\">\n    <div class=\"row\">\n      <div class=\"col-6\">\n\n        <div class=\"container\">\n\n          <div class=\"row form-group\">\n            <label for=\"example-text-input\" class=\"col-form-label co-custom\">地址：</label>\n            <div class=\"col-6\">\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"addr\" placeholder=\"placeholderText\" />\n            </div>\n            <div class=\"col-2\">\n              <button type=\"button\" class=\"btn btn-success btn-search co-custom\" (click)=\"setCircle()\">定位</button>\n            </div>\n            <div class=\"col-2\">\n              <button type=\"button\" class=\"btn btn-success btn-search co-custom\" (click)=\"analyticsPointer()\">分析</button>\n            </div>\n          </div>\n\n          <div class=\"row form-group\">\n            <label class=\"col-form-label co-custom\">經度：</label>\n            <div class=\"col-4\">\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"lat\" readonly />\n            </div>\n            <label class=\"col-form-label co-custom\">緯度：</label>\n            <div class=\"col-4\">\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"lng\" readonly />\n            </div>\n          </div>\n\n          <div class=\"row form-group\">\n            <label class=\"col-form-label co-custom\">半徑：</label>\n            <div class=\"col-4\">\n              <input type=\"number\" class=\"form-control\" [(ngModel)]=\"radius\" />\n            </div>\n            <label class=\"col-form-label co-custom\">顏色：</label>\n            <div class=\"col-4\">\n              <input class=\"form-control\" [(colorPicker)]=\"color\" [style.background]=\"color\" [value]=\"color\" />\n            </div>\n          </div>\n\n          <div class=\"row\">\n            <div class=\"col-6\">\n              <div class=\"card\">\n                <div class=\"card-header card-inverse card-success co-custom\">\n                  圖層控制\n                </div>\n                <div class=\"card-block\">\n                  <blockquote class=\"card-blockquote\">\n                    <tree-root #tree [nodes]=\"nodes\" [options]=\"treeOptions\">\n                      <template #treeNodeTemplate let-node=\"node\" let-index=\"index\">\n                        <input (change)=\"check( node, $event)\" type=\"checkbox\" [indeterminate]=\"node.data.indeterminate\" [checked]=\"node.data.checked\">                        {{ node.data.name }}\n                      </template>\n                    </tree-root>\n                  </blockquote>\n                </div>\n              </div>\n            </div>\n            <div class=\"col-6\">\n              <div class=\"card\">\n                <div class=\"card-header card-inverse card-success co-custom\">\n                  環域分析結果\n                </div>\n                <div class=\"card-block\">\n                  <blockquote class=\"card-blockquote\">\n                    <p>監視器材：{{countSecure}}</p>\n                    <p>醫院診所：{{countHospi}}</p>\n                    <p>照護機構：{{countCare}}</p>\n                    <p>宗教建設：{{countTemple}}</p>\n                    <p>竊盜紀錄：{{countBurglary}}</p>\n                  </blockquote>\n                </div>\n              </div>\n            </div>\n          </div>\n\n        </div>\n\n      </div>\n\n\n      <div class=\"col-6\">\n        <div class=\"gmap\">\n          <agm-map [latitude]=\"lat\" [longitude]=\"lng\" [zoom]=\"zoom\" [disableDefaultUI]=\"false\">\n            <agm-marker [latitude]=\"lat\" [longitude]=\"lng\"></agm-marker>\n            <agm-circle [latitude]=\"lat\" [longitude]=\"lng\" [radius]=\"radius\" [fillColor]=\"color\" [fillOpacity]=\"0.6\"></agm-circle>\n            <agm-data-layer *ngIf=\"geoLayerShowTaiwan\" [geoJson]=\"geoLayerTaiwan\" (layerClick)=\"infoWindow.open();geoLayerClick($event)\"\n              [style]=\"styleLayer\"></agm-data-layer>\n            <agm-data-layer *ngIf=\"geoLayerShowHospi\" [geoJson]=\"geoLayerHospi\" (layerClick)=\"infoWindow.open();geoLayerClick($event)\"\n              [style]=\"styleLayer\"></agm-data-layer>\n            <agm-data-layer *ngIf=\"geoLayerShowSecure\" [geoJson]=\"geoLayerSecure\" (layerClick)=\"infoWindow.open();geoLayerClick($event)\"\n              [style]=\"styleLayer\"></agm-data-layer>\n            <agm-data-layer *ngIf=\"geoLayerShowBurglary\" [geoJson]=\"geoLayerBurglary\" (layerClick)=\"infoWindow.open();geoLayerClick($event)\"\n              [style]=\"styleLayer\"></agm-data-layer>\n            <agm-data-layer *ngIf=\"geoLayerShowCare\" [geoJson]=\"geoLayerCare\" (layerClick)=\"infoWindow.open();geoLayerClick($event)\"\n              [style]=\"styleLayer\"></agm-data-layer>\n            <agm-data-layer *ngIf=\"geoLayerShowTemple\" [geoJson]=\"geoLayerTemple\" (layerClick)=\"infoWindow.open();geoLayerClick($event)\"\n              [style]=\"styleLayer\"></agm-data-layer>\n            <agm-info-window #infoWindow [isOpen]=\"infowinIsOpen\" [latitude]=\"infowinLat\" [longitude]=\"infowinLng\">\n              <strong>{{infowinMsg[0]}}</strong>\n              <p>{{infowinMsg[1]}}</p>\n              <p>{{infowinMsg[2]}}</p>\n            </agm-info-window>\n          </agm-map>\n\n        </div>\n      </div>\n\n    </div>\n  </div>\n\n\n</div>\n\n\n\n\n<div id=\"futureGroup\" class=\"jumbotron jumbotron-fluid\">\n\n  <div class=\"container\">\n\n    <div class=\"row\">\n      <div class=\"col-lg-12 text-center\">\n        <h2 class=\"title\">未來指標預測</h2>\n      </div>\n    </div>\n\n    <div class=\"row\">\n      <div class=\"col-lg-6\">\n        <div class=\"card\">\n          <div class=\"card-header card-custom\">\n            <i class=\"fa fa-table\" aria-hidden=\"true\"></i>&nbsp;年齡結構指標（ 2012-01 ）\n          </div>\n          <div class=\"card-block\">\n            <blockquote class=\"card-blockquote\">\n              <div class=\"row\">\n                <div class=\"col-sm-12\">\n                  <h5><span class=\"badge badge-custom\"><var>y</var> = <var>a</var> + <var>b</var> * <var>x</var> + <var>b</var> * <var>x²</var></span></h5>\n                </div>\n              </div>\n              <div class=\"row\">\n                <div class=\"col-sm-2\">\n                  <label class=\"col-form-label\">縣市：</label>\n                </div>\n                <div class=\"col-sm-10\">\n                  <select id=\"optionCity\" class=\"form-control\" [(ngModel)]=\"cityYearSelect\" (ngModelChange)=\"optionYearChange($event)\">\n            <option disabled [ngValue]=\"-1\">請選擇縣市</option>\n            <option *ngFor=\"let option of cityYearGroup; let itemIndex = index\" [ngValue]=\"option\">{{option.chName }}</option>\n        </select>\n                </div>\n              </div>\n              <div class=\"row\">\n                <div class=\"col-sm-2\">\n                  <label class=\"col-form-label\">指標：</label>\n                </div>\n                <div class=\"col-sm-10\">\n                  <nouislider class=\"nouislider\" [min]=\"1\" [max]=\"250\" [step]=\"1\" [(ngModel)]=\"yearValueSlider\" (ngModelChange)=\"onYearSliderChange($event)\"\n                    [disabled]=\"yearActiveSlider\"></nouislider>\n                </div>\n              </div>\n              <table class=\"table table-bordered table-inverse table-custom\">\n                <thead>\n                  <tr>\n                    <th>估計年月</th>\n                    <th>0~17</th>\n                    <th>17~65</th>\n                    <th>65歲以上</th>\n                  </tr>\n                </thead>\n                <tbody>\n                  <tr>\n                    <td>{{ yearDateSlider }}</td>\n                    <td>{{ yearDataPercent[0] }}%</td>\n                    <td>{{ yearDataPercent[1] }}%</td>\n                    <td>{{ yearDataPercent[2] }}%</td>\n                  </tr>\n                </tbody>\n              </table>\n            </blockquote>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"col-lg-6\">\n        <div class=\"card\">\n          <div class=\"card-header card-custom\">\n            <i class=\"fa fa-table\" aria-hidden=\"true\"></i>&nbsp;人口數量預估（ 2012-01 ）\n          </div>\n          <div class=\"card-block\">\n            <blockquote class=\"card-blockquote\">\n              <div class=\"row\">\n                <div class=\"col-sm-12\">\n                  <h5><span class=\"badge badge-custom\"><var>y</var> = <var>a</var> + <var>b</var> * <var>x</var> + <var>b</var> * <var>x²</var></span></h5>\n                </div>\n              </div>\n              <div class=\"row\">\n                <div class=\"col-sm-2\">\n                  <label class=\"col-form-label\">縣市：</label>\n                </div>\n                <div class=\"col-sm-10\">\n                  <select id=\"optionCity\" class=\"form-control\" [(ngModel)]=\"cityPopuSelect\" (ngModelChange)=\"optionPopuChange($event)\">\n            <option disabled [ngValue]=\"-1\">請選擇縣市</option>\n            <option *ngFor=\"let option of cityPopuGroup; let itemIndex = index\" [ngValue]=\"option\">{{option.chName }}</option>\n        </select>\n                </div>\n              </div>\n              <div class=\"row\">\n                <div class=\"col-sm-2\">\n                  <label class=\"col-form-label\">指標：</label>\n                </div>\n                <div class=\"col-sm-10\">\n                  <nouislider class=\"nouislider\" [min]=\"41\" [max]=\"250\" [step]=\"1\" [(ngModel)]=\"popuValueSlider\" (ngModelChange)=\"onPopuSliderChange($event)\"\n                    [disabled]=\"popuActiveSlider\"></nouislider>\n                </div>\n              </div>\n              <table class=\"table table-bordered table-inverse table-custom\">\n                <thead>\n                  <tr>\n                    <th>估計年月</th>\n                    <th>總人口數</th>\n                    <th>自然成長係數</th>\n                    <th>社會成長係數</th>\n                  </tr>\n                </thead>\n                <tbody>\n                  <tr>\n                    <td>{{ popuDateSlider }}</td>\n                    <td>{{ popuDataPercent[0] }}人</td>\n                    <td>{{ popuDataPercent[1] }}%</td>\n                    <td>{{ popuDataPercent[2] }}%</td>\n                  </tr>\n                </tbody>\n              </table>\n            </blockquote>\n          </div>\n        </div>\n      </div>\n    </div>\n\n  </div>\n\n  <div id=\"charGroup\" class=\"container\">\n    <div class=\"row\">\n      <div class=\"col-xl-4 col-sm-6 mb-4\">\n        <div class=\"card h-100\">\n          <div class=\"card-header card-inverse\">\n            <i class=\"fa fa-pie-chart\"></i> 年齡結構分析\n          </div>\n          <div class=\"card-block\">\n            <canvas baseChart [data]=\"yearDataPercent\" [labels]=\"doughnutChartLabels\" [chartType]=\"doughnutChartType\"></canvas>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"col-xl-4 col-sm-6 mb-4\">\n        <div class=\"card h-100\">\n          <div class=\"card-header card-inverse\">\n            <i class=\"fa fa-bar-chart\"></i> 人口數量預測\n          </div>\n          <div class=\"card-block\">\n            <canvas baseChart [datasets]=\"barChartData\" [labels]=\"barChartLabels\" [options]=\"barChartOptions\" [legend]=\"barChartLegend\"\n              [chartType]=\"barChartType\"></canvas>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"col-xl-4 col-sm-6 mb-4\">\n        <div class=\"card h-100\">\n          <div class=\"card-header card-inverse\">\n            <i class=\"fa fa-area-chart\"></i> 區域社福評估\n          </div>\n          <div class=\"card-block\">\n            <canvas baseChart [datasets]=\"radarChartData\" [labels]=\"radarChartLabels\" [chartType]=\"radarChartType\" [colors]=\"radarChartOptions\"></canvas>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n</div>\n"
 
 /***/ }),
 
@@ -766,25 +780,25 @@ var MapModalComponent = (function () {
         this.color = 'rgba(253,216,55,0.57)';
         this.addr = "̨嘉義縣政府";
         // 分析統計
-        this.countSecure = 17;
         this.countHospi = 7;
+        this.countSecure = 17;
         this.countCare = 3;
         this.countTemple = 2;
         this.countBurglary = 1;
         // 圖層資料
         this.geoLayerTaiwan = null;
-        this.geoLayerSecure = null;
-        this.geoLayerBurglary = null;
         this.geoLayerHospi = null;
+        this.geoLayerSecure = null;
         this.geoLayerCare = null;
         this.geoLayerTemple = null;
+        this.geoLayerBurglary = null;
         // 圖層是否顯示
         this.geoLayerShowTaiwan = false;
-        this.geoLayerShowSecure = false;
-        this.geoLayerShowBurglary = false;
         this.geoLayerShowHospi = false;
+        this.geoLayerShowSecure = false;
         this.geoLayerShowCare = false;
         this.geoLayerShowTemple = false;
+        this.geoLayerShowBurglary = false;
         // 點位訊息小窗
         this.infowinLat = 23.458987;
         this.infowinLng = 120.29294219999997;
@@ -812,11 +826,11 @@ var MapModalComponent = (function () {
         // 人口結構 - 下拉式選單
         this.cityPopuSelect = new __WEBPACK_IMPORTED_MODULE_6__class_city__["a" /* City */]().cityGroup[0];
         this.cityPopuGroup = new __WEBPACK_IMPORTED_MODULE_6__class_city__["a" /* City */]().cityGroup;
-        // Char-Doughnut Config
+        // 圖表 - 年齡結構分析
         this.doughnutChartLabels = ['~17', '18~65', '65~',];
         this.doughnutChartData = [650, 210, 140];
         this.doughnutChartType = 'doughnut'; // 改讀取 yearDataPercent
-        // Char-Radar Config
+        // 圖表 - 區域社福評估
         this.radarChartLabels = ['監視', '醫院', '照護', '宗教', '竊盜'];
         this.radarChartData = [
             { data: [17, 7, 3, 2, 1], label: '嘉義縣' }
@@ -829,7 +843,7 @@ var MapModalComponent = (function () {
                 pointBorderColor: '#fff'
                 // [colors]="colors" 
             }];
-        // Char-BarChart Config
+        // 圖表 - 人口數量預測
         this.barChartOptions = {
             scaleOverride: true,
             scaleShowVerticalLines: false,
@@ -850,7 +864,7 @@ var MapModalComponent = (function () {
         this.barChartData = [
             { data: [524787, 519659, 514201, 508414, 505412], label: '雲林縣' }
         ];
-        // Tree Config
+        // 圖層清單
         this.nodes = [
             {
                 id: 1,
@@ -878,6 +892,9 @@ var MapModalComponent = (function () {
         this.getYearCSV();
         this.LoadAllLayer();
     };
+    /**
+     * 載入所有圖層
+     */
     MapModalComponent.prototype.LoadAllLayer = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
@@ -891,7 +908,7 @@ var MapModalComponent = (function () {
                         })];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, this.layerService.getSecureLayer('secure', 'Chiayi')
+                        return [4 /*yield*/, this.layerService.getPointerLayer('secure', 'Chiayi')
                                 .subscribe(function (result) {
                                 _this.zone.run(function () { return __awaiter(_this, void 0, void 0, function () {
                                     var _this = this;
@@ -899,7 +916,7 @@ var MapModalComponent = (function () {
                                         switch (_a.label) {
                                             case 0:
                                                 this.layerService.getSecureGeoJson(result);
-                                                return [4 /*yield*/, this.layerService.getSecureLayer('secure', 'Yunlin')
+                                                return [4 /*yield*/, this.layerService.getPointerLayer('secure', 'Yunlin')
                                                         .subscribe(function (result) {
                                                         _this.zone.run(function () {
                                                             _this.geoLayerSecure = _this.layerService.getSecureGeoJson(result);
@@ -914,7 +931,7 @@ var MapModalComponent = (function () {
                             })];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, this.layerService.getBurglaryLayer('burglary', 'Chiayi')
+                        return [4 /*yield*/, this.layerService.getPointerLayer('burglary', 'Chiayi')
                                 .subscribe(function (result) {
                                 _this.zone.run(function () { return __awaiter(_this, void 0, void 0, function () {
                                     var _this = this;
@@ -922,7 +939,7 @@ var MapModalComponent = (function () {
                                         switch (_a.label) {
                                             case 0:
                                                 this.layerService.getBurglaryGeoJson(result);
-                                                return [4 /*yield*/, this.layerService.getBurglaryLayer('burglary', 'Yunlin')
+                                                return [4 /*yield*/, this.layerService.getPointerLayer('burglary', 'Yunlin')
                                                         .subscribe(function (result) {
                                                         _this.zone.run(function () {
                                                             _this.geoLayerBurglary = _this.layerService.getBurglaryGeoJson(result);
@@ -937,7 +954,7 @@ var MapModalComponent = (function () {
                             })];
                     case 3:
                         _a.sent();
-                        return [4 /*yield*/, this.layerService.getCareLayer('care', 'Chiayi')
+                        return [4 /*yield*/, this.layerService.getPointerLayer('care', 'Chiayi')
                                 .subscribe(function (result) {
                                 _this.zone.run(function () { return __awaiter(_this, void 0, void 0, function () {
                                     var _this = this;
@@ -945,7 +962,7 @@ var MapModalComponent = (function () {
                                         switch (_a.label) {
                                             case 0:
                                                 this.layerService.getCareGeoJson(result);
-                                                return [4 /*yield*/, this.layerService.getCareLayer('care', 'Yunlin')
+                                                return [4 /*yield*/, this.layerService.getPointerLayer('care', 'Yunlin')
                                                         .subscribe(function (result) {
                                                         _this.zone.run(function () {
                                                             _this.geoLayerCare = _this.layerService.getCareGeoJson(result);
@@ -960,7 +977,7 @@ var MapModalComponent = (function () {
                             })];
                     case 4:
                         _a.sent();
-                        return [4 /*yield*/, this.layerService.getTempleLayer('temple', 'Chiayi')
+                        return [4 /*yield*/, this.layerService.getPointerLayer('temple', 'Chiayi')
                                 .subscribe(function (result) {
                                 _this.zone.run(function () { return __awaiter(_this, void 0, void 0, function () {
                                     var _this = this;
@@ -968,7 +985,7 @@ var MapModalComponent = (function () {
                                         switch (_a.label) {
                                             case 0:
                                                 this.layerService.getTempleGeoJson(result);
-                                                return [4 /*yield*/, this.layerService.getTempleLayer('temple', 'Yunlin')
+                                                return [4 /*yield*/, this.layerService.getPointerLayer('temple', 'Yunlin')
                                                         .subscribe(function (result) {
                                                         _this.zone.run(function () {
                                                             _this.geoLayerTemple = _this.layerService.getTempleGeoJson(result);
@@ -983,7 +1000,7 @@ var MapModalComponent = (function () {
                             })];
                     case 5:
                         _a.sent();
-                        return [4 /*yield*/, this.layerService.getHospiLayer('hospi', 'Chiayi')
+                        return [4 /*yield*/, this.layerService.getPointerLayer('hospi', 'Chiayi')
                                 .subscribe(function (result) {
                                 _this.zone.run(function () { return __awaiter(_this, void 0, void 0, function () {
                                     var _this = this;
@@ -991,7 +1008,7 @@ var MapModalComponent = (function () {
                                         switch (_a.label) {
                                             case 0:
                                                 this.layerService.getHospiGeoJson(result);
-                                                return [4 /*yield*/, this.layerService.getHospiLayer('hospi', 'Yunlin')
+                                                return [4 /*yield*/, this.layerService.getPointerLayer('hospi', 'Yunlin')
                                                         .subscribe(function (result) {
                                                         _this.zone.run(function () { return __awaiter(_this, void 0, void 0, function () {
                                                             var _this = this;
@@ -999,7 +1016,7 @@ var MapModalComponent = (function () {
                                                                 switch (_a.label) {
                                                                     case 0:
                                                                         this.layerService.getHospiGeoJson(result);
-                                                                        return [4 /*yield*/, this.layerService.getHospiLayer('hospi', '長照ABC')
+                                                                        return [4 /*yield*/, this.layerService.getPointerLayer('hospi', '長照ABC')
                                                                                 .subscribe(function (result) {
                                                                                 _this.zone.run(function () {
                                                                                     _this.geoLayerHospi = _this.layerService.getHospiGeoJson(result);
@@ -1026,33 +1043,33 @@ var MapModalComponent = (function () {
             });
         });
     };
+    /**
+     * 座標點選 EVENT
+     * @param e
+     */
     MapModalComponent.prototype.geoLayerClick = function (e) {
         var feature = e.feature.f;
         this.infowinLat = feature.lat + 0.00008;
         this.infowinLng = feature.lng;
-        var name;
-        if (feature.TempleName) {
-            name = feature.TempleName;
-        }
-        else if (feature.CareName) {
-            name = feature.CareName;
-        }
-        else if (feature.Name) {
-            name = feature.Name;
-        }
-        else if (feature.name) {
-            name = feature.name;
-        }
-        this.infowinMsg[0] = name;
+        this.infowinMsg[0] = feature.name;
         this.infowinMsg[1] = feature.address;
         if (feature.level) {
             this.infowinMsg[2] = "\u9577\u7167\u7B49\u7D1A\uFF1A" + feature.level;
+        }
+        else if (feature.date) {
+            this.infowinMsg[2] = "\u4E8B\u4EF6\u6642\u9593\uFF1A" + feature.date;
+        }
+        else if (feature.lordgod) {
+            this.infowinMsg[2] = "\u5BFA\u5EDF\u4E3B\u795E\uFF1A" + feature.lordgod;
         }
         else {
             this.infowinMsg[2] = null;
         }
         this.infowinIsOpen = true;
     };
+    /**
+     * 環域分析 EVENT
+     */
     MapModalComponent.prototype.analyticsPointer = function () {
         var _this = this;
         this.countSecure = 0;
@@ -1188,6 +1205,9 @@ var MapModalComponent = (function () {
             }
         ];
     };
+    /**
+     * 繪製圓形區域 EVENT
+     */
     MapModalComponent.prototype.setCircle = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
@@ -1211,15 +1231,23 @@ var MapModalComponent = (function () {
             });
         });
     };
+    /**
+     * 當前座標
+     * @param lat
+     * @param lng
+     */
     MapModalComponent.prototype.saveMarker = function (lat, lng) {
         this.marker.lat = lat;
         this.marker.lng = lng;
     };
+    /**
+     * 圖層樣式
+     * @param feature
+     */
     MapModalComponent.prototype.styleLayer = function (feature) {
         var icon;
         switch (feature.getProperty('group')) {
             case 'hospi':
-                console.log(feature.getProperty('level'));
                 switch (feature.getProperty('level')) {
                     case 'A':
                         icon = 'assets/images/a.png';
@@ -1231,7 +1259,6 @@ var MapModalComponent = (function () {
                         icon = 'assets/images/c.png';
                         break;
                     default:
-                    case 1:
                         icon = 'assets/images/hospi.png';
                 }
                 break;
@@ -1446,7 +1473,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "  .navbar {\r\n    min-height: 80px;\r\n  }\r\n\r\n  .navbar.bg-custom {\r\n    background-size: 100%;\r\n    background-image: linear-gradient(90deg, #33d5c5, #4bccef);\r\n  }\r\n\r\n  .navbar-brand {\r\n    padding: 0 15px;\r\n    height: 80px;\r\n    line-height: 80px;\r\n    font-size: 2em;\r\n  }\r\n\r\n  .navbar-toggle {\r\n    /* (80px - button height 34px) / 2 = 23px */\r\n    margin-top: 23px;\r\n    padding: 9px 10px !important;\r\n  }\r\n\r\n  @media (min-width: 768px) {\r\n    .navbar-nav>li>a {\r\n      /* (80px - line-height of 27px) / 2 = 26.5px */\r\n      padding-top: 26.5px;\r\n      padding-bottom: 26.5px;\r\n      line-height: 27px;\r\n      font-size: 1.2em;\r\n    }\r\n  }\r\n\r\n  #navbar-toggler {\r\n    margin-top: 20px;\r\n  }\r\n\r\n  .navbar-collapse .navbar-text {\r\n    line-height: 60px;\r\n  }\r\n", ""]);
+exports.push([module.i, "  .navbar {\n    min-height: 80px;\n  }\n\n  .navbar.bg-custom {\n    background-size: 100%;\n    background-image: linear-gradient(90deg, #33d5c5, #4bccef);\n  }\n\n  .navbar-brand {\n    padding: 0 15px;\n    height: 80px;\n    line-height: 80px;\n    font-size: 2em;\n  }\n\n  .navbar-toggle {\n    /* (80px - button height 34px) / 2 = 23px */\n    margin-top: 23px;\n    padding: 9px 10px !important;\n  }\n\n  @media (min-width: 768px) {\n    .navbar-nav>li>a {\n      /* (80px - line-height of 27px) / 2 = 26.5px */\n      padding-top: 26.5px;\n      padding-bottom: 26.5px;\n      line-height: 27px;\n      font-size: 1.2em;\n    }\n  }\n\n  #navbar-toggler {\n    margin-top: 20px;\n  }\n\n  .navbar-collapse .navbar-text {\n    line-height: 60px;\n  }\n", ""]);
 
 // exports
 
@@ -1459,7 +1486,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/component/navbar-modal/navbar-modal.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-toggleable-md navbar-inverse bg-custom bg-info fixed-top py-0 py-md-0\">\r\n  <div class=\"container\">\r\n    <button id=\"navbar-toggler\" class=\"navbar-toggler navbar-toggler-right\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbar\"\r\n      aria-controls=\"navbar\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n        <span class=\"navbar-toggler-icon\"></span>\r\n      </button>\r\n    <a class=\"navbar-brand\" href=\"#\">嘉義黑蚵松</a>\r\n\r\n    <div class=\"collapse navbar-collapse\" id=\"navbar\">\r\n      <ul class=\"navbar-nav mr-auto\">\r\n        <li class=\"nav-item active\">\r\n          <a class=\"nav-link\" href=\"#\">首頁 <span class=\"sr-only\">(current)</span></a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link\" href=\"#\" data-toggle=\"modal\" data-target=\"#popuDataTable\">人口數量變動 </a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link\" href=\"#\" data-toggle=\"modal\" data-target=\"#ysDataTable\">年齡結構指標</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link\" target=\"_blank\" href=\"https://explooosion.github.io/ChiayiHackthon/\">Github</a>\r\n        </li>\r\n      </ul>\r\n      <span class=\"navbar-text\">Hackathon</span>\r\n    </div>\r\n  </div>\r\n</nav>\r\n"
+module.exports = "<nav class=\"navbar navbar-toggleable-md navbar-inverse bg-custom bg-info fixed-top py-0 py-md-0\">\n  <div class=\"container\">\n    <button id=\"navbar-toggler\" class=\"navbar-toggler navbar-toggler-right\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbar\"\n      aria-controls=\"navbar\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n        <span class=\"navbar-toggler-icon\"></span>\n      </button>\n    <a class=\"navbar-brand\" href=\"#\">嘉義黑蚵松</a>\n\n    <div class=\"collapse navbar-collapse\" id=\"navbar\">\n      <ul class=\"navbar-nav mr-auto\">\n        <li class=\"nav-item active\">\n          <a class=\"nav-link\" href=\"#\">首頁 <span class=\"sr-only\">(current)</span></a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#\" data-toggle=\"modal\" data-target=\"#popuDataTable\">人口數量變動 </a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#\" data-toggle=\"modal\" data-target=\"#ysDataTable\">年齡結構指標</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" target=\"_blank\" href=\"https://explooosion.github.io/ChiayiHackthon/\">Github</a>\n        </li>\n      </ul>\n      <span class=\"navbar-text\">Hackathon</span>\n    </div>\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -1482,8 +1509,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var NavbarModalComponent = (function () {
     function NavbarModalComponent() {
     }
-    NavbarModalComponent.prototype.ngOnInit = function () {
-    };
     return NavbarModalComponent;
 }());
 NavbarModalComponent = __decorate([
@@ -1605,11 +1630,11 @@ var _a, _b;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/add/operator/map.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__class_geo_json__ = __webpack_require__("../../../../../src/app/class/geo-json.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__class_care__ = __webpack_require__("../../../../../src/app/class/care.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__class_temple__ = __webpack_require__("../../../../../src/app/class/temple.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__class_secure__ = __webpack_require__("../../../../../src/app/class/secure.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__class_burglary__ = __webpack_require__("../../../../../src/app/class/burglary.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__class_hospi__ = __webpack_require__("../../../../../src/app/class/hospi.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__class_hospi__ = __webpack_require__("../../../../../src/app/class/hospi.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__class_secure__ = __webpack_require__("../../../../../src/app/class/secure.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__class_care__ = __webpack_require__("../../../../../src/app/class/care.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__class_temple__ = __webpack_require__("../../../../../src/app/class/temple.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__class_burglary__ = __webpack_require__("../../../../../src/app/class/burglary.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LayerService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1633,43 +1658,52 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var LayerService = (function () {
     function LayerService(http) {
         this.http = http;
-        this.templeGeoJson = new __WEBPACK_IMPORTED_MODULE_4__class_geo_json__["a" /* GeoJson */]();
-        this.careGeoJson = new __WEBPACK_IMPORTED_MODULE_4__class_geo_json__["a" /* GeoJson */]();
-        this.secureGeoJson = new __WEBPACK_IMPORTED_MODULE_4__class_geo_json__["a" /* GeoJson */]();
-        this.burglaryGeoJson = new __WEBPACK_IMPORTED_MODULE_4__class_geo_json__["a" /* GeoJson */]();
         this.hospiGeoJson = new __WEBPACK_IMPORTED_MODULE_4__class_geo_json__["a" /* GeoJson */]();
+        this.secureGeoJson = new __WEBPACK_IMPORTED_MODULE_4__class_geo_json__["a" /* GeoJson */]();
+        this.careGeoJson = new __WEBPACK_IMPORTED_MODULE_4__class_geo_json__["a" /* GeoJson */]();
+        this.templeGeoJson = new __WEBPACK_IMPORTED_MODULE_4__class_geo_json__["a" /* GeoJson */]();
+        this.burglaryGeoJson = new __WEBPACK_IMPORTED_MODULE_4__class_geo_json__["a" /* GeoJson */]();
         this.fileUrl = 'assets/layer/';
         this.fileCategory = '';
         this.fileExtend = '.csv';
         this.fileUrlMap = 'assets/layer/map/county.json';
     }
+    /**
+     * 讀取地區 JSON（GeoJson）
+     */
     LayerService.prototype.getTaiwanLayer = function () {
         return this.http.get(this.fileUrlMap)
-            .map(this.saveTaiwan);
+            .map(function (res) {
+            return res.json() || {};
+        });
     };
-    LayerService.prototype.saveTaiwan = function (res) {
-        return res.json() || {};
-    };
-    LayerService.prototype.getTempleLayer = function (category, city) {
+    /**
+     * 讀取指標 CSV（監視器、醫院診所、照護機構、宗教建設、竊盜紀錄）
+     * @param category
+     * @param city
+     */
+    LayerService.prototype.getPointerLayer = function (category, city) {
+        var _this = this;
         return this.http.get(this.fileUrl + category + '/' + city + this.fileExtend)
-            .map(this.saveTemple);
+            .map(function (res) {
+            switch (category) {
+                case 'hospi':
+                    return _this.saveHospi(res);
+                case 'secure':
+                    return _this.saveSecure(res);
+                case 'care':
+                    return _this.saveCare(res);
+                case 'temple':
+                    return _this.saveTemple(res);
+                case 'burglary':
+                    return _this.saveBurglary(res);
+            }
+        });
     };
-    LayerService.prototype.getCareLayer = function (category, city) {
-        return this.http.get(this.fileUrl + category + '/' + city + this.fileExtend)
-            .map(this.saveCare);
-    };
-    LayerService.prototype.getSecureLayer = function (category, city) {
-        return this.http.get(this.fileUrl + category + '/' + city + this.fileExtend)
-            .map(this.saveSecure);
-    };
-    LayerService.prototype.getBurglaryLayer = function (category, city) {
-        return this.http.get(this.fileUrl + category + '/' + city + this.fileExtend)
-            .map(this.saveSecure);
-    };
-    LayerService.prototype.getHospiLayer = function (category, city) {
-        return this.http.get(this.fileUrl + category + '/' + city + this.fileExtend)
-            .map(this.saveHospi);
-    };
+    /**
+     * Layer - 宗教建設
+     * @param res
+     */
     LayerService.prototype.saveTemple = function (res) {
         var csvData = res['_body'] || '';
         var allTextLines = csvData.split(/\r\n|\n/);
@@ -1678,19 +1712,23 @@ var LayerService = (function () {
         for (var i = 1; i < allTextLines.length; i++) {
             var data = allTextLines[i].split(',');
             if (data.length == headers.length) {
-                this.temple = new __WEBPACK_IMPORTED_MODULE_6__class_temple__["a" /* Temple */](data[0], // TempleName
-                data[1], // LordGod
-                data[2], // Area
-                data[3], // Address
+                this.temple = new __WEBPACK_IMPORTED_MODULE_8__class_temple__["a" /* Temple */](data[0], // name
+                data[1], // lordgod
+                data[2], // area
+                data[3], // address
                 data[4], // lat
                 data[5] // lng
                 );
                 lines.push(this.temple);
             }
             this.templeArr = lines;
-        } // fro
+        }
         return this.templeArr;
     };
+    /**
+     * Layer - 照護機構
+     * @param res
+     */
     LayerService.prototype.saveCare = function (res) {
         var csvData = res['_body'] || '';
         var allTextLines = csvData.split(/\r\n|\n/);
@@ -1699,19 +1737,23 @@ var LayerService = (function () {
         for (var i = 1; i < allTextLines.length; i++) {
             var data = allTextLines[i].split(',');
             if (data.length == headers.length) {
-                this.care = new __WEBPACK_IMPORTED_MODULE_5__class_care__["a" /* Care */](data[0], // CareName
-                data[6], // Service
-                data[1], // Area
-                data[4], // Address
+                this.care = new __WEBPACK_IMPORTED_MODULE_7__class_care__["a" /* Care */](data[0], // name
+                data[6], // service
+                data[1], // area
+                data[4], // address
                 data[11], // lat
                 data[12] // lng
                 );
                 lines.push(this.care);
             }
             this.careArr = lines;
-        } // fro
+        }
         return this.careArr;
     };
+    /**
+     * Layer - 監視器
+     * @param res
+     */
     LayerService.prototype.saveSecure = function (res) {
         var csvData = res['_body'] || '';
         var allTextLines = csvData.split(/\r\n|\n/);
@@ -1720,15 +1762,19 @@ var LayerService = (function () {
         for (var i = 1; i < allTextLines.length; i++) {
             var data = allTextLines[i].split(',');
             if (data.length == headers.length) {
-                this.secure = new __WEBPACK_IMPORTED_MODULE_7__class_secure__["a" /* Secure */](data[0], // address
+                this.secure = new __WEBPACK_IMPORTED_MODULE_6__class_secure__["a" /* Secure */](data[0], // address
                 data[1], // lat
                 data[2]);
                 lines.push(this.secure);
             }
             this.secureArr = lines;
-        } // fro
+        }
         return this.secureArr;
     };
+    /**
+     * Layer - 竊盜紀錄
+     * @param res
+     */
     LayerService.prototype.saveBurglary = function (res) {
         var csvData = res['_body'] || '';
         var allTextLines = csvData.split(/\r\n|\n/);
@@ -1737,17 +1783,21 @@ var LayerService = (function () {
         for (var i = 1; i < allTextLines.length; i++) {
             var data = allTextLines[i].split(',');
             if (data.length == headers.length) {
-                this.burglary = new __WEBPACK_IMPORTED_MODULE_8__class_burglary__["a" /* Burglary */](data[0], // address
+                this.burglary = new __WEBPACK_IMPORTED_MODULE_9__class_burglary__["a" /* Burglary */](data[0], // address
                 data[1], // lat
                 data[2], // lng
-                data[3] // Address
+                data[3] // date
                 );
                 lines.push(this.burglary);
             }
             this.burglaryArr = lines;
-        } // fro
+        }
         return this.burglaryArr;
     };
+    /**
+     * Layer - 醫院診所
+     * @param res
+     */
     LayerService.prototype.saveHospi = function (res) {
         var csvData = res['_body'] || '';
         var allTextLines = csvData.split(/\r\n|\n/);
@@ -1756,7 +1806,7 @@ var LayerService = (function () {
         for (var i = 1; i < allTextLines.length; i++) {
             var data = allTextLines[i].split(',');
             if (data.length == headers.length) {
-                this.hospi = new __WEBPACK_IMPORTED_MODULE_9__class_hospi__["a" /* Hospi */](data[0], // address
+                this.hospi = new __WEBPACK_IMPORTED_MODULE_5__class_hospi__["a" /* Hospi */](data[0], // address
                 data[1], // lat
                 data[2], // lng
                 data[3], // Address
@@ -1764,37 +1814,49 @@ var LayerService = (function () {
                 lines.push(this.hospi);
             }
             this.hospiArr = lines;
-        } // fro
+        }
         return this.hospiArr;
     };
+    /**
+     * GeoJson - 宗教建設
+     * @param temple
+     */
     LayerService.prototype.getTempleGeoJson = function (temple) {
         var _this = this;
         temple.forEach(function (element) {
             _this.templeGeoJson.features.push(new __WEBPACK_IMPORTED_MODULE_4__class_geo_json__["b" /* Features */]({
                 group: 'temple',
-                address: element.Address,
-                LordGod: element.element,
-                TempleName: element.TempleName,
+                name: element.name,
+                address: element.address,
                 lat: Number(element.lat),
                 lng: Number(element.lng),
+                lordgod: element.lordgod,
             }, new __WEBPACK_IMPORTED_MODULE_4__class_geo_json__["c" /* Geometry */]('Point', [Number(element.lng), Number(element.lat)])));
         });
         return JSON.parse(JSON.stringify(this.templeGeoJson));
     };
+    /**
+     * GeoJson - 照護機構
+     * @param care
+     */
     LayerService.prototype.getCareGeoJson = function (care) {
         var _this = this;
         care.forEach(function (element) {
             _this.careGeoJson.features.push(new __WEBPACK_IMPORTED_MODULE_4__class_geo_json__["b" /* Features */]({
                 group: 'care',
-                address: element.Address,
-                Service: element.Service,
-                CareName: element.CareName,
+                name: element.name,
+                address: element.address,
                 lat: Number(element.lat),
                 lng: Number(element.lng),
+                service: element.service,
             }, new __WEBPACK_IMPORTED_MODULE_4__class_geo_json__["c" /* Geometry */]('Point', [Number(element.lng), Number(element.lat)])));
         });
         return JSON.parse(JSON.stringify(this.careGeoJson));
     };
+    /**
+     * GeoJson - 監視器
+     * @param secure
+     */
     LayerService.prototype.getSecureGeoJson = function (secure) {
         var _this = this;
         secure.forEach(function (element) {
@@ -1807,19 +1869,27 @@ var LayerService = (function () {
         });
         return JSON.parse(JSON.stringify(this.secureGeoJson));
     };
+    /**
+     * GeoJson - 竊盜紀錄
+     * @param burglary
+     */
     LayerService.prototype.getBurglaryGeoJson = function (burglary) {
         var _this = this;
         burglary.forEach(function (element) {
             _this.burglaryGeoJson.features.push(new __WEBPACK_IMPORTED_MODULE_4__class_geo_json__["b" /* Features */]({
                 group: 'burglary',
                 address: element.address,
-                date: element.date,
                 lat: Number(element.lat),
                 lng: Number(element.lng),
+                date: element.date,
             }, new __WEBPACK_IMPORTED_MODULE_4__class_geo_json__["c" /* Geometry */]('Point', [Number(element.lng), Number(element.lat)])));
         });
         return JSON.parse(JSON.stringify(this.burglaryGeoJson));
     };
+    /**
+     * GeoJson - 醫院診所
+     * @param hospi
+     */
     LayerService.prototype.getHospiGeoJson = function (hospi) {
         var _this = this;
         hospi.forEach(function (element) {
