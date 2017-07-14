@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import url(http://fonts.googleapis.com/earlyaccess/notosanstc.css);
+@import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
 @import url('./bootstrap-custom.css');
 @import "~nouislider/distribute/nouislider.min.css";
 * {
