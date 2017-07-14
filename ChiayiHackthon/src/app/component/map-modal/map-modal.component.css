@@ -13,6 +13,40 @@
   padding: 2rem 0 !important;
 }
 
+.gmap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+
+/* 
+  設計巧思 by Rplus 
+  https://codepen.io/Rplus/full/awMVjy/
+*/
+
+.gmap-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(255, 255, 255, .6);
+  text-transform: uppercase;
+  font-size: 4vmin;
+  font-weight: 900;
+  font-family: sans-serif;
+  background-color: rgba(0, 0, 0, .2);
+}
+
+.gmap-mask:active,
+agm-map:hover+.gmap-mask {
+  visibility: hidden;
+}
+
 agm-map {
   height: 600px;
   width: 100%;
@@ -26,6 +60,3 @@ agm-map {
   color: #f1f1f1;
   background: #444;
 }
-
-
-/**/

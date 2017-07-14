@@ -148,7 +148,7 @@
 
       <div class="col-6">
         <div class="gmap">
-          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false">
+          <agm-map class="gmap-box" [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false">
             <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
             <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="color" [fillOpacity]="0.6"></agm-circle>
             <agm-data-layer *ngIf="geoLayerShowTaiwan" [geoJson]="geoLayerTaiwan" (layerClick)="infoWindow.open();geoLayerClick($event)"
@@ -169,7 +169,7 @@
               <p>{{infowinMsg[2]}}</p>
             </agm-info-window>
           </agm-map>
-
+          <div class="gmap-mask">click to unlock</div>
         </div>
       </div>
 
