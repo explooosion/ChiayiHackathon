@@ -880,7 +880,6 @@ var MapModalComponent = (function () {
                 children: [
                     { id: 11, name: '直轄市、縣市界線' },
                     { id: 12, name: '鄉鎮市區界線' },
-                    { id: 13, name: '村里界圖' }
                 ]
             },
             {
@@ -932,18 +931,14 @@ var MapModalComponent = (function () {
                             })];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, this.layerService.getGeoJsonLayer('village')
-                                .subscribe(function (result) {
-                                _this.zone.run(function () { return __awaiter(_this, void 0, void 0, function () {
-                                    return __generator(this, function (_a) {
-                                        this.geoLayerVillage = result;
-                                        console.log("Load: Village " + new Date());
-                                        return [2 /*return*/];
-                                    });
-                                }); });
-                            })];
-                    case 3:
-                        _a.sent();
+                        /*await this.layerService.getGeoJsonLayer('village')
+                          .subscribe(
+                          result => {
+                            this.zone.run(async () => {
+                              this.geoLayerVillage = result;
+                              console.log(`Load: Village ${new Date()}`);
+                            });
+                          });*/
                         return [4 /*yield*/, this.layerService.getPointerLayer('secure', 'Chiayi')
                                 .subscribe(function (result) {
                                 _this.zone.run(function () { return __awaiter(_this, void 0, void 0, function () {
@@ -966,7 +961,15 @@ var MapModalComponent = (function () {
                                     });
                                 }); });
                             })];
-                    case 4:
+                    case 3:
+                        /*await this.layerService.getGeoJsonLayer('village')
+                          .subscribe(
+                          result => {
+                            this.zone.run(async () => {
+                              this.geoLayerVillage = result;
+                              console.log(`Load: Village ${new Date()}`);
+                            });
+                          });*/
                         _a.sent();
                         return [4 /*yield*/, this.layerService.getPointerLayer('burglary', 'Chiayi')
                                 .subscribe(function (result) {
@@ -990,7 +993,7 @@ var MapModalComponent = (function () {
                                     });
                                 }); });
                             })];
-                    case 5:
+                    case 4:
                         _a.sent();
                         return [4 /*yield*/, this.layerService.getPointerLayer('care', 'Chiayi')
                                 .subscribe(function (result) {
@@ -1014,7 +1017,7 @@ var MapModalComponent = (function () {
                                     });
                                 }); });
                             })];
-                    case 6:
+                    case 5:
                         _a.sent();
                         return [4 /*yield*/, this.layerService.getPointerLayer('temple', 'Chiayi')
                                 .subscribe(function (result) {
@@ -1038,7 +1041,7 @@ var MapModalComponent = (function () {
                                     });
                                 }); });
                             })];
-                    case 7:
+                    case 6:
                         _a.sent();
                         return [4 /*yield*/, this.layerService.getPointerLayer('hospi', 'Chiayi')
                                 .subscribe(function (result) {
@@ -1077,7 +1080,7 @@ var MapModalComponent = (function () {
                                     });
                                 }); });
                             })];
-                    case 8:
+                    case 7:
                         _a.sent();
                         return [2 /*return*/];
                 }
