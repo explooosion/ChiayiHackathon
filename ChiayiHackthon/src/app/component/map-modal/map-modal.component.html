@@ -212,7 +212,7 @@
                 <div class="col-sm-10">
                   <select id="optionCity" class="form-control" [(ngModel)]="cityYearSelect" (ngModelChange)="optionYearChange($event)">
                       <option disabled [ngValue]="-1">請選擇縣市</option>
-                      <option *ngFor="let option of cityYearGroup; let itemIndex = index" [ngValue]="option" [selected]="true">{{option.chName }}</option>
+                      <option *ngFor="let option of cityYearGroup; let itemIndex = index" [ngValue]="option.enName" >{{option.chName }}</option>
                   </select>
                 </div>
               </div>
@@ -266,9 +266,9 @@
                 </div>
                 <div class="col-sm-10">
                   <select id="optionCity" class="form-control" [(ngModel)]="cityPopuSelect" (ngModelChange)="optionPopuChange($event)">
-            <option disabled [ngValue]="-1">請選擇縣市</option>
-            <option *ngFor="let option of cityPopuGroup; let itemIndex = index" [ngValue]="option">{{option.chName }}</option>
-        </select>
+                      <option disabled [ngValue]="-1">請選擇縣市</option>
+                      <option *ngFor="let option of cityPopuGroup; let itemIndex = index" [ngValue]="option.enName">{{option.chName }}</option>
+                  </select>
                 </div>
               </div>
               <div class="row">

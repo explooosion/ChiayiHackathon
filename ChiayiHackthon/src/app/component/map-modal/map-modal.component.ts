@@ -67,17 +67,17 @@ export class MapModalComponent implements OnInit {
   infowinIsOpen: boolean = false;
 
   // 年齡結構 - 卷軸
-  yearActiveSlider: string = 'false';
+  yearActiveSlider: string = null;
   yearValueSlider: number = 1;
   yearDateSlider: string = `${new Date().getFullYear().toString()}-${new Date().getMonth().toString()}`;
 
   // 人口結構 - 卷軸
-  popuActiveSlider: string = 'false';
+  popuActiveSlider: string = null;
   popuValueSlider: number = 41;
   popuDateSlider: string = `${new Date().getFullYear().toString()}-${new Date().getMonth().toString()}`;
 
   // 年齡結構 - 圖表
-  yearData: any[] = [];
+  //yearData: any[] = [];
   // yearDataFilter: any[] = []; // 儲存卷軸對應的No.資料
   yearDataPercent: any[] = [50, 50, 50]; // 年齡結構百分比[A群,B群,C群]
 
@@ -86,12 +86,12 @@ export class MapModalComponent implements OnInit {
   popuDataFilter: any[] = [];
   popuDataPercent: any[] = [50, 50, 50];
 
-  // 年齡結構 - 下拉式選單
-  cityYearSelect: any = new City().cityGroup[0];
+  // 年齡結構 - 下拉式選單 
+  cityYearSelect: string = new City().cityGroup[1].enName;
   cityYearGroup: any[] = new City().cityGroup;
 
   // 人口結構 - 下拉式選單
-  cityPopuSelect = new City().cityGroup[0];
+  cityPopuSelect: string = new City().cityGroup[1].enName;
   cityPopuGroup: any[] = new City().cityGroup;
 
   // 圖表 - 年齡結構分析
@@ -169,8 +169,13 @@ export class MapModalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getYearCSV();
+
+    // 載入圖層資料
     this.LoadAllLayer();
+
+    // 載入圖表資料
+    this.optionPopuChange('Chiayi');
+    this.optionYearChange('Chiayi');
   }
 
   /**
@@ -495,8 +500,10 @@ export class MapModalComponent implements OnInit {
    * 下拉式選單 - 年齡結構
    * @param city 
    */
+
   public optionYearChange(city: any) {
-    this.yearDataPercent = this.yearService.getStructurePercent(city.enName, this.yearValueSlider);
+    console.log(city);
+    this.yearDataPercent = this.yearService.getStructurePercent(city, this.yearValueSlider);
     this.yearActiveSlider = ''; // 選擇縣市後才可以滑動 Slider
   }
 
@@ -505,7 +512,7 @@ export class MapModalComponent implements OnInit {
    * @param no 
    */
   public onYearSliderChange(no: number) {
-    this.yearDataPercent = this.yearService.getStructurePercent(this.cityYearSelect.enName, no);
+    this.yearDataPercent = this.yearService.getStructurePercent(this.cityYearSelect, no);
     let _mon = no % 12 == 0 ? 12 : no % 12;
     let _year = no / 12 == 0 ? 2012 : Math.floor(no / 12) + 2012;
     this.yearDateSlider = `${_year}-${_mon}`;
@@ -516,7 +523,7 @@ export class MapModalComponent implements OnInit {
    * @param city 
    */
   public optionPopuChange(city: any) {
-    this.popuDataPercent = this.popuService.getPopulationPercent(city.enName, this.yearValueSlider)[0];
+    this.popuDataPercent = this.popuService.getPopulationPercent(city, this.yearValueSlider)[0];
     this.popuActiveSlider = ''; // 選擇縣市後才可以滑動 Slider
     this.onPopuSliderChange(41);
   }
@@ -526,34 +533,23 @@ export class MapModalComponent implements OnInit {
    * @param no 
    */
   public onPopuSliderChange(no: number) {
-    this.popuDataPercent = this.popuService.getPopulationPercent(this.cityPopuSelect.enName, no);
+    this.popuDataPercent = this.popuService.getPopulationPercent(this.cityPopuSelect, no);
     let _mon = no % 4 == 0 ? 4 : no % 4;
     let _year = no / 4 == 0 ? 2007 : Math.floor(no / 4) + 2007;
     this.popuDateSlider = `${_year}-${_mon}`;
 
-    let popuf = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, no)[0]);
-    let popu14 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, 32)[0]);
-    let popu15 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, 36)[0]);
-    let popu16 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, 40)[0]);
-    let popu17 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect.enName, 44)[0]);
-    this.barChartData = [{ data: [popu14, popu15, popu16, popu17, popuf], label: this.cityPopuSelect.chName }];
+    let popuf = Number(this.popuService.getPopulationPercent(this.cityPopuSelect, no)[0]);
+    let popu14 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect, 32)[0]);
+    let popu15 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect, 36)[0]);
+    let popu16 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect, 40)[0]);
+    let popu17 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect, 44)[0]);
+    this.barChartData = [{ data: [popu14, popu15, popu16, popu17, popuf], label: this.cityPopuSelect }];
 
     let bartmpLabels = ['2014', '2015', '2016', '2017', `${_year}-${_mon}(季)`];
     this.barChartLabels.length = 0;
     for (let i = 0; i < bartmpLabels.length; i++) {
       this.barChartLabels.push(bartmpLabels[i]);
     }
-  }
-
-  /**
-   * 取得資料原始資料 - 年齡結構
-   */
-  public async getYearCSV() {
-    await this.yearService.readCsv('YearStructure_Chiayi')
-      .subscribe(
-      result => {
-        this.yearData = result;
-      });
   }
 
   /**
