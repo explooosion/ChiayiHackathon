@@ -148,8 +148,8 @@
 
       <div class="col-6">
         <div class="gmap">
-          <agm-map class="gmap-box" [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false">
-            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+          <agm-map class="gmap-box" [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [fitBounds]="bounds">
+            <agm-marker [latitude]=" lat" [longitude]="lng"></agm-marker>
             <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="color" [fillOpacity]="0.6"></agm-circle>
             <agm-data-layer *ngIf="geoLayerShowCounty" [geoJson]="geoLayerCounty" (layerClick)="infoWindow.open();geoLayerClick($event)"
               [style]="styleLayer"></agm-data-layer>
@@ -200,7 +200,7 @@
 
 
 
-<div id="futureGroup" class="jumbotron jumbotron-fluid">
+<div id="futureGroup" class="">
 
   <div class="container">
 
@@ -230,7 +230,7 @@
                 <div class="col-sm-10">
                   <select id="optionCity" class="form-control" [(ngModel)]="cityYearSelect" (ngModelChange)="optionYearChange($event)">
                       <option disabled [ngValue]="-1">請選擇縣市</option>
-                      <option *ngFor="let option of cityYearGroup; let itemIndex = index" [ngValue]="option.enName" >{{option.chName }}</option>
+                      <option *ngFor="let option of cityYearGroup; let itemIndex=i ndex" [ngValue]="option.enName" >{{option.chName }}</option>
                   </select>
                 </div>
               </div>
@@ -239,8 +239,8 @@
                   <label class="col-form-label">指標：</label>
                 </div>
                 <div class="col-sm-10">
-                  <nouislider class="nouislider" [min]="1" [max]="250" [step]="1" [(ngModel)]="yearValueSlider" (ngModelChange)="onYearSliderChange($event)"
-                    [disabled]="yearActiveSlider"></nouislider>
+                  <nouislider class="nouislider" [min]="1" [max]="250" [step]="1" [(ngModel)]="yearValueSlider
+           " (ngModelChange)="onYearSliderChange($event)" [disabled]="yearActiveSlider"></nouislider>
                 </div>
               </div>
               <table class="table table-bordered table-inverse table-custom">
@@ -285,7 +285,7 @@
                 <div class="col-sm-10">
                   <select id="optionCity" class="form-control" [(ngModel)]="cityPopuSelect" (ngModelChange)="optionPopuChange($event)">
                       <option disabled [ngValue]="-1">請選擇縣市</option>
-                      <option *ngFor="let option of cityPopuGroup; let itemIndex = index" [ngValue]="option.enName">{{option.chName }}</option>
+                      <option *ngFor="let option of cityPopuGroup; let itemIndex=i ndex" [ngValue]="option.enName">{{option.chName }}</option>
                   </select>
                 </div>
               </div>
@@ -294,8 +294,8 @@
                   <label class="col-form-label">指標：</label>
                 </div>
                 <div class="col-sm-10">
-                  <nouislider class="nouislider" [min]="1" [max]="180" [step]="1" [(ngModel)]="popuValueSlider" (ngModelChange)="onPopuSliderChange($event)"
-                    [disabled]="popuActiveSlider"></nouislider>
+                  <nouislider class="nouislider" [min]="1" [max]="180" [step]="1" [(ngModel)]="popuValueSlider
+           " (ngModelChange)="onPopuSliderChange($event)" [disabled]="popuActiveSlider"></nouislider>
                 </div>
               </div>
               <table class="table table-bordered table-inverse table-custom">
@@ -343,8 +343,8 @@
             <i class="fa fa-bar-chart"></i> 人口數量預測
           </div>
           <div class="card-block">
-            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
-              [chartType]="barChartType"></canvas>
+            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions
+           " [legend]="barChartLegend" [chartType]="barChartType"></canvas>
           </div>
         </div>
       </div>
@@ -355,7 +355,8 @@
             <i class="fa fa-area-chart"></i> 區域社福評估
           </div>
           <div class="card-block">
-            <canvas baseChart [datasets]="radarChartData" [labels]="radarChartLabels" [chartType]="radarChartType" [colors]="radarChartOptions"></canvas>
+            <canvas baseChart [datasets]="radarChartData" [labels]="radarChartLabels" [chartType]="radarChartType
+           " [colors]="radarChartOptions"></canvas>
           </div>
         </div>
       </div>

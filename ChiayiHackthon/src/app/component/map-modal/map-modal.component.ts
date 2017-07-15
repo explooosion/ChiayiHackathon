@@ -15,6 +15,8 @@ import { Secure } from '../../class/secure';
 import { Temple } from '../../class/temple';
 import { Burglary } from '../../class/burglary';
 
+
+import { MapsAPILoader } from '@agm/core';
 declare let jquery: any;
 declare let $: any;
 
@@ -32,6 +34,7 @@ declare let $: any;
 })
 export class MapModalComponent implements OnInit {
 
+  bounds;
   // 初始資料
   lat: number = 23.4589877;
   lng: number = 120.29294219999997;
@@ -173,6 +176,7 @@ export class MapModalComponent implements OnInit {
     private yearService: YearStructureService,
     private gmapService: GMapsService,
     private layerService: LayerService,
+    private mapsAPILoader: MapsAPILoader,
     private zone: NgZone,
     private marker: Marker
   ) { }
@@ -192,11 +196,13 @@ export class MapModalComponent implements OnInit {
    */
   public async LoadAllLayer() {
 
+    console.log(`Load: start ${new Date()}`);
     await this.layerService.getGeoJsonLayer('county')
       .subscribe(
       result => {
         this.zone.run(() => {
           this.geoLayerCounty = result;
+          console.log(`Load: County ${new Date()}`);
         });
       });
 
@@ -205,6 +211,7 @@ export class MapModalComponent implements OnInit {
       result => {
         this.zone.run(() => {
           this.geoLayerTown = result;
+          console.log(`Load: Town ${new Date()}`);
         });
       });
 
@@ -213,6 +220,7 @@ export class MapModalComponent implements OnInit {
       result => {
         this.zone.run(async () => {
           this.geoLayerVillage = result;
+          console.log(`Load: Village ${new Date()}`);
         });
       });
 
@@ -228,6 +236,7 @@ export class MapModalComponent implements OnInit {
             result => {
               this.zone.run(() => {
                 this.geoLayerSecure = this.layerService.getSecureGeoJson(result);
+                console.log(`Load: Secure ${new Date()}`);
               });
             });
         });
@@ -245,6 +254,7 @@ export class MapModalComponent implements OnInit {
             result => {
               this.zone.run(() => {
                 this.geoLayerBurglary = this.layerService.getBurglaryGeoJson(result);
+                console.log(`Load: Burglary ${new Date()}`);
               });
             });
         });
@@ -262,6 +272,7 @@ export class MapModalComponent implements OnInit {
             result => {
               this.zone.run(() => {
                 this.geoLayerCare = this.layerService.getCareGeoJson(result);
+                console.log(`Load: Care ${new Date()}`);
               });
             });
         });
@@ -279,6 +290,7 @@ export class MapModalComponent implements OnInit {
             result => {
               this.zone.run(() => {
                 this.geoLayerTemple = this.layerService.getTempleGeoJson(result);
+                console.log(`Load: Temple ${new Date()}`);
               });
             });
         });
@@ -303,6 +315,7 @@ export class MapModalComponent implements OnInit {
                   result => {
                     this.zone.run(() => {
                       this.geoLayerHospi = this.layerService.getHospiGeoJson(result);
+                      console.log(`Load: Hospi ${new Date()}`);
                     });
                   });
               });
@@ -440,8 +453,6 @@ export class MapModalComponent implements OnInit {
    */
   public async setCircle() {
 
-    this.zoom = 14;
-
     await this.gmapService.getLatLan(this.addr)
       .subscribe(
       result => {
@@ -450,7 +461,13 @@ export class MapModalComponent implements OnInit {
           this.lat = result.lat();
           this.lng = result.lng();
           this.saveMarker(result.lat(), result.lng());
+          this.mapsAPILoader.load().then(() => {
+            this.bounds = new window['google'].maps.LatLngBounds(new window['google'].maps.LatLng(this.lat, this.lng));
+          }
+          )
+
         });
+        this.zoom = 10;
       },
       error => console.log(error),
       () => console.log('Geocoding completed!')
@@ -473,10 +490,14 @@ export class MapModalComponent implements OnInit {
    */
   public styleLayer(feature) {
 
-    //$('.gmap-loading').hide();
-
+    if ($('.gmap-loading').css('display') != 'none') {
+      setTimeout(() => {
+        $('.gmap-loading').hide();
+      }, 3000);
+    }
+    
     let icon, visible = true, color = 'green';
-    console.log(feature);
+    // console.log(feature);
 
     if (feature.getProperty('VILLNAME') != undefined) {
       console.log('load 村里');
@@ -497,11 +518,13 @@ export class MapModalComponent implements OnInit {
         feature.getProperty('COUNTYNAME') == '嘉義縣' ||
         feature.getProperty('COUNTYNAME') == '嘉義市'
       ) {
-        color = 'orange';
+        color = 'blue';
         visible = true;
       } else {
         visible = false;
       }
+    } else if (feature.getProperty('address') != undefined) {
+      visible = true;
     } else if (feature.getProperty('COUNTYENG') != '') {
       console.log('load 縣市');
       if (
@@ -632,6 +655,8 @@ export class MapModalComponent implements OnInit {
    * @param event 
    */
   public check(node, $event) {
+
+    if (!node.data.checked) $('.gmap-loading').show();
 
     this.updateChildNodesCheckBox(node, $event.target.checked);
     this.updateParentNodesCheckBox(node.parent);
