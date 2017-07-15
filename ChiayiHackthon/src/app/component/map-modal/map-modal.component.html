@@ -16,7 +16,7 @@
     <div class="col-xl-3 col-sm-6 mb-3">
       <div class="card card-inverse card-danger o-hidden h-100">
         <div class="card-block">
-          <i class="fa fa-3x fa-heartbeat"></i>
+          <i class="fa fa-3x fa-medkit"></i>
           <h1 class="text-center">{{countHospi}}</h1>
         </div>
         <div class="card-footer small">
@@ -27,7 +27,7 @@
     <div class="col-xl-3 col-sm-6 mb-3">
       <div class="card card-inverse card-success o-hidden h-100">
         <div class="card-block">
-          <i class="fa fa-3x fa-wheelchair"></i>
+          <i class="fa fa-3x fa-heartbeat"></i>
           <h1 class="text-center">{{countCare}}</h1>
         </div>
         <div class="card-footer small">
@@ -151,7 +151,11 @@
           <agm-map class="gmap-box" [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false">
             <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
             <agm-circle [latitude]="lat" [longitude]="lng" [radius]="radius" [fillColor]="color" [fillOpacity]="0.6"></agm-circle>
-            <agm-data-layer *ngIf="geoLayerShowTaiwan" [geoJson]="geoLayerTaiwan" (layerClick)="infoWindow.open();geoLayerClick($event)"
+            <agm-data-layer *ngIf="geoLayerShowCounty" [geoJson]="geoLayerCounty" (layerClick)="infoWindow.open();geoLayerClick($event)"
+              [style]="styleLayer"></agm-data-layer>
+            <agm-data-layer *ngIf="geoLayerShowTown" [geoJson]="geoLayerTown" (layerClick)="infoWindow.open();geoLayerClick($event)"
+              [style]="styleLayer"></agm-data-layer>
+            <agm-data-layer *ngIf="geoLayerShowVillage" [geoJson]="geoLayerVillage" (layerClick)="infoWindow.open();geoLayerClick($event)"
               [style]="styleLayer"></agm-data-layer>
             <agm-data-layer *ngIf="geoLayerShowHospi" [geoJson]="geoLayerHospi" (layerClick)="infoWindow.open();geoLayerClick($event)"
               [style]="styleLayer"></agm-data-layer>

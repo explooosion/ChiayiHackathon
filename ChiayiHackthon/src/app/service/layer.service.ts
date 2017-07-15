@@ -35,17 +35,21 @@ export class LayerService {
   private burglaryArr: Burglary[];
 
   private fileUrl: string = 'assets/layer/';
-  private fileCategory: string = '';
-  private fileExtend: string = '.csv';
+  private fileExtend: string[] = ['.csv', '.json'];
 
-  private fileUrlMap: string = 'assets/layer/map/county.json';
+  private countyUrl: string = 'assets/layer/map/county.json';
+  private townUrl: string = 'assets/layer/map/town.json';
+
+  // SHP > GEO
+  // npm install mapshaper -g
+  // mapshaper TOWN_MOI_1060525.shp -o encoding=big5 format=geojson TOWN_MOI_1060525.json
   constructor(private http: Http) { }
 
   /**
-   * 讀取地區 JSON（GeoJson）
+   * 讀取地區 County JSON（GeoJson）
    */
-  public getTaiwanLayer() {
-    return this.http.get(this.fileUrlMap)
+  public getGeoJsonLayer(type: string) {
+    return this.http.get(this.fileUrl + 'map/' + type + this.fileExtend[1])
       .map((res) => {
         return res.json() || {}
       });
@@ -57,7 +61,7 @@ export class LayerService {
    * @param city 
    */
   public getPointerLayer(category: string, city: string) {
-    return this.http.get(this.fileUrl + category + '/' + city + this.fileExtend)
+    return this.http.get(this.fileUrl + category + '/' + city + this.fileExtend[0])
       .map(
       (res) => {
         switch (category) {

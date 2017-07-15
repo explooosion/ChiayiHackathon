@@ -45,7 +45,9 @@ export class MapModalComponent implements OnInit {
   countBurglary: number = 1;
 
   // 圖層資料
-  geoLayerTaiwan: Object = null;
+  geoLayerCounty: Object = null;
+  geoLayerTown: Object = null;
+  geoLayerVillage: Object = null;
   geoLayerHospi: Object = null;
   geoLayerSecure: Object = null;
   geoLayerCare: Object = null;
@@ -53,7 +55,9 @@ export class MapModalComponent implements OnInit {
   geoLayerBurglary: Object = null;
 
   // 圖層是否顯示
-  geoLayerShowTaiwan: boolean = false;
+  geoLayerShowCounty: boolean = false;
+  geoLayerShowTown: boolean = false;
+  geoLayerShowVillage: boolean = false;
   geoLayerShowHospi: boolean = false;
   geoLayerShowSecure: boolean = false;
   geoLayerShowCare: boolean = false;
@@ -142,7 +146,9 @@ export class MapModalComponent implements OnInit {
       name: '地區圖層',
       isExpanded: true,
       children: [
-        { id: 11, name: '直轄市、縣市界線' }
+        { id: 11, name: '直轄市、縣市界線' },
+        { id: 12, name: '鄉鎮市區界線' },
+        { id: 13, name: '村里界圖' }
       ]
     },
     {
@@ -183,11 +189,27 @@ export class MapModalComponent implements OnInit {
    */
   public async LoadAllLayer() {
 
-    await this.layerService.getTaiwanLayer()
+    await this.layerService.getGeoJsonLayer('county')
       .subscribe(
       result => {
         this.zone.run(() => {
-          this.geoLayerTaiwan = result;
+          this.geoLayerCounty = result;
+        });
+      });
+
+    await this.layerService.getGeoJsonLayer('town')
+      .subscribe(
+      result => {
+        this.zone.run(() => {
+          this.geoLayerTown = result;
+        });
+      });
+
+    await this.layerService.getGeoJsonLayer('village')
+      .subscribe(
+      result => {
+        this.zone.run(async () => {
+          this.geoLayerVillage = result;
         });
       });
 
@@ -570,24 +592,26 @@ export class MapModalComponent implements OnInit {
 
     switch (node.id) {
       case 1:
+        if (node.data.checked) {
+          this.geoLayerShowCounty = true;
+          this.geoLayerShowTown = true;
+          this.geoLayerShowVillage = true;
+        } else {
+          this.geoLayerShowCounty = false;
+          this.geoLayerShowTown = false;
+          this.geoLayerShowVillage = false;
+        }
+        break;
       case 11:
-        this.geoLayerShowTaiwan = !this.geoLayerShowTaiwan;
+        this.geoLayerShowCounty = !this.geoLayerShowCounty;
         break;
-      case 21:
-        this.geoLayerShowSecure = !this.geoLayerShowSecure;
+      case 12:
+        this.geoLayerShowTown = !this.geoLayerShowTown;
         break;
-      case 22:
-        this.geoLayerShowHospi = !this.geoLayerShowHospi;
+      case 13:
+        this.geoLayerShowVillage = !this.geoLayerShowVillage;
         break;
-      case 23:
-        this.geoLayerShowCare = !this.geoLayerShowCare;
-        break;
-      case 24:
-        this.geoLayerShowTemple = !this.geoLayerShowTemple;
-        break;
-      case 25:
-        this.geoLayerShowBurglary = !this.geoLayerShowBurglary;
-        break;
+
       case 2:
         if (node.data.checked) {
           this.geoLayerShowSecure = true;
@@ -603,6 +627,21 @@ export class MapModalComponent implements OnInit {
           this.geoLayerShowTemple = false;
           this.geoLayerShowBurglary = false;
         }
+        break;
+      case 21:
+        this.geoLayerShowSecure = !this.geoLayerShowSecure;
+        break;
+      case 22:
+        this.geoLayerShowHospi = !this.geoLayerShowHospi;
+        break;
+      case 23:
+        this.geoLayerShowCare = !this.geoLayerShowCare;
+        break;
+      case 24:
+        this.geoLayerShowTemple = !this.geoLayerShowTemple;
+        break;
+      case 25:
+        this.geoLayerShowBurglary = !this.geoLayerShowBurglary;
         break;
     }
   }
