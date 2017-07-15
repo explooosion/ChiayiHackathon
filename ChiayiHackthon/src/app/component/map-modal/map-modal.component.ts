@@ -538,14 +538,20 @@ export class MapModalComponent implements OnInit {
     let _year = no / 4 == 0 ? 2007 : Math.floor(no / 4) + 2007;
     this.popuDateSlider = `${_year}-${_mon}`;
 
-    let popuf = Number(this.popuService.getPopulationPercent(this.cityPopuSelect, no)[0]);
-    let popu14 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect, 32)[0]);
-    let popu15 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect, 36)[0]);
-    let popu16 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect, 40)[0]);
-    let popu17 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect, 44)[0]);
-    this.barChartData = [{ data: [popu14, popu15, popu16, popu17, popuf], label: this.cityPopuSelect }];
+    let popuNow = Number(this.popuService.getPopulationPercent(this.cityPopuSelect, no)[0]);
+    let popu1 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect, no + 4)[0]);
+    let popu2 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect, no + 8)[0]);
+    let popu3 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect, no + 12)[0]);
+    let popu4 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect, no + 16)[0]);
+    this.barChartData = [{ data: [popuNow, popu1, popu2, popu3, popu4], label: this.cityPopuSelect }];
 
-    let bartmpLabels = ['2014', '2015', '2016', '2017', `${_year}-${_mon}(季)`];
+    let bartmpLabels = [
+      `${_year}-${_mon}(季)`,
+      `${_year + 1}`,
+      `${_year + 2}`,
+      `${_year + 3}`,
+      `${_year + 4}`,
+    ];
     this.barChartLabels.length = 0;
     for (let i = 0; i < bartmpLabels.length; i++) {
       this.barChartLabels.push(bartmpLabels[i]);
