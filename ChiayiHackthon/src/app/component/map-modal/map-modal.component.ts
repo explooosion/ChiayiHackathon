@@ -154,7 +154,7 @@ export class MapModalComponent implements OnInit {
       children: [
         { id: 11, name: '直轄市、縣市界線' },
         { id: 12, name: '鄉鎮市區界線' },
-        { id: 13, name: '村里界圖' }
+        /*{ id: 13, name: '村里界圖' }*/
       ]
     },
     {
@@ -215,14 +215,14 @@ export class MapModalComponent implements OnInit {
         });
       });
 
-    await this.layerService.getGeoJsonLayer('village')
+    /*await this.layerService.getGeoJsonLayer('village')
       .subscribe(
       result => {
         this.zone.run(async () => {
           this.geoLayerVillage = result;
           console.log(`Load: Village ${new Date()}`);
         });
-      });
+      });*/
 
     await this.layerService.getPointerLayer('secure', 'Chiayi')
       .subscribe(
@@ -495,7 +495,7 @@ export class MapModalComponent implements OnInit {
         $('.gmap-loading').hide();
       }, 3000);
     }
-    
+
     let icon, visible = true, color = 'green';
     // console.log(feature);
 
