@@ -94,7 +94,7 @@ export class PopulationStructureService {
       } else {
         res.push(Number(v).toFixed(4));
       }
-      console.log(`${res} = ${fx[i].a} + ${fx[i].b} * ${no} + ${fx[i].c} * ${no} * ${no}`);
+      //console.log(`${res} = ${fx[i].a} + ${fx[i].b} * ${no} + ${fx[i].c} * ${no} * ${no}`);
     }
     return res;
 

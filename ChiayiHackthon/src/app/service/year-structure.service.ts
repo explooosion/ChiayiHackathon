@@ -90,7 +90,7 @@ export class YearStructureService {
 
       var v = fx[i].a + fx[i].b * no + fx[i].c * no * no;
       res.push(Number(v).toFixed(6));
-      console.log(`${res} = ${fx[i].a} + ${fx[i].b} * ${no} + ${fx[i].c} * ${no} * ${no}`);
+      //console.log(`${res} = ${fx[i].a} + ${fx[i].b} * ${no} + ${fx[i].c} * ${no} * ${no}`);
     }
     return res;
   }

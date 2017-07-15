@@ -23,7 +23,9 @@
   設計巧思 by Rplus 
   https://codepen.io/Rplus/full/awMVjy/
 */
-/* 
+
+
+/*
 .gmap-mask {
     position: absolute;
     top: 0;
@@ -42,9 +44,21 @@
 }
 
 .gmap-mask:active,
-agm-map:hover+.gmap-mask {
+.agm-map-container-inner:hover+.gmap-mask {
     visibility: hidden;
-} */
+}*/
+
+.gmap-loading {
+    position: absolute;
+    top: 25%;
+    left: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 agm-map {
     height: 600px;

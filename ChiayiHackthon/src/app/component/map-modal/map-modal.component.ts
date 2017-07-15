@@ -15,6 +15,9 @@ import { Secure } from '../../class/secure';
 import { Temple } from '../../class/temple';
 import { Burglary } from '../../class/burglary';
 
+declare let jquery: any;
+declare let $: any;
+
 @Component({
   selector: 'app-map-modal',
   templateUrl: './map-modal.component.html',
@@ -469,7 +472,50 @@ export class MapModalComponent implements OnInit {
    * @param feature 
    */
   public styleLayer(feature) {
-    let icon;
+
+    //$('.gmap-loading').hide();
+
+    let icon, visible = true, color = 'green';
+    console.log(feature);
+
+    if (feature.getProperty('VILLNAME') != undefined) {
+      console.log('load 村里');
+      if (
+        feature.getProperty('COUNTYNAME') == '雲林縣' ||
+        feature.getProperty('COUNTYNAME') == '嘉義縣' ||
+        feature.getProperty('COUNTYNAME') == '嘉義市'
+      ) {
+        color = 'red';
+        visible = true;
+      } else {
+        visible = false;
+      }
+    } else if (feature.getProperty('COUNTYNAME') != undefined && feature.getProperty('COUNTYENG') == undefined) {
+      console.log('load 鄉鎮');
+      if (
+        feature.getProperty('COUNTYNAME') == '雲林縣' ||
+        feature.getProperty('COUNTYNAME') == '嘉義縣' ||
+        feature.getProperty('COUNTYNAME') == '嘉義市'
+      ) {
+        color = 'orange';
+        visible = true;
+      } else {
+        visible = false;
+      }
+    } else if (feature.getProperty('COUNTYENG') != '') {
+      console.log('load 縣市');
+      if (
+        feature.getProperty('COUNTYENG') == 'Chiayi County' ||
+        feature.getProperty('COUNTYENG') == 'Chiayi City' ||
+        feature.getProperty('COUNTYENG') == 'Yunlin County'
+      ) {
+        color = 'green';
+        visible = true;
+      } else {
+        visible = false;
+      }
+    }
+
     switch (feature.getProperty('group')) {
       case 'hospi':
 
@@ -507,12 +553,13 @@ export class MapModalComponent implements OnInit {
         icon = 'assets/images/temple.png';
         break;
     }
+
     return {
       icon: icon,
-      visible: true,
-      fillColor: 'green',
+      visible: visible,
+      fillColor: color,
       fillOpacity: 0.2,
-      strokeColor: 'green',
+      strokeColor: color,
       strokeWeight: 1,
       strokeOpacity: 0.8,
     };
@@ -524,7 +571,6 @@ export class MapModalComponent implements OnInit {
    */
 
   public optionYearChange(city: any) {
-    console.log(city);
     this.yearDataPercent = this.yearService.getStructurePercent(city, this.yearValueSlider);
     this.yearActiveSlider = ''; // 選擇縣市後才可以滑動 Slider
   }
