@@ -33,11 +33,11 @@ export class PopulationStructureService {
 
     let lines = [];
 
+
     for (let i = 1; i < allTextLines.length; i++) {
 
       let data = allTextLines[i].split(',');
       if (data.length == headers.length) {
-
         this.popu = new Population();
         this.popu.no = data[0];
         this.popu.year = data[1];

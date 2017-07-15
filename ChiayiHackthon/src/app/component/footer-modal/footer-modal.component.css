@@ -1,20 +1,39 @@
 footer {
-    padding: 15px 0;
-    height: 120px;
-    background: #2B3442;
+    padding: 2rem 0;
+    background: #2E3542;
 }
 
-footer .nav-thanks {
+.footer-source {
+    padding-bottom: 1rem;
+}
+
+.footer-source h5 {
+    padding: 15px 0;
+    color: #C7C7C7;
+    border-bottom: 1px solid #29303C;
+}
+
+.footer-source ul {
+    padding: 0;
+    list-style-type: none;
+}
+
+.footer-source ul li a {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.footer-bottom ul {
     margin: 6px 0;
 }
 
-footer .nav-thanks li {
+.footer-bottom ul li {
     margin: 0 4px;
     color: #707070;
     font-weight: normal;
 }
 
-footer .nav-thanks li+li::before {
+.footer-bottom ul li+li::before {
     content: '｜';
     margin: 0 3px 0 -8px;
     color: #666;

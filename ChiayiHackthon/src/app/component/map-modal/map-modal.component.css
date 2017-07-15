@@ -1,22 +1,21 @@
 .dashboard {
-  margin: 60px auto 90px;
+    margin: 60px auto 90px;
 }
 
 #currentGroup {
-  /* background: #A3CCFF; */
-  background: #3A4354;
-  padding: 2rem 0 !important;
+    background: #3A4354;
+    padding: 2rem 0 5rem !important;
 }
 
 #futureGroup {
-  background: #343C4B;
-  padding: 2rem 0 !important;
+    background: #343C4B;
+    padding: 2rem 0 !important;
 }
 
 .gmap {
-  position: relative;
-  width: 100%;
-  height: 100%;
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 
@@ -24,39 +23,39 @@
   設計巧思 by Rplus 
   https://codepen.io/Rplus/full/awMVjy/
 */
-
+/* 
 .gmap-mask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: rgba(255, 255, 255, .6);
-  text-transform: uppercase;
-  font-size: 4vmin;
-  font-weight: 900;
-  font-family: sans-serif;
-  background-color: rgba(0, 0, 0, .2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(255, 255, 255, .6);
+    text-transform: uppercase;
+    font-size: 4vmin;
+    font-weight: 900;
+    font-family: sans-serif;
+    background-color: rgba(0, 0, 0, .2);
 }
 
 .gmap-mask:active,
 agm-map:hover+.gmap-mask {
-  visibility: hidden;
-}
+    visibility: hidden;
+} */
 
 agm-map {
-  height: 600px;
-  width: 100%;
+    height: 600px;
+    width: 100%;
 }
 
 #charGroup {
-  margin: 30px auto;
+    margin: 30px auto;
 }
 
 #charGroup .card-inverse {
-  color: #f1f1f1;
-  background: #444;
+    color: #f1f1f1;
+    background: #444;
 }

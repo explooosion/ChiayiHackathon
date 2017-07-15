@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  title: string = '高齡化社會發展趨勢之預測評估';
+  title: string = '生活照護友善指數';
   constructor() { }
 
 }

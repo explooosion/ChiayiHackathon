@@ -87,7 +87,7 @@ export class MapModalComponent implements OnInit {
   popuDataPercent: any[] = [50, 50, 50];
 
   // 年齡結構 - 下拉式選單
-  cityYearSelect = new City().cityGroup[0];
+  cityYearSelect: any = new City().cityGroup[0];
   cityYearGroup: any[] = new City().cityGroup;
 
   // 人口結構 - 下拉式選單

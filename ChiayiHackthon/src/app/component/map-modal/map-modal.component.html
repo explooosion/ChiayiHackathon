@@ -58,7 +58,7 @@
 
     <div class="row">
       <div class="col-lg-12 text-center">
-        <h2 class="title">社福環域分析</h2>
+        <h2 class="title">社會福利環域分析</h2>
       </div>
     </div>
 
@@ -169,7 +169,7 @@
               <p>{{infowinMsg[2]}}</p>
             </agm-info-window>
           </agm-map>
-          <div class="gmap-mask">click to unlock</div>
+          <!-- <div class="gmap-mask">click to unlock</div> -->
         </div>
       </div>
 
@@ -188,7 +188,7 @@
 
     <div class="row">
       <div class="col-lg-12 text-center">
-        <h2 class="title">未來指標預測</h2>
+        <h3 class="title">高齡化社會發展趨勢之預測評估</h3>
       </div>
     </div>
 
@@ -211,9 +211,9 @@
                 </div>
                 <div class="col-sm-10">
                   <select id="optionCity" class="form-control" [(ngModel)]="cityYearSelect" (ngModelChange)="optionYearChange($event)">
-            <option disabled [ngValue]="-1">請選擇縣市</option>
-            <option *ngFor="let option of cityYearGroup; let itemIndex = index" [ngValue]="option">{{option.chName }}</option>
-        </select>
+                      <option disabled [ngValue]="-1">請選擇縣市</option>
+                      <option *ngFor="let option of cityYearGroup; let itemIndex = index" [ngValue]="option" [selected]="true">{{option.chName }}</option>
+                  </select>
                 </div>
               </div>
               <div class="row">
