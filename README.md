@@ -15,14 +15,8 @@ Demo：[生活照護友善指數](https://chiayi-ht.robby570.tw/)
 提供數據分析，預測未來藍圖：
 + 年齡結構指標
 + 人口數量預估
-  
-## 四、技術整合
-+ Angular4
-+ Google Map API
-+ GIS (GeoJson)
-+ Firebase
-  
-## 五、使用資料集
+    
+## 四、使用資料集
 #### 醫療
 + [醫療機構基本資料](http://data.gov.tw/node/15393)
   
@@ -43,8 +37,7 @@ Demo：[生活照護友善指數](https://chiayi-ht.robby570.tw/)
 + [民政司-全國宗教資訊系統資料-基金會](http://data.gov.tw/node/8205)
     
 #### 人口數量變動
-+ [內政部不動產-人口數量季報表（96年1季-105年4季）](https://pip.moi.gov.tw/V2/E/SCRE0103.aspx)     
-  
++ [內政部不動產-人口數量季報表（96年1季-105年4季）](https://pip.moi.gov.tw/V2/E/SCRE0103.aspx)   
 #### 年齡結構指標
 + [戶政司-縣市人口年齡結構指標（101年1月-106年6月）](http://www.ris.gov.tw/fr/346)
   
@@ -57,3 +50,8 @@ Demo：[生活照護友善指數](https://chiayi-ht.robby570.tw/)
 + [鄉鎮市區界線(TWD97經緯度)](http://data.gov.tw/node/7441)
 + [村里界圖(TWD97經緯度)](http://data.gov.tw/node/7438)
   
+## 五、網頁技術應用
++ Angular4
++ Google Map API
++ GIS (GeoJson)
++ Firebase
