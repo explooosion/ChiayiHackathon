@@ -27,7 +27,7 @@ footer {
     margin: 6px 0;
 }
 
-.footer-bottom ul li {
+.footer-bottom ul li a {
     margin: 0 4px;
     color: #707070;
     font-weight: normal;
@@ -35,6 +35,5 @@ footer {
 
 .footer-bottom ul li+li::before {
     content: '｜';
-    margin: 0 3px 0 -8px;
     color: #666;
 }

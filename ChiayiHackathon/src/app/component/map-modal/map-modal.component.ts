@@ -79,17 +79,21 @@ export class MapModalComponent implements OnInit {
   // 年齡結構 - 卷軸
   yearActiveSlider: string = null;
   yearValueSlider: number = 1;
-  yearDateSlider: string = `${new Date().getFullYear().toString()}-${new Date().getMonth().toString()}`;
+  yearDateSlider: string = `${new Date().getFullYear().toString()}年 - 第${new Date().getMonth().toString()}季`;
 
   // 人口結構 - 卷軸
   popuActiveSlider: string = null;
   popuValueSlider: number = 41;
-  popuDateSlider: string = `${new Date().getFullYear().toString()}-${new Date().getMonth().toString()}`;
+  popuDateSlider: string = `${new Date().getFullYear().toString()}年 - 第${new Date().getMonth().toString()}季`;
 
   // 年齡結構 - 圖表
   //yearData: any[] = [];
   // yearDataFilter: any[] = []; // 儲存卷軸對應的No.資料
   yearDataPercent: any[] = [50, 50, 50]; // 年齡結構百分比[A群,B群,C群]
+  yearCountOldMan: number[] = [1, 2, 3, 4];
+  yearCountMale: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  yearCountPercent: number = 51.13;
+
 
   // 人口結構 - 圖表
   popuData: any[] = [];
@@ -133,7 +137,7 @@ export class MapModalComponent implements OnInit {
       yAxes: [{
         ticks: {
           min: 0,
-          max: 1000000
+          max: 800000
         }
       }]
     }
@@ -596,6 +600,19 @@ export class MapModalComponent implements OnInit {
   public optionYearChange(city: any) {
     this.yearDataPercent = this.yearService.getStructurePercent(city, this.yearValueSlider);
     this.yearActiveSlider = ''; // 選擇縣市後才可以滑動 Slider
+
+    // 扶養比
+    this.yearCountPercent = Number(Number((Number(this.yearDataPercent[0]) + Number(this.yearDataPercent[2])) / this.yearDataPercent[1] * 100).toFixed(2));
+    var old = Number(this.yearCountPercent / 10);
+    this.yearCountOldMan = [];
+    for (let i = 1; i <= old; i++) {
+      this.yearCountOldMan.push(i);
+    }
+    var man = 10;
+    this.yearCountMale = [];
+    for (let j = 1; j <= man; j++) {
+      this.yearCountMale.push(j);
+    }
   }
 
   /**
@@ -606,7 +623,20 @@ export class MapModalComponent implements OnInit {
     this.yearDataPercent = this.yearService.getStructurePercent(this.cityYearSelect, no);
     let _mon = no % 12 == 0 ? 12 : no % 12;
     let _year = no / 12 == 0 ? 2012 : Math.floor(no / 12) + 2012;
-    this.yearDateSlider = `${_year}-${_mon}`;
+    this.yearDateSlider = `${_year}年 - 第${_mon}季`;
+
+    // 扶養比
+    this.yearCountPercent = Number(Number((Number(this.yearDataPercent[0]) + Number(this.yearDataPercent[2])) / this.yearDataPercent[1] * 100).toFixed(2));
+    var old = Number(this.yearCountPercent / 10);
+    this.yearCountOldMan = [];
+    for (let i = 1; i <= old; i++) {
+      this.yearCountOldMan.push(i);
+    }
+    var man = 10;
+    this.yearCountMale = [];
+    for (let j = 1; j <= man; j++) {
+      this.yearCountMale.push(j);
+    }
   }
 
   /**
@@ -627,7 +657,7 @@ export class MapModalComponent implements OnInit {
     this.popuDataPercent = this.popuService.getPopulationPercent(this.cityPopuSelect, no);
     let _mon = no % 4 == 0 ? 4 : no % 4;
     let _year = no / 4 == 0 ? 2007 : Math.floor(no / 4) + 2007;
-    this.popuDateSlider = `${_year}-${_mon}`;
+    this.popuDateSlider = `${_year}年 - 第${_mon}季`;
 
     let popuNow = Number(this.popuService.getPopulationPercent(this.cityPopuSelect, no)[0]);
     let popu1 = Number(this.popuService.getPopulationPercent(this.cityPopuSelect, no + 4)[0]);

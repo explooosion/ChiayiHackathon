@@ -220,7 +220,7 @@
             <blockquote class="card-blockquote">
               <div class="row">
                 <div class="col-sm-12">
-                  <h5><span class="badge badge-custom"><var>y</var> = <var>a</var> + <var>b</var> * <var>x</var> + <var>b</var> * <var>x²</var></span></h5>
+                  <h5><span class="badge badge-custom"><var>y</var> = <var>a</var> + <var>b</var> * <var>x</var> + <var>c</var> * <var>x²</var></span></h5>
                 </div>
               </div>
               <div class="row">
@@ -243,10 +243,17 @@
            " (ngModelChange)="onYearSliderChange($event)" [disabled]="yearActiveSlider"></nouislider>
                 </div>
               </div>
+              <div class="row fix-col">
+                <div class="col-sm-3">
+                  <label class="col-form-label">估計年月：</label>
+                </div>
+                <div class="col-sm-9">
+                  <label class="col-form-label">{{yearDateSlider}}</label>
+                </div>
+              </div>
               <table class="table table-bordered table-inverse table-custom">
                 <thead>
                   <tr>
-                    <th>估計年月</th>
                     <th>0~17</th>
                     <th>17~65</th>
                     <th>65歲以上</th>
@@ -254,7 +261,6 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>{{ yearDateSlider }}</td>
                     <td>{{ yearDataPercent[0] }}%</td>
                     <td>{{ yearDataPercent[1] }}%</td>
                     <td>{{ yearDataPercent[2] }}%</td>
@@ -269,13 +275,13 @@
       <div class="col-lg-6">
         <div class="card">
           <div class="card-header card-custom">
-            <i class="fa fa-table" aria-hidden="true"></i>&nbsp;人口數量預估（ 2012-01 ）
+            <i class="fa fa-table" aria-hidden="true"></i>&nbsp;人口數量預估（ 2007-01 ）
           </div>
           <div class="card-block">
             <blockquote class="card-blockquote">
               <div class="row">
                 <div class="col-sm-12">
-                  <h5><span class="badge badge-custom"><var>y</var> = <var>a</var> + <var>b</var> * <var>x</var> + <var>b</var> * <var>x²</var></span></h5>
+                  <h5><span class="badge badge-custom"><var>y</var> = <var>a</var> + <var>b</var> * <var>x</var> + <var>c</var> * <var>x²</var></span></h5>
                 </div>
               </div>
               <div class="row">
@@ -298,10 +304,17 @@
            " (ngModelChange)="onPopuSliderChange($event)" [disabled]="popuActiveSlider"></nouislider>
                 </div>
               </div>
+              <div class="row fix-col">
+                <div class="col-sm-3">
+                  <label class="col-form-label">估計年月：</label>
+                </div>
+                <div class="col-sm-9 text-left">
+                  <label class="col-form-label">{{popuDateSlider}}</label>
+                </div>
+              </div>
               <table class="table table-bordered table-inverse table-custom">
                 <thead>
                   <tr>
-                    <th>估計年月</th>
                     <th>總人口數</th>
                     <th>自然成長係數</th>
                     <th>社會成長係數</th>
@@ -309,7 +322,6 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>{{ popuDateSlider }}</td>
                     <td>{{ popuDataPercent[0] }}人</td>
                     <td>{{ popuDataPercent[1] }}%</td>
                     <td>{{ popuDataPercent[2] }}%</td>
@@ -340,6 +352,31 @@
       <div class="col-xl-4 col-sm-6 mb-4">
         <div class="card h-100">
           <div class="card-header card-inverse">
+            <i class="fa fa-area-chart"></i> 扶養比
+          </div>
+          <div id="carePercent" class="card-block">
+            <div class="row text-center">
+              <div class="col-12">
+                <i class="fa fa-blind fa-3x" aria-hidden="true" *ngFor="let i of yearCountOldMan"></i>
+              </div>
+            </div>
+            <div class="row text-center">
+              <div class="col-12">
+                <h1 class="text-center card-title">{{ yearCountPercent }}%</h1>
+              </div>
+            </div>
+            <div class="row text-center">
+              <div class="col-12">
+                <i class="fa fa-male fa-3x" aria-hidden="true" *ngFor="let i of yearCountMale"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-sm-6 mb-4">
+        <div class="card h-100">
+          <div class="card-header card-inverse">
             <i class="fa fa-bar-chart"></i> 人口數量預測
           </div>
           <div class="card-block">
@@ -349,7 +386,7 @@
         </div>
       </div>
 
-      <div class="col-xl-4 col-sm-6 mb-4">
+      <!-- <div class="col-xl-4 col-sm-6 mb-4">
         <div class="card h-100">
           <div class="card-header card-inverse">
             <i class="fa fa-area-chart"></i> 區域社福評估
@@ -359,7 +396,7 @@
            " [colors]="radarChartOptions"></canvas>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
