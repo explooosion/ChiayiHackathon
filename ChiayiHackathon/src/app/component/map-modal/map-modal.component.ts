@@ -320,16 +320,9 @@ export class MapModalComponent implements OnInit {
             result => {
               this.zone.run(async () => {
 
-                this.layerService.getHospiGeoJson(result);
+                this.geoLayerHospi = this.layerService.getHospiGeoJson(result);
+                console.log(`Load: Hospi ${new Date()}`);
 
-                await this.layerService.getPointerLayer('hospi', '長照ABC')
-                  .subscribe(
-                  result => {
-                    this.zone.run(() => {
-                      this.geoLayerHospi = this.layerService.getHospiGeoJson(result);
-                      console.log(`Load: Hospi ${new Date()}`);
-                    });
-                  });
               });
             });
         });
@@ -625,7 +618,7 @@ export class MapModalComponent implements OnInit {
             break;
         }
         break;
-        
+
       case 'secure':
         icon = 'assets/images/secure.png';
         break;
