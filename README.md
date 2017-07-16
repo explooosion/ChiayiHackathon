@@ -49,8 +49,8 @@ Demo：[生活照護友善指數](https://chiayi-ht.robby570.tw/)
 + [戶政司-縣市人口年齡結構指標（101年1月-106年6月）](http://www.ris.gov.tw/fr/346)
   
 #### 長照ABC
-+ 雲林縣社會局-電訪（05-552-2560）
-+ 嘉義縣社會局-電訪（05-362-0900）
++ [雲林縣社會局-電訪（05-552-2560）](http://www4.yunlin.gov.tw/social/index.jsp)
++ [嘉義縣社會局-電訪（05-362-0900）](http://www.sabcc.gov.tw/)
   
 #### 界線圖資
 + [直轄市、縣市界線(TWD97經緯](http://data.gov.tw/node/7442)
