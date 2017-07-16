@@ -53,7 +53,7 @@ Demo：[生活照護友善指數](https://chiayi-ht.robby570.tw/)
 + [嘉義縣社會局-電訪（05-362-0900）](http://www.sabcc.gov.tw/)
   
 #### 界線圖資
-+ [直轄市、縣市界線(TWD97經緯](http://data.gov.tw/node/7442)
++ [直轄市、縣市界線(TWD97經緯)](http://data.gov.tw/node/7442)
 + [鄉鎮市區界線(TWD97經緯度)](http://data.gov.tw/node/7441)
 + [村里界圖(TWD97經緯度)](http://data.gov.tw/node/7438)
   
