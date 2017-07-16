@@ -1,6 +1,6 @@
 [![ChiayiHackathon](http://i.imgur.com/EBGyKFv.jpg)](http://www.accupass.com/go/hackforlocal)
   
-## 一、ChiayiHackthon
+## 一、ChiayiHackathon
 Demo：[生活照護友善指數](https://chiayi-ht.robby570.tw/)
 [(備用)](https://gmap-1499610594295.firebaseapp.com/)
   
