@@ -1,4 +1,4 @@
-[[ChiayiHackathon](http://i.imgur.com/EBGyKFv.jpg)](http://www.accupass.com/go/hackforlocal)
+[![ChiayiHackathon](http://i.imgur.com/EBGyKFv.jpg)](http://www.accupass.com/go/hackforlocal)
   
 ## 一、ChiayiHackthon
 Demo：[生活照護友善指數](https://chiayi-ht.robby570.tw/)
