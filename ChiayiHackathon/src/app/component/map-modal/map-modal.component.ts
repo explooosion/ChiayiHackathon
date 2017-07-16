@@ -85,7 +85,7 @@ export class MapModalComponent implements OnInit {
   // 年齡結構 - 卷軸
   yearActiveSlider: string = null;
   yearValueSlider: number = 1;
-  yearDateSlider: string = `${new Date().getFullYear().toString()}年 - 第${new Date().getMonth().toString()}季`;
+  yearDateSlider: string = `${new Date().getFullYear().toString()}年 - ${new Date().getMonth().toString()}月`;
 
   // 人口結構 - 卷軸
   popuActiveSlider: string = null;
@@ -682,7 +682,7 @@ export class MapModalComponent implements OnInit {
     this.yearDataPercent = this.yearService.getStructurePercent(this.cityYearSelect, no);
     let _mon = no % 12 == 0 ? 12 : no % 12;
     let _year = no / 12 == 0 ? 2012 : Math.floor(no / 12) + 2012;
-    this.yearDateSlider = `${_year}年 - 第${_mon}季`;
+    this.yearDateSlider = `${_year}年 - ${_mon}月`;
 
     // 扶養比
     this.yearCountPercent = Number(Number((Number(this.yearDataPercent[0]) + Number(this.yearDataPercent[2])) / this.yearDataPercent[1] * 100).toFixed(2));
