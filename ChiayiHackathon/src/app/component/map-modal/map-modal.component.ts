@@ -49,6 +49,8 @@ export class MapModalComponent implements OnInit {
   countCare: number = 3;
   countTemple: number = 2;
   countBurglary: number = 1;
+  countSchool: number = 0;
+  countABC: number = 0;
 
   // 圖層資料
   geoLayerCounty: Object = null;
@@ -59,6 +61,8 @@ export class MapModalComponent implements OnInit {
   geoLayerCare: Object = null;
   geoLayerTemple: Object = null;
   geoLayerBurglary: Object = null;
+  geoLayerSchool: Object = null;
+  geoLayerABC: Object = null;
 
   // 圖層是否顯示
   geoLayerShowCounty: boolean = false;
@@ -69,6 +73,8 @@ export class MapModalComponent implements OnInit {
   geoLayerShowCare: boolean = false;
   geoLayerShowTemple: boolean = false;
   geoLayerShowBurglary: boolean = false;
+  geoLayerShowSchool: boolean = false;
+  geoLayerShowABC: boolean = false;
 
   // 點位訊息小窗
   infowinLat: number = 23.458987;
@@ -171,6 +177,8 @@ export class MapModalComponent implements OnInit {
         { id: 23, name: '照護機構' },
         { id: 24, name: '宗教建設' },
         { id: 25, name: '竊盜紀錄' },
+        { id: 26, name: '國民中學' },
+        { id: 27, name: '長照ABC' },
       ]
     }
   ];
@@ -326,6 +334,27 @@ export class MapModalComponent implements OnInit {
             });
         });
       });
+
+    await this.layerService.getPointerLayer('abc', 'abc')
+      .subscribe(
+      result => {
+        this.zone.run(async () => {
+
+          this.geoLayerABC = this.layerService.getABCGeoJson(result);
+          console.log(`Load: ABC ${new Date()}`);
+        });
+      });
+
+    await this.layerService.getPointerLayer('school', 'ChiaYu')
+      .subscribe(
+      result => {
+        this.zone.run(async () => {
+
+          this.geoLayerSchool = this.layerService.getSchoolGeoJson(result);
+          console.log(`Load: School ${new Date()}`);
+
+        });
+      });
   }
 
   /**
@@ -361,6 +390,8 @@ export class MapModalComponent implements OnInit {
     this.countCare = 0;
     this.countTemple = 0;
     this.countHospi = 0;
+    this.countSchool = 0;
+    this.countABC = 0;
 
     this.geoLayerHospi['features'].forEach(async (element) => {
       let lat = Number(element.geometry.coordinates[1]);
@@ -372,6 +403,21 @@ export class MapModalComponent implements OnInit {
           this.zone.run(() => {
             if (result <= this.radius) {
               this.countHospi++;
+            }
+          });
+        });
+    });
+
+    this.geoLayerABC['features'].forEach(async (element) => {
+      let lat = Number(element.geometry.coordinates[1]);
+      let lng = Number(element.geometry.coordinates[0]);
+      let p2 = [lat, lng];
+      await this.gmapService.getDistance([this.lat, this.lng], p2)
+        .subscribe(
+        result => {
+          this.zone.run(() => {
+            if (result <= this.radius) {
+              this.countABC++;
             }
           });
         });
@@ -437,6 +483,21 @@ export class MapModalComponent implements OnInit {
         });
     });
 
+    this.geoLayerSchool['features'].forEach(async (element) => {
+      let lat = Number(element.geometry.coordinates[1]);
+      let lng = Number(element.geometry.coordinates[0]);
+      let p2 = [lat, lng];
+      await this.gmapService.getDistance([this.lat, this.lng], p2)
+        .subscribe(
+        result => {
+          this.zone.run(() => {
+            if (result <= this.radius) {
+              this.countSchool++;
+            }
+          });
+        });
+    });
+
     // 分析完後要更新圖表 - 區域社福評估
     this.radarChartData = [
       {
@@ -494,6 +555,7 @@ export class MapModalComponent implements OnInit {
    */
   public styleLayer(feature) {
 
+    console.log(feature);
     if ($('.gmap-loading').css('display') != 'none') {
       setTimeout(() => {
         $('.gmap-loading').hide();
@@ -545,7 +607,10 @@ export class MapModalComponent implements OnInit {
 
     switch (feature.getProperty('group')) {
       case 'hospi':
+        icon = 'assets/images/hospi.png';
+        break;
 
+      case 'abc':
         switch (feature.getProperty('level')) {
           case 'A':
             icon = 'assets/images/a.png';
@@ -558,12 +623,9 @@ export class MapModalComponent implements OnInit {
           case 'C':
             icon = 'assets/images/c.png';
             break;
-
-          default:
-            icon = 'assets/images/hospi.png';
         }
         break;
-
+        
       case 'secure':
         icon = 'assets/images/secure.png';
         break;
@@ -578,6 +640,10 @@ export class MapModalComponent implements OnInit {
 
       case 'temple':
         icon = 'assets/images/temple.png';
+        break;
+
+      case 'school':
+        icon = 'assets/images/school.png';
         break;
     }
 
@@ -720,6 +786,8 @@ export class MapModalComponent implements OnInit {
           this.geoLayerShowCare = true;
           this.geoLayerShowTemple = true;
           this.geoLayerShowBurglary = true;
+          this.geoLayerShowSchool = true;
+          this.geoLayerShowABC = true;
 
         } else {
           this.geoLayerShowSecure = false;
@@ -727,6 +795,8 @@ export class MapModalComponent implements OnInit {
           this.geoLayerShowCare = false;
           this.geoLayerShowTemple = false;
           this.geoLayerShowBurglary = false;
+          this.geoLayerShowSchool = false;
+          this.geoLayerShowABC = false;
         }
         break;
       case 21:
@@ -743,6 +813,12 @@ export class MapModalComponent implements OnInit {
         break;
       case 25:
         this.geoLayerShowBurglary = !this.geoLayerShowBurglary;
+        break;
+      case 26:
+        this.geoLayerShowSchool = !this.geoLayerShowSchool;
+        break;
+      case 27:
+        this.geoLayerShowABC = !this.geoLayerShowABC;
         break;
     }
   }

@@ -135,6 +135,7 @@
                     <p>照護機構：{{countCare}}</p>
                     <p>宗教建設：{{countTemple}}</p>
                     <p>竊盜紀錄：{{countBurglary}}</p>
+                    <p>國民中學：{{countSchool}}</p>
                   </blockquote>
                 </div>
               </div>
@@ -159,6 +160,8 @@
               [style]="styleLayer"></agm-data-layer>
             <agm-data-layer *ngIf="geoLayerShowHospi" [geoJson]="geoLayerHospi" (layerClick)="infoWindow.open();geoLayerClick($event)"
               [style]="styleLayer"></agm-data-layer>
+            <agm-data-layer *ngIf="geoLayerShowABC" [geoJson]="geoLayerABC" (layerClick)="infoWindow.open();geoLayerClick($event)"
+              [style]="styleLayer"></agm-data-layer>
             <agm-data-layer *ngIf="geoLayerShowSecure" [geoJson]="geoLayerSecure" (layerClick)="infoWindow.open();geoLayerClick($event)"
               [style]="styleLayer"></agm-data-layer>
             <agm-data-layer *ngIf="geoLayerShowBurglary" [geoJson]="geoLayerBurglary" (layerClick)="infoWindow.open();geoLayerClick($event)"
@@ -166,6 +169,8 @@
             <agm-data-layer *ngIf="geoLayerShowCare" [geoJson]="geoLayerCare" (layerClick)="infoWindow.open();geoLayerClick($event)"
               [style]="styleLayer"></agm-data-layer>
             <agm-data-layer *ngIf="geoLayerShowTemple" [geoJson]="geoLayerTemple" (layerClick)="infoWindow.open();geoLayerClick($event)"
+              [style]="styleLayer"></agm-data-layer>
+            <agm-data-layer *ngIf="geoLayerShowSchool" [geoJson]="geoLayerSchool" (layerClick)="infoWindow.open();geoLayerClick($event)"
               [style]="styleLayer"></agm-data-layer>
             <agm-info-window #infoWindow [isOpen]="infowinIsOpen" [latitude]="infowinLat" [longitude]="infowinLng">
               <strong>{{infowinMsg[0]}}</strong>

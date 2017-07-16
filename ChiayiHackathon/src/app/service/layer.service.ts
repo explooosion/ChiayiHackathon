@@ -12,6 +12,7 @@ import { Secure } from '../class/secure';
 import { Care } from '../class/care';
 import { Temple } from '../class/temple';
 import { Burglary } from '../class/burglary';
+import { School } from '../class/school';
 
 @Injectable()
 export class LayerService {
@@ -21,18 +22,24 @@ export class LayerService {
   private careGeoJson: GeoJson = new GeoJson();
   private templeGeoJson: GeoJson = new GeoJson();
   private burglaryGeoJson: GeoJson = new GeoJson();
+  private schoolGeoJson: GeoJson = new GeoJson();
+  private abcGeoJson: GeoJson = new GeoJson();
 
   private hospi: Hospi;
+  private abc: Hospi;
   private secure: Secure;
   private care: Care;
   private temple: Temple;
   private burglary: Burglary;
+  private school: School;
 
   private hospiArr: Hospi[];
+  private abcArr: Hospi[];
   private secureArr: Secure[];
   private careArr: Care[];
   private templeArr: Temple[];
   private burglaryArr: Burglary[];
+  private schoolArr: School[];
 
   private fileUrl: string = 'assets/layer/';
   private fileExtend: string[] = ['.csv', '.json'];
@@ -68,6 +75,9 @@ export class LayerService {
           case 'hospi':
             return this.saveHospi(res);
 
+          case 'abc':
+            return this.saveABC(res);
+
           case 'secure':
             return this.saveSecure(res);
 
@@ -79,6 +89,9 @@ export class LayerService {
 
           case 'burglary':
             return this.saveBurglary(res);
+
+          case 'school':
+            return this.saveSchool(res);
         }
       }
       );
@@ -239,6 +252,68 @@ export class LayerService {
   }
 
   /**
+   * Layer - 學校地點
+   * @param res 
+   */
+  public saveSchool(res: Response): School[] {
+    let csvData = res['_body'] || '';
+    let allTextLines = csvData.split(/\r\n|\n/);
+    let headers = allTextLines[0].split(',');
+
+    let lines = [];
+    for (let i = 1; i < allTextLines.length; i++) {
+
+      let data = allTextLines[i].split(',');
+      if (data.length == headers.length) {
+
+        this.school = new School(
+          data[0],    // name
+          data[1],    // address
+          data[2],   // lat
+          data[3],   // lng
+          data[4]    // city
+        );
+
+        lines.push(this.school);
+      }
+      this.schoolArr = lines;
+
+    }
+    return this.schoolArr;
+  }
+
+  /**
+     * Layer - 長照
+     * @param res 
+     */
+  public saveABC(res: Response): Hospi[] {
+    let csvData = res['_body'] || '';
+    let allTextLines = csvData.split(/\r\n|\n/);
+    let headers = allTextLines[0].split(',');
+
+    let lines = [];
+    for (let i = 1; i < allTextLines.length; i++) {
+
+      let data = allTextLines[i].split(',');
+      if (data.length == headers.length) {
+
+        this.abc = new Hospi(
+          data[0],  // address
+          data[1],  // lat
+          data[2],  // lng
+          data[3],  // Address
+          data[4] == null ? '' : data[4], // level
+        );
+
+        lines.push(this.abc);
+      }
+      this.abcArr = lines;
+
+    }
+    return this.abcArr;
+  }
+
+  /**
    * GeoJson - 宗教建設
    * @param temple 
    */
@@ -355,5 +430,52 @@ export class LayerService {
       );
     });
     return JSON.parse(JSON.stringify(this.hospiGeoJson));
+  }
+
+  /**
+   * GeoJson - 長照
+   * @param hospi 
+   */
+  public getABCGeoJson(abc: any[]): GeoJson {
+
+    abc.forEach(element => {
+      this.abcGeoJson.features.push(
+        new Features(
+          {
+            group: 'abc',
+            name: element.name,
+            address: element.address,
+            lat: Number(element.lat),
+            lng: Number(element.lng),
+            level: element.level
+          },
+          new Geometry('Point', [Number(element.lng), Number(element.lat)])
+        )
+      );
+    });
+    return JSON.parse(JSON.stringify(this.abcGeoJson));
+  }
+
+  /**
+ * GeoJson - 學校地點
+ * @param school 
+ */
+  public getSchoolGeoJson(school: any[]): GeoJson {
+
+    school.forEach(element => {
+      this.schoolGeoJson.features.push(
+        new Features(
+          {
+            group: 'school',
+            name: element.name,
+            address: element.address,
+            lat: Number(element.lat),
+            lng: Number(element.lng)
+          },
+          new Geometry('Point', [Number(element.lng), Number(element.lat)])
+        )
+      );
+    });
+    return JSON.parse(JSON.stringify(this.schoolGeoJson));
   }
 }
