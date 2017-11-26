@@ -60,4 +60,4 @@ Demo：[生活照護友善指數](https://chiayi-ht.robby570.tw/)
 + Firebase
 
 ## 六、Thanks All
-![^Q^](http://i.imgur.com/LnZ1uxJ.jpg)
+<!-- ![^Q^](http://i.imgur.com/LnZ1uxJ.jpg) -->
